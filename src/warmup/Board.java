@@ -83,13 +83,13 @@ public class Board {
         Geometry.DoublePair newLoc = new Geometry.DoublePair(newX, newY); 
         LineSegment collisionWall = new LineSegment(0,0,0,0);
         
-        if (newX >= width && newY < height && newY > 0){
+        if (newX >= width && newY <= height && newY >= 0){
             collisionWall = right;
-        } else if (newX <= 0 && newY < height && newY > 0){
+        } else if (newX <= 0 && newY <= height && newY >= 0){
             collisionWall = left;
-        } else if (newY >= height && newX < width && newX > 0){
+        } else if (newY >= height && newX <= width && newX >= 0){
             collisionWall = bottom;
-        } else if (newY <= 0 && newX < width && newX > 0){
+        } else if (newY <= 0 && newX <= width && newX >= 0){
             collisionWall = top;
         } else if (newX >= width && newY >= height){
             if (xOver > yOver){ collisionWall = right; }
@@ -126,6 +126,26 @@ public class Board {
     
     private void moveWithoutCollision(Geometry.DoublePair newLoc){
         this.ball.setPosition(newLoc);
+        int x=(int)this.ball.getPosition().d1;
+        int y=(int)this.ball.getPosition().d2;
+        if (x<=0){
+            x=1;
+            
+            this.ball.setVelocity(new Vect(-this.ball.getVelocity().x(),this.ball.getVelocity().y()));
+        }
+        if (x>=this.board[0].length-1){
+            x=this.board[0].length-2;
+            this.ball.setVelocity(new Vect(-this.ball.getVelocity().x(),this.ball.getVelocity().y()));
+        }
+        if (y<=0){
+            y=1;
+            this.ball.setVelocity(new Vect(this.ball.getVelocity().x(),-this.ball.getVelocity().y()));
+        }
+        if (y>=this.board.length-1){
+            y=this.board.length-2;
+            this.ball.setVelocity(new Vect(this.ball.getVelocity().x(),-this.ball.getVelocity().y()));
+        }
+        this.ball.setPosition( new Geometry.DoublePair(x, y));
     }
   
     private void moveWithCollision(Geometry.DoublePair newLoc, LineSegment wall, long deltaT){
