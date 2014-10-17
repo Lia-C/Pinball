@@ -157,11 +157,14 @@ public class Board {
     }
     
     private void updateBallOnMap(){
+     
+        
         Geometry.DoublePair loc = this.ball.getPosition();
         int xPos=(int) loc.d1;
         int yPos=(int) loc.d2;
+       
         board[yPos][xPos]="*";
-        if (!(this.priorY==0||this.priorX==0)){
+        if (!(this.priorY==0||this.priorX==0)&&!(this.priorY==yPos||this.priorX==xPos)){
             board[this.priorY][this.priorX]=" "; 
         }       
         this.priorX=xPos;
