@@ -30,11 +30,14 @@ public class Board {
         }
     }
     
-    public void translate(Ball ball, double deltaT) {
-        double deltaX = ball.getVelocity().x() * deltaT;
-        double deltaY = ball.getVelocity().y() * deltaT;
+    public void translate(double deltaT) {
+        double deltaX = this.ball.getVelocity().x() * deltaT;
+        double deltaY = this.ball.getVelocity().y() * deltaT;
         double newX;
         Geometry.DoublePair newLoc; 
+    }
+    private void moveWithoutCollision(Geometry.DoublePair newLoc){
+        this.ball.setPosition(newLoc);
     }
   
 }
