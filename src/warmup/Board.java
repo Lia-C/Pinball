@@ -4,8 +4,6 @@ import physics.*;
 public class Board {
     
     private final Ball ball;
-    private int priorX;
-    private int priorY;
     private final LineSegment top, bottom, left, right;
     private String[][] board;
     private int width;
@@ -18,8 +16,6 @@ public class Board {
         this.bottom = new LineSegment(0,height,width,height);
         this.left = new LineSegment(0,0,0,height);
         this.right = new LineSegment(width,0,width,height);
-        this.priorX = 0;
-        this.priorY = 0;
         this.board = makeBoard(width,height);
         this.width = width;
         this.height = height;
@@ -147,27 +143,22 @@ public class Board {
     }
     
     public void printBoard(){
-        updateBallOnMap();
+        int x=(int)this.ball.getPosition().d1;
+        int y=(int)this.ball.getPosition().d2;
         for (int i=0; i<board.length;i++){
             for (int j=0; j<board[i].length;j++){
-                System.out.print(board[i][j]);
+                if(i==y&&x==j){
+                    System.out.print("*");
+                }
+                else{
+                    System.out.print(board[i][j]);
+                }
+                
             }
             System.out.print("\n");
         }
     }
     
-    private void updateBallOnMap(){
-     
-        
-        Geometry.DoublePair loc = this.ball.getPosition();
-        int xPos=(int) loc.d1;
-        int yPos=(int) loc.d2;
-       
-        board[yPos][xPos]="*";
-        if (!(this.priorY==0||this.priorX==0)&&!(this.priorY==yPos||this.priorX==xPos)){
-            board[this.priorY][this.priorX]=" "; 
-        }       
-        this.priorX=xPos;
-        this.priorY=yPos;
-    }
+    
+  
 }
