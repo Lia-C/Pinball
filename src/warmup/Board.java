@@ -47,7 +47,7 @@ public class Board {
             //else:
             //  ball.setPosition(newX, newY)
             //  ball.setVelocity(newVelocity)
-            
+            //^All of this is to be handled in translate
             //after updating ball's location, re-update the lastTimeUpdated
             lastTimeUpdatedMillis = System.currentTimeMillis();
             
