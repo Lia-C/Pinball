@@ -35,7 +35,10 @@ public class Board {
         double deltaY = ball.getVelocity().y() * deltaT;
         double newX;
         Geometry.DoublePair newLoc; 
+        
+        
     }
+    
     
      
 }
