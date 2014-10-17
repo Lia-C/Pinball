@@ -52,6 +52,12 @@ public class Board {
             translate(deltaT);
             //after updating ball's location, re-update the lastTimeUpdated
             lastTimeUpdatedMillis = System.currentTimeMillis();
+            try {
+                Thread.sleep((long) (1000./60.));
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
             
         
         }
@@ -161,7 +167,7 @@ public class Board {
     
     private boolean timeToPrint(long lastTimePrintedMillis){
         double timeDeltaSecs = (System.currentTimeMillis() - lastTimePrintedMillis)/1000.0;
-        return timeDeltaSecs > 1/20.; //prints every 20 times per second
+        return timeDeltaSecs > 1/60.; //prints every 20 times per second
     }
     
     public void printBoard(){
