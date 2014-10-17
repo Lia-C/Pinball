@@ -31,5 +31,6 @@ public class Ball {
     
     public void setPosition(Geometry.DoublePair newPosition){
         this.position = newPosition;
+        this.circle = new Circle(newPosition.d1, newPosition.d2, 1);
     }
 }
