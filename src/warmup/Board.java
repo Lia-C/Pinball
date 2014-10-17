@@ -29,7 +29,7 @@ public class Board {
         long deltaT = 0;
         
         while(true){
-            System.out.println("HERE:"+this.ball.getPosition());
+            
             //print the board if it's time to
             if (timeToPrint(lastTimePrintedMillis)){
                 printBoard();
@@ -149,11 +149,14 @@ public class Board {
     }
   
     private void moveWithCollision(Geometry.DoublePair newLoc, LineSegment wall, long deltaT){
-        long timeUntilCollision = (long)Geometry.timeUntilWallCollision(wall, this.ball.getCircle(), this.ball.getVelocity());
-        
-        this.translate(timeUntilCollision);
-        this.ball.setVelocity(Geometry.reflectWall(wall, this.ball.getVelocity()));
-        this.translate(deltaT - timeUntilCollision);
+        double n = Geometry.timeUntilWallCollision(wall, this.ball.getCircle(), this.ball.getVelocity());
+        if (n != Double.POSITIVE_INFINITY){
+            long timeUntilCollision = (long) n;
+            
+            this.translate(timeUntilCollision);
+            this.ball.setVelocity(Geometry.reflectWall(wall, this.ball.getVelocity()));
+            this.translate(deltaT - timeUntilCollision);
+        }
     }
 
     
