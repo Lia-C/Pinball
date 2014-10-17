@@ -79,7 +79,6 @@ public class Board {
         double newX;
         Geometry.DoublePair newLoc; 
     }
-
         
         //TODO: check if the newx and newy are out-of-bounds
         //if out-of-bounds:
@@ -91,6 +90,23 @@ public class Board {
         //  ball.setVelocity(newVelocity)
     
     
+    private void moveWithoutCollision(Geometry.DoublePair newLoc){
+        this.ball.setPosition(newLoc);
+    }
+  
+    private void moveWithCollision(Geometry.DoublePair newLoc, LineSegment wall, long deltaT){
+        long timeUntilCollision = (long)Geometry.timeUntilWallCollision(wall, this.ball.getCircle(), this.ball.getVelocity());
+        
+        this.translate(timeUntilCollision);
+        this.ball.setVelocity(Geometry.reflectWall(wall, this.ball.getVelocity()));
+        this.translate(deltaT - timeUntilCollision);
+    }
+
+    
+    private boolean timeToPrint(long lastTimePrintedMillis){
+        double timeDeltaSecs = (System.currentTimeMillis() - lastTimePrintedMillis)/1000.0;
+        return timeDeltaSecs > 1/20.; //prints every 20 times per second
+    }
     
     public void printBoard(){
         updateBallOnMap();
@@ -112,23 +128,5 @@ public class Board {
         }       
         this.priorX=xPos;
         this.priorY=yPos;
-    }
-    
-    private void moveWithoutCollision(Geometry.DoublePair newLoc){
-        this.ball.setPosition(newLoc);
-    }
-  
-    private void moveWithCollision(Geometry.DoublePair newLoc, LineSegment wall, long deltaT){
-        long timeUntilCollision = (long)Geometry.timeUntilWallCollision(wall, this.ball.getCircle(), this.ball.getVelocity());
-        
-        this.translate(timeUntilCollision);
-        this.ball.setVelocity(Geometry.reflectWall(wall, this.ball.getVelocity()));
-        this.translate(deltaT - timeUntilCollision);
-    }
-
-    
-    private boolean timeToPrint(long lastTimePrintedMillis){
-        double timeDeltaSecs = (System.currentTimeMillis() - lastTimePrintedMillis)/1000.0;
-        return timeDeltaSecs > 1/20.; //prints every 20 times per second
     }
 }
