@@ -74,8 +74,8 @@ public class Board {
 
     
     public void translate(long deltaT) {
-        double deltaX = this.ball.getVelocity().x() * deltaT;
-        double deltaY = this.ball.getVelocity().y() * deltaT;
+        double deltaX = this.ball.getVelocity().x() * deltaT/1000;
+        double deltaY = this.ball.getVelocity().y() * deltaT/1000;
         double newX = this.ball.getPosition().d1 + deltaX;
         double newY = this.ball.getPosition().d2 + deltaY;
         double xOver = Math.abs(newX - width);
@@ -157,7 +157,6 @@ public class Board {
             this.translate(deltaT - timeUntilCollision);
         }
     }
-
     
     private boolean timeToPrint(long lastTimePrintedMillis){
         double timeDeltaSecs = (System.currentTimeMillis() - lastTimePrintedMillis)/1000.0;
