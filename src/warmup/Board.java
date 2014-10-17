@@ -70,15 +70,12 @@ public class Board {
         return board;
     }
     
- 
-    
     public void translate(long deltaT) {
         double deltaX = this.ball.getVelocity().x() * deltaT;
         double deltaY = this.ball.getVelocity().y() * deltaT;
         double newX;
         Geometry.DoublePair newLoc; 
     }
-
     
     private void moveWithoutCollision(Geometry.DoublePair newLoc){
         this.ball.setPosition(newLoc);
