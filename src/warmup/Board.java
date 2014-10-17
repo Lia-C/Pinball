@@ -24,36 +24,16 @@ public class Board {
     
     public void run(){
         
-        long lastTimePrintedMillis = System.currentTimeMillis();
-        long lastTimeUpdatedMillis = System.currentTimeMillis();
-        long deltaT = 0;
+        
+        long deltaT = (long) (1000./20.);
         
         while(true){
             
-            //print the board if it's time to
-            if (timeToPrint(lastTimePrintedMillis)){
-                printBoard();
-                lastTimePrintedMillis = System.currentTimeMillis();
-            }
             
-            
-            deltaT = System.currentTimeMillis() - lastTimeUpdatedMillis;
-            
-
-            //TODO: calculate the ball's newX, newY, and newVelocity
+            printBoard();    
             translate(deltaT); //this isn't right for the time-being, but we can come back to this -Lia 
-            //TODO: check if the newx and newy are out-of-bounds
-            //if out-of-bounds:
-            //  newVelocity = Vect reflectWall(LineSegment line, Vect velocity)
-            //else:
-            //  ball.setPosition(newX, newY)
-            //  ball.setVelocity(newVelocity)
-            //^All of this is to be handled in translate
-            translate(deltaT);
-            //after updating ball's location, re-update the lastTimeUpdated
-            lastTimeUpdatedMillis = System.currentTimeMillis();
             try {
-                Thread.sleep((long) (1000./60.));
+                Thread.sleep((long) (1000./20.));
             } catch (InterruptedException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -80,8 +60,8 @@ public class Board {
 
     
     public void translate(long deltaT) {
-        double deltaX = this.ball.getVelocity().x() * deltaT;
-        double deltaY = this.ball.getVelocity().y() * deltaT;
+        double deltaX = this.ball.getVelocity().x() * deltaT/1000;
+        double deltaY = this.ball.getVelocity().y() * deltaT/1000;
         double newX = this.ball.getPosition().d1 + deltaX;
         double newY = this.ball.getPosition().d2 + deltaY;
         double xOver = Math.abs(newX - width);
@@ -163,7 +143,6 @@ public class Board {
             this.translate(deltaT - timeUntilCollision);
         }
     }
-
     
     private boolean timeToPrint(long lastTimePrintedMillis){
         double timeDeltaSecs = (System.currentTimeMillis() - lastTimePrintedMillis)/1000.0;
