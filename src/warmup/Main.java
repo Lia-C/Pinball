@@ -47,11 +47,9 @@ public class Main {
      */
     
     public static void main(String[] args) {
-<<<<<<< HEAD
-        Ball ball = new Ball(new Vect(2,2), new Geometry.DoublePair(5, 5));
-=======
-        Ball ball = new Ball(new Vect(1.2,5), new Geometry.DoublePair(5, 5));
->>>>>>> 35de93a06a96483a250378f1e4d6270db2c790aa
+
+        Ball ball = new Ball(new Vect(0,2), new Geometry.DoublePair(5, 5));
+
         Board board= new Board(ball, 20, 20);
         board.printBoard();
         board.run();

@@ -66,6 +66,11 @@ public class Board {
         double newY = this.ball.getPosition().d2 + deltaY;
         double xOver = Math.abs(newX - width);
         double yOver = Math.abs(newY - height);
+        System.out.println("I AM HERE");
+        System.out.println(deltaX);
+        System.out.println(deltaY);
+        System.out.println(newX);
+        System.out.println(newY);
         Geometry.DoublePair newLoc = new Geometry.DoublePair(newX, newY); 
         LineSegment collisionWall = new LineSegment(0,0,0,0);
         
@@ -111,26 +116,28 @@ public class Board {
     
     
     private void moveWithoutCollision(Geometry.DoublePair newLoc){
+        System.out.println("I AM IN HERE"+ newLoc.d1+" "+newLoc.d2);
         this.ball.setPosition(newLoc);
-        int x=(int)this.ball.getPosition().d1;
-        int y=(int)this.ball.getPosition().d2;
-        if (x<=0){
+        double x=this.ball.getPosition().d1;
+        double y=this.ball.getPosition().d2;
+        if ((int)x<=0){
             x=1;
             
             this.ball.setVelocity(new Vect(-this.ball.getVelocity().x(),this.ball.getVelocity().y()));
         }
-        if (x>=this.board[0].length-1){
+        if ((int)x>=this.board[0].length-1){
             x=this.board[0].length-2;
             this.ball.setVelocity(new Vect(-this.ball.getVelocity().x(),this.ball.getVelocity().y()));
         }
-        if (y<=0){
+        if ((int)y<=0){
             y=1;
             this.ball.setVelocity(new Vect(this.ball.getVelocity().x(),-this.ball.getVelocity().y()));
         }
-        if (y>=this.board.length-1){
+        if ((int)y>=this.board.length-1){
             y=this.board.length-2;
             this.ball.setVelocity(new Vect(this.ball.getVelocity().x(),-this.ball.getVelocity().y()));
         }
+        System.out.println("I AM IN HERE"+ x+" "+y);
         this.ball.setPosition( new Geometry.DoublePair(x, y));
     }
   
