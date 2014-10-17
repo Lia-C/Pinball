@@ -48,7 +48,7 @@ public class Main {
     public static void main(String[] args) {
         //initialize() = create board
         //print board 10-20 times
-        Board.printBoard();
+       
     }
     
 }
