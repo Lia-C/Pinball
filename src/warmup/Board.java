@@ -39,8 +39,17 @@ public class Board {
             
             deltaT = System.currentTimeMillis() - lastTimeUpdatedMillis;
             
-            translate(deltaT); 
-            
+<<<<<<< HEAD
+            //TODO: calculate the ball's newX, newY, and newVelocity
+            translate(deltaT); //this isn't right for the time-being, but we can come back to this -Lia 
+            //TODO: check if the newx and newy are out-of-bounds
+            //if out-of-bounds:
+            //  newVelocity = Vect reflectWall(LineSegment line, Vect velocity)
+            //else:
+            //  ball.setPosition(newX, newY)
+            //  ball.setVelocity(newVelocity)
+            //^All of this is to be handled in translate
+            translate(deltaT);
             //after updating ball's location, re-update the lastTimeUpdated
             lastTimeUpdatedMillis = System.currentTimeMillis();
             
