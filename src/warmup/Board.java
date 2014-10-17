@@ -104,7 +104,9 @@ public class Board {
         int xPos=(int) loc.d1;
         int yPos=(int) loc.d2;
         board[yPos][xPos]="*";
-        board[this.priorY][this.priorX]=" ";
+        if (!(this.priorY==0||this.priorX==0)){
+            board[this.priorY][this.priorX]=" "; 
+        }       
         this.priorX=xPos;
         this.priorY=yPos;
     }
