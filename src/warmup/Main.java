@@ -18,7 +18,7 @@ package warmup;
      *      currentTime = System.currentTimeinMillis()
      *      
      *      recalculate ball's new x and y
-     *          translate(startx, starty, velocity, timedelta) --> 
+     *          translate(ball, timedelta) --> 
          *      if ball's new x-coord/y-coord out of board:
          *       Vect reflectWall(LineSegment line, Vect velocity)
          *      else:
