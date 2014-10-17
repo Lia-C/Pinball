@@ -51,6 +51,7 @@ public class Main {
         Board board= new Board(ball, 20, 20);
         board.printBoard();
         board.run();
+        
        
     }
     

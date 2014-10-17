@@ -33,7 +33,7 @@ public class Board {
         long deltaT = 0;
         
         while(true){
-            
+            System.out.println("HERE:"+this.ball.getPosition());
             //print the board if it's time to
             if (timeToPrint(lastTimePrintedMillis)){
                 printBoard();
