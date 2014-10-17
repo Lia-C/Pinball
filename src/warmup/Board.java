@@ -7,17 +7,8 @@ public class Board {
     private int priorX;
     private int priorY;
     private final LineSegment top, bottom, left, right;
-    private final String[][] board;
+    private String[][] board;
     
-    public static void main(String[] args){
-        //the velocity of this ball is <2,2>
-        //ball starts in middle of board
-        Ball ball = new Ball(new Vect(2,2), new Geometry.DoublePair(10, 10));
-        Board b = new Board(ball, 20,20);
-        b.printBoard();
-        b.updateBallOnMap();
-        b.printBoard();
-    }
     
     public Board(Ball ball, int width, int height){
         this.ball = ball;
@@ -27,7 +18,7 @@ public class Board {
         this.right = new LineSegment(width,0,width,height);
         this.priorX = 0;
         this.priorY = 0;
-        this.board = makeBoard();
+        this.board = makeBoard(width,height);
     }
 
     
@@ -60,13 +51,45 @@ public class Board {
             //after updating ball's location, re-update the lastTimeUpdated
             lastTimeUpdatedMillis = System.currentTimeMillis();
             
-            
         
         }
     }
     
+    private String[][] makeBoard(int width,int height){
+        String[][] board =new String [width][height];
+        for (int i=0;i<height;i++){
+            for (int j=0;j<width;j++){
+                if (i==0||i==(height-1)||j==0||j==(width-1)){
+                    board[i][j]=".";
+                }
+                else{
+                    board[i][j]=" ";
+                }
+            }
+        }
+        return board;
+    }
     
-    private void printBoard(){
+ 
+    
+    public void translate(long deltaT) {
+        double deltaX = this.ball.getVelocity().x() * deltaT;
+        double deltaY = this.ball.getVelocity().y() * deltaT;
+        double newX;
+        Geometry.DoublePair newLoc; 
+    }
+
+    
+    private void moveWithoutCollision(Geometry.DoublePair newLoc){
+        this.ball.setPosition(newLoc);
+    }
+    
+    private boolean timeToPrint(long lastTimePrintedMillis){
+        double timeDeltaSecs = (System.currentTimeMillis() - lastTimePrintedMillis)/1000.0;
+        return timeDeltaSecs > 1/20.; //prints every 20 times per second
+    }
+    
+    public void printBoard(){
         updateBallOnMap();
         for (int i=0; i<board.length;i++){
             for (int j=0; j<board[i].length;j++){
@@ -75,14 +98,6 @@ public class Board {
             System.out.print("\n");
         }
     }
-    
-    public void translate(long deltaT) {
-        double deltaX = this.ball.getVelocity().x() * deltaT;
-        double deltaY = this.ball.getVelocity().y() * deltaT;
-        double newX;
-        Geometry.DoublePair newLoc; 
-    }
-    
     
     private void updateBallOnMap(){
         Geometry.DoublePair loc =this.ball.getPosition();
@@ -94,14 +109,6 @@ public class Board {
         this.priorY=yPos;
     }
     
-    private void moveWithoutCollision(Geometry.DoublePair newLoc){
-        this.ball.setPosition(newLoc);
-    }
-    
-    private boolean timeToPrint(long lastTimePrintedMillis){
-        double timeDeltaSecs = (System.currentTimeMillis() - lastTimePrintedMillis)/1000.0;
-        return timeDeltaSecs > 1/20.; //prints every 20 times per second
-    }
     
 
 }

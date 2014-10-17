@@ -1,4 +1,5 @@
 package warmup;
+import physics.*;
 
 /**
  * TODO: put documentation for your class here
@@ -46,8 +47,10 @@ public class Main {
      */
     
     public static void main(String[] args) {
-        //initialize() = create board
-        //print board 10-20 times
+        Ball ball = new Ball(new Vect(0,10), new Geometry.DoublePair(5, 5));
+        Board board= new Board(ball, 20, 20);
+        board.printBoard();
+        board.run();
        
     }
     
