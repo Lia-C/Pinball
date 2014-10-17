@@ -39,7 +39,7 @@ public class Board {
             
             deltaT = System.currentTimeMillis() - lastTimeUpdatedMillis;
             
-<<<<<<< HEAD
+
             //TODO: calculate the ball's newX, newY, and newVelocity
             translate(deltaT); //this isn't right for the time-being, but we can come back to this -Lia 
             //TODO: check if the newx and newy are out-of-bounds
