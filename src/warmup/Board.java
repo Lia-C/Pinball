@@ -19,6 +19,37 @@ public class Board {
 
     
     public void run(){
+        
+        long lastTimePrintedMillis = System.currentTimeMillis();
+        long lastTimeUpdatedMillis = System.currentTimeMillis();
+        long deltaT = 0;
+        
+        while(true){
+            
+            //print the board if it's time to
+            if (timeToPrint(lastTimePrintedMillis)){
+                printBoard();
+                lastTimePrintedMillis = System.currentTimeMillis();
+            }
+            
+            
+            deltaT = System.currentTimeMillis() - lastTimeUpdatedMillis;
+            
+            //TODO: calculate the ball's newX, newY, and newVelocity
+            translate(deltaT); //this isn't right for the time-being, but we can come back to this -Lia 
+            //TODO: check if the newx and newy are out-of-bounds
+            //if out-of-bounds:
+            //  newVelocity = Vect reflectWall(LineSegment line, Vect velocity)
+            //else:
+            //  ball.setPosition(newX, newY)
+            //  ball.setVelocity(newVelocity)
+            
+            //after updating ball's location, re-update the lastTimeUpdated
+            lastTimeUpdatedMillis = System.currentTimeMillis();
+            
+            
+        
+        }
     }
     
     private String[][] board;
@@ -44,7 +75,7 @@ public class Board {
         }
     }
     
-    public void translate(double deltaT) {
+    public void translate(long deltaT) {
         double deltaX = this.ball.getVelocity().x() * deltaT;
         double deltaY = this.ball.getVelocity().y() * deltaT;
         double newX;
