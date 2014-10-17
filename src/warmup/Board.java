@@ -155,13 +155,13 @@ public class Board {
     }
   
     private void moveWithCollision(Geometry.DoublePair newLoc, LineSegment wall, long deltaT){
-        long timeUntilCollision = (long)Geometry.timeUntilWallCollision(wall, this.ball.getCircle(), this.ball.getVelocity());
-        if (timeUntilCollision!=Double.POSITIVE_INFINITY){
+        double n = Geometry.timeUntilWallCollision(wall, this.ball.getCircle(), this.ball.getVelocity());
+        if (n != Double.POSITIVE_INFINITY){
+            long timeUntilCollision = (long) n;
             this.translate(timeUntilCollision);
             this.ball.setVelocity(Geometry.reflectWall(wall, this.ball.getVelocity()));
             this.translate(deltaT - timeUntilCollision);
         }
-        
     }
 
     
