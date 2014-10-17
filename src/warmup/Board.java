@@ -35,6 +35,13 @@ public class Board {
         double newX;
         Geometry.DoublePair newLoc; 
     }
+    
+    
+    private void moveWithoutCollision(Geometry.DoublePair newLoc){
+        this.ball.setPosition(newLoc);
+    }
+  
+
 
     
     private boolean timeToPrint(long lastTimePrintedMillis){
