@@ -5,10 +5,12 @@ import physics.*;
 public class Ball {
     private Vect velocity;
     private Geometry.DoublePair position;
+    private Circle circle;
     
-    public Ball(Vect velocity, Geometry.DoublePair position){
+    public Ball(Vect velocity, Geometry.DoublePair position, Circle circle){
         this.velocity = velocity;
         this.position = position;
+        this.circle = circle;
     }
     
     public Vect getVelocity(){
@@ -17,6 +19,10 @@ public class Ball {
     
     public Geometry.DoublePair getPosition(){
         return this.position;
+    }
+    
+    public Circle getCircle() {
+        return this.circle;
     }
     
     public void setVelocity(Vect newVelocity){
