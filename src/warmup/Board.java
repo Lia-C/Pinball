@@ -4,6 +4,8 @@ import physics.*;
 public class Board {
     
     private final Ball ball;
+    private int priorX;
+    private int priorY;
     private final LineSegment top, bottom, left, right;
     
     public Board(Ball ball, int width, int height){
@@ -36,6 +38,16 @@ public class Board {
         Geometry.DoublePair newLoc; 
     }
     
+    
+    private void updateBallOnMap(){
+        Geometry.DoublePair loc =this.ball.getPosition();
+        int xPos=(int) loc.d1;
+        int yPos=(int) loc.d2;
+        board[yPos][xPos]="*";
+        board[this.priorY][this.priorX]=" ";
+        this.priorX=xPos;
+        this.priorY=yPos;
+    }
     
     private void moveWithoutCollision(Geometry.DoublePair newLoc){
         this.ball.setPosition(newLoc);
