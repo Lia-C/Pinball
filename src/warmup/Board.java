@@ -147,10 +147,17 @@ public class Board {
     }
     
     public void printBoard(){
-        updateBallOnMap();
+        int x=(int)this.ball.getPosition().d1;
+        int y=(int)this.ball.getPosition().d2;
         for (int i=0; i<board.length;i++){
             for (int j=0; j<board[i].length;j++){
-                System.out.print(board[i][j]);
+                if(i==y&&x==j){
+                    System.out.print("*");
+                }
+                else{
+                    System.out.print(board[i][j]);
+                }
+                
             }
             System.out.print("\n");
         }
