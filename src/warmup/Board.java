@@ -39,6 +39,7 @@ public class Board {
             
             deltaT = System.currentTimeMillis() - lastTimeUpdatedMillis;
             
+<<<<<<< HEAD
             //TODO: calculate the ball's newX, newY, and newVelocity
             translate(deltaT); //this isn't right for the time-being, but we can come back to this -Lia 
             //TODO: check if the newx and newy are out-of-bounds
@@ -48,6 +49,10 @@ public class Board {
             //  ball.setPosition(newX, newY)
             //  ball.setVelocity(newVelocity)
             //^All of this is to be handled in translate
+=======
+            translate(deltaT); 
+            
+>>>>>>> 20416353db42332ff4a6f2b441e7d5a50d2e8c7b
             //after updating ball's location, re-update the lastTimeUpdated
             lastTimeUpdatedMillis = System.currentTimeMillis();
             
@@ -70,19 +75,29 @@ public class Board {
         return board;
     }
     
- 
     
     public void translate(long deltaT) {
         double deltaX = this.ball.getVelocity().x() * deltaT;
         double deltaY = this.ball.getVelocity().y() * deltaT;
         double newX;
         Geometry.DoublePair newLoc; 
-    }
 
+        
+        //TODO: check if the newx and newy are out-of-bounds
+        //if out-of-bounds:
+        //  moveWithCollision
+        //  newVelocity = Vect reflectWall(LineSegment line, Vect velocity)
+        //else:
+        //  moveWithoutCollision
+        //  ball.setPosition(newX, newY)
+        //  ball.setVelocity(newVelocity)
+    }
     
     private void moveWithoutCollision(Geometry.DoublePair newLoc){
         this.ball.setPosition(newLoc);
     }
+    
+    
     
     private boolean timeToPrint(long lastTimePrintedMillis){
         double timeDeltaSecs = (System.currentTimeMillis() - lastTimePrintedMillis)/1000.0;
