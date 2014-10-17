@@ -151,11 +151,6 @@ public class Board {
         }
     }
     
-    private boolean timeToPrint(long lastTimePrintedMillis){
-        double timeDeltaSecs = (System.currentTimeMillis() - lastTimePrintedMillis)/1000.0;
-        return timeDeltaSecs > 1/60.; //prints every 20 times per second
-    }
-    
     public void printBoard(){
         int x=(int)this.ball.getPosition().d1;
         int y=(int)this.ball.getPosition().d2;
