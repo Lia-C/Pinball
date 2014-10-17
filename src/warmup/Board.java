@@ -1,5 +1,4 @@
 package warmup;
-
 import physics.*;
 
 public class Board {
@@ -28,6 +27,13 @@ public class Board {
             }
             System.out.print("\n");
         }
+    }
+    
+    public void translate(Ball ball, double deltaT) {
+        double deltaX = ball.getVelocity().x() * deltaT;
+        double deltaY = ball.getVelocity().y() * deltaT;
+        double newX;
+        Geometry.DoublePair newLoc; 
     }
     
     private boolean timeToPrint(long lastTimePrintedMillis){
