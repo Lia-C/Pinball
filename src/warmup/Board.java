@@ -8,6 +8,8 @@ public class Board {
     private int priorY;
     private final LineSegment top, bottom, left, right;
     private String[][] board;
+    private int width;
+    private int height;
     
     
     public Board(Ball ball, int width, int height){
@@ -19,6 +21,8 @@ public class Board {
         this.priorX = 0;
         this.priorY = 0;
         this.board = makeBoard(width,height);
+        this.width = width;
+        this.height = height;
     }
 
     
@@ -76,9 +80,42 @@ public class Board {
     public void translate(long deltaT) {
         double deltaX = this.ball.getVelocity().x() * deltaT;
         double deltaY = this.ball.getVelocity().y() * deltaT;
-        double newX;
-        Geometry.DoublePair newLoc; 
+        double newX = this.ball.getPosition().d1 + deltaX;
+        double newY = this.ball.getPosition().d2 + deltaY;
+        double xOver = Math.abs(newX - width);
+        double yOver = Math.abs(newY - height);
+        Geometry.DoublePair newLoc = new Geometry.DoublePair(newX, newY); 
+        LineSegment collisionWall = new LineSegment(0,0,0,0);
+        
+        if (newX >= width && newY < height && newY > 0){
+            collisionWall = right;
+        } else if (newX <= 0 && newY < height && newY > 0){
+            collisionWall = left;
+        } else if (newY >= height && newX < width && newX > 0){
+            collisionWall = bottom;
+        } else if (newY <= 0 && newX < width && newX > 0){
+            collisionWall = top;
+        } else if (newX >= width && newY >= height){
+            if (xOver > yOver){ collisionWall = right; }
+            else { collisionWall = bottom; }
+        } else if (newX >= width && newY <= 0){
+            if (xOver > yOver){ collisionWall = right; }
+            else { collisionWall = top; }
+        } else if (newX <= 0 && newY >= height){ 
+            if (xOver > yOver){ collisionWall = left; }
+            else { collisionWall = bottom; }
+        } else if (newX <= 0 && newY <= 0){
+            if (xOver > yOver){ collisionWall = left; }
+            else { collisionWall = top; }
+        }
+        
+        if (newX > 0 && newX < width && newY > 0 && newY < width){
+            moveWithoutCollision(newLoc);
+        } else {
+            moveWithCollision(newLoc, collisionWall, deltaT);
+        }
     }
+    
 
         
         //TODO: check if the newx and newy are out-of-bounds
