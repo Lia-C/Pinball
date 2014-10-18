@@ -6,7 +6,7 @@ public class Empty implements Gadget {
     }
     
     @Override
-    public boolean isOccupying() {
+    public boolean isOccupying(int x, int y) {
         return false;
     }
 
