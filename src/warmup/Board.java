@@ -23,23 +23,15 @@ public class Board {
 
     
     public void run(){
-        
-        
         long deltaT = (long) (1000./20.);
-        
         while(true){
-            
-            
             printBoard();    
-            translate(deltaT); //this isn't right for the time-being, but we can come back to this -Lia 
+            translate(deltaT); 
             try {
                 Thread.sleep((long) (1000./20.));
             } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            
-        
         }
     }
     
@@ -102,18 +94,6 @@ public class Board {
             moveWithCollision(newLoc, collisionWall, deltaT);
         }
     }
-    
-
-        
-        //TODO: check if the newx and newy are out-of-bounds
-        //if out-of-bounds:
-        //  moveWithCollision
-        //  newVelocity = Vect reflectWall(LineSegment line, Vect velocity)
-        //else:
-        //  moveWithoutCollision
-        //  ball.setPosition(newX, newY)
-        //  ball.setVelocity(newVelocity)
-    
     
     private void moveWithoutCollision(Geometry.DoublePair newLoc){
         System.out.println("I AM IN HERE"+ newLoc.d1+" "+newLoc.d2);

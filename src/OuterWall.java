@@ -1,8 +1,8 @@
 
-public class outerWall implements Gadget{
+public class OuterWall implements Gadget{
     private final int boardWidth;
     private final int boardHeight;
-    public outerWall(int boardWidth, int boardHeight){
+    public OuterWall(int boardWidth, int boardHeight){
         this.boardWidth=boardWidth;
         this.boardHeight=boardHeight;
     }
