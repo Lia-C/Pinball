@@ -1,16 +1,29 @@
+import physics.*;
 
 public class OuterWall implements Gadget{
     private final int length;
     private final int x;
     private final int y;
     private final boolean isVertical;
-    public final boolean isTransparent;
+    private final boolean isTransparent;
+    private final LineSegment line;
+    
     public OuterWall(int length,int x, int y,boolean isVertical){
         this.length=length;
         this.x=x;
         this.y=y;
         this.isVertical=isVertical;
         this.isTransparent=false;
+        if (isVertical){
+            this.line = new LineSegment(x, y, x, y+length);
+        }
+        else{
+            this.line = new LineSegment(x, y, x+length, y);
+        }
+        
+    }
+    public LineSegment getLineSegment(){
+        return line;
     }
     @Override
     public String toString(){
