@@ -22,8 +22,10 @@ public class absorber implements Gadget{
     }
 
     @Override
-    public boolean isOccupying() {
-        // TODO Auto-generated method stub
+    public boolean isOccupying(int x, int y) {
+        if (x>=this.x&&x<=this.x+this.width&&y>=this.y&&y<=this.y+this.height){
+            return true;
+        }
         return false;
     }
 
