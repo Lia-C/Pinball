@@ -3,7 +3,7 @@ import physics.*;
 /**
  * An immutable class representing a circle bumper.
  */
-public class CircleBumper {
+public class CircleBumper implements Gadget{
     private final int xCor, yCor;
     private final Circle circle;
     

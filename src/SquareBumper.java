@@ -3,7 +3,7 @@ import physics.*;
  * An immutable class representing a square bumper.
  */
 
-public class SquareBumper {
+public class SquareBumper implements Gadget{
     private final LineSegment top, bottom, left, right;
     private final int xCor, yCor;
     

@@ -11,7 +11,7 @@ public class Board {
     private OuterWall left = new OuterWall(//TODO);
     private OuterWall right = new OuterWall(//TODO);
     
-    public Board(){
+    public Board(Gadget[] gadgets){
         
     }
     
