@@ -10,7 +10,7 @@ public class Ball {
     public Ball(Vect velocity, Geometry.DoublePair position){
         this.velocity = velocity;
         this.position = position;
-        this.circle = new Circle(position.d1, position.d2, 1);
+        this.circle = new Circle(position.d1, position.d2, 0.5);
     }
     
     public Vect getVelocity(){
@@ -31,6 +31,6 @@ public class Ball {
     
     public void setPosition(Geometry.DoublePair newPosition){
         this.position = newPosition;
-        this.circle = new Circle(newPosition.d1, newPosition.d2, 1);
+        this.circle = new Circle(newPosition.d1, newPosition.d2, 0.5);
     }
 }
