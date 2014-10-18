@@ -61,7 +61,7 @@ public class Board {
     public void run(){
         long deltaT = (long) (1000./20.);
         while(true){
-            printBoard();    
+            System.out.println(this);   
             translate(deltaT); 
             try {
                 Thread.sleep((long) (1000./20.));
@@ -82,25 +82,25 @@ public class Board {
         LineSegment collisionWall = new LineSegment(0,0,0,0);
         
         if (newX >= WIDTH && newY <= HEIGHT && newY >= 0){
-            collisionWall = right;
+            collisionWall = right.getLineSegment();
         } else if (newX <= 0 && newY <= HEIGHT && newY >= 0){
-            collisionWall = left;
+            collisionWall = left.getLineSegment();
         } else if (newY >= HEIGHT && newX <= WIDTH && newX >= 0){
-            collisionWall = bottom;
+            collisionWall = bottom.getLineSegment();
         } else if (newY <= 0 && newX <= WIDTH && newX >= 0){
-            collisionWall = top;
+            collisionWall = top.getLineSegment();
         } else if (newX >= WIDTH && newY >= HEIGHT){
-            if (xOver > yOver){ collisionWall = right; }
-            else { collisionWall = bottom; }
+            if (xOver > yOver){ collisionWall = right.getLineSegment(); }
+            else { collisionWall = bottom.getLineSegment(); }
         } else if (newX >= WIDTH && newY <= 0){
-            if (xOver > yOver){ collisionWall = right; }
-            else { collisionWall = top; }
+            if (xOver > yOver){ collisionWall = right.getLineSegment(); }
+            else { collisionWall = top.getLineSegment(); }
         } else if (newX <= 0 && newY >= HEIGHT){ 
-            if (xOver > yOver){ collisionWall = left; }
-            else { collisionWall = bottom; }
+            if (xOver > yOver){ collisionWall = left.getLineSegment(); }
+            else { collisionWall = bottom.getLineSegment(); }
         } else if (newX <= 0 && newY <= 0){
-            if (xOver > yOver){ collisionWall = left; }
-            else { collisionWall = top; }
+            if (xOver > yOver){ collisionWall = left.getLineSegment(); }
+            else { collisionWall = top.getLineSegment(); }
         }
         
         if (newX > 0 && newX < WIDTH && newY > 0 && newY < WIDTH){
@@ -110,32 +110,43 @@ public class Board {
         }
     }
     
+    /**
+     * Moves the ball on the board if there is no collision with a wall.
+     * @param newLoc
+     *      //TODO
+     */
     private void moveWithoutCollision(Geometry.DoublePair newLoc){
-        System.out.println("I AM IN HERE"+ newLoc.d1+" "+newLoc.d2);
         this.ball.setPosition(newLoc);
         double x=this.ball.getPosition().d1;
         double y=this.ball.getPosition().d2;
         if ((int)x<=0){
             x=1;
-            
             this.ball.setVelocity(new Vect(-this.ball.getVelocity().x(),this.ball.getVelocity().y()));
         }
-        if ((int)x>=this.board[0].length-1){
-            x=this.board[0].length-2;
+        if ((int)x>=WIDTH-1){
+            x=WIDTH-2;
             this.ball.setVelocity(new Vect(-this.ball.getVelocity().x(),this.ball.getVelocity().y()));
         }
         if ((int)y<=0){
             y=1;
             this.ball.setVelocity(new Vect(this.ball.getVelocity().x(),-this.ball.getVelocity().y()));
         }
-        if ((int)y>=this.board.length-1){
-            y=this.board.length-2;
+        if ((int)y>=HEIGHT-1){
+            y=HEIGHT-2;
             this.ball.setVelocity(new Vect(this.ball.getVelocity().x(),-this.ball.getVelocity().y()));
         }
-        System.out.println("I AM IN HERE"+ x+" "+y);
         this.ball.setPosition( new Geometry.DoublePair(x, y));
     }
   
+    /**
+     * Moves the ball on the board if there is a collision with a wall.
+     * @param newLoc
+     *      //TODO
+     * @param wall
+     *      //TODO
+     * @param deltaT
+     *      //TODO
+     */
     private void moveWithCollision(Geometry.DoublePair newLoc, LineSegment wall, long deltaT){
         double n = Geometry.timeUntilWallCollision(wall, this.ball.getCircle(), this.ball.getVelocity());
         if (n != Double.POSITIVE_INFINITY){
