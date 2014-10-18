@@ -20,6 +20,34 @@ public class SquareBumper {
         this.right = new LineSegment(xCor+1, yCor, xCor+1, yCor+1);
     }
     
+    public int getXCor(){
+        return xCor;
+    }
+    
+    public int getYCor(){
+        return yCor;
+    }
+    
+    public LineSegment getTop(){
+        return top;
+    }
+    
+    public LineSegment getBottom(){
+        return bottom;
+    }
+    
+    public LineSegment getLeft(){
+        return left;
+    }
+    
+    public LineSegment getRight(){
+        return right;
+    }
+    
+    public double getCoeffOfReflection(){
+        return COEFFICIENT_OF_REFLECTION;
+    }
+    
     @Override
     public String toString(){
         return "#";

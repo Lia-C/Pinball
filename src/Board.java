@@ -1,12 +1,24 @@
 import javax.management.RuntimeErrorException;
 
+import physics.LineSegment;
+import warmup.Ball;
+
 
 public class Board {
-
+    private final Ball ball;
+    private OuterWall top = new OuterWall(//TODO);
+    private OuterWall bottom = new OuterWall(//TODO);
+    private OuterWall left = new OuterWall(//TODO);
+    private OuterWall right = new OuterWall(//TODO);
     
     public Board(){
         
     }
+    
+    private addGadget(){
+        
+    }
+    
     
     /**
      * Make a Benchmark Board
@@ -22,7 +34,8 @@ public class Board {
         switch (boardName) {
         case "default":
             //TODO
-                break;
+                Board default = new Board();
+                return default;
         case "absorber":
             //TODO
             break;
@@ -33,5 +46,10 @@ public class Board {
             throw new IllegalArgumentException();
             break;
         }
+    }
+    
+    @Override
+    public String toString(){
+        String[][] 
     }
 }
