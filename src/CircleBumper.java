@@ -14,7 +14,23 @@ public class CircleBumper {
     public CircleBumper(int xCor, int yCor){
         this.xCor = xCor;
         this.yCor = yCor;
-        this.circle = new Circle(xCor+0.5, yCor+0.5, RADIUS)
+        this.circle = new Circle(xCor+0.5, yCor+0.5, RADIUS);
+    }
+    
+    public int getXCor(){
+        return xCor;
+    }
+    
+    public int getYCor(){
+        return yCor;
+    }
+    
+    public Circle getCircle(){
+        return circle;
+    }
+    
+    public double getCoeffOfReflection(){
+        return COEFFICIENT_OF_REFLECTION;
     }
     
     @Override

@@ -8,10 +8,6 @@ public class Board {
         
     }
     
-    public Board(String boardName){
-        
-    }
-    
     /**
      * Make a Benchmark Board
      * The 3 available benchmark boards are described at:
@@ -22,20 +18,20 @@ public class Board {
      * @return
      *          a new Board representing the benchmark board
      */     
-    private Board makeBenchmarkBoard(String boardName){
+    public Board Board(String boardName){
         switch (boardName) {
         case "default":
+            //TODO
                 break;
         case "absorber":
+            //TODO
             break;
         case "flippers":
+            //TODO
             break;
         default:
-            throw new RuntimeErrorException();
+            throw new IllegalArgumentException();
             break;
-        }
-        if boardName.equals("default"){
-            
         }
     }
 }
