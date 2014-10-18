@@ -1,5 +1,5 @@
 
-public class absorber implements Gadget{
+public class Absorber implements Gadget{
 
     private final int height;
     private final int width;
@@ -10,7 +10,7 @@ public class absorber implements Gadget{
      * @param height must be <=20
      * @param width must be <=20
      */
-    public absorber(int height, int width,int x,int y){
+    public Absorber(int height, int width,int x,int y){
         this.height=height;
         this.width=width;
         this.x=x;
