@@ -54,7 +54,7 @@ public class Flipper implements Gadget {
     }
     
     public boolean isOccupying(int x, int y) {
-        if (type.equalsIgnoreCase("left")) {
+        /**if (type.equalsIgnoreCase("left")) {
             if (orientation == 0) {
                 if (x == xCor && y >= yCor && y <= yCor+1) { return true; } 
                 else { return false; }
@@ -75,7 +75,7 @@ public class Flipper implements Gadget {
                 throw new RuntimeException("Flipper type must be \"left\" or \"right\"");
             }
         }
-        return true; //this should not be reached
+        return true; //this should not be reached**/
     }
     
     public boolean isEmpty() {
