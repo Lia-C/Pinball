@@ -5,16 +5,18 @@ public class Absorber implements Gadget{
     private final int width;
     private final int x;
     private final int y;
+    private int balls;
     /**
      * 
      * @param height must be <=20
      * @param width must be <=20
      */
-    public Absorber(int height, int width,int x,int y){
+    public Absorber(int height, int width,int x,int y,int balls){
         this.height=height;
         this.width=width;
         this.x=x;
         this.y=y;
+        this.balls=balls;
     }
     
     public String toString(){
@@ -34,5 +36,7 @@ public class Absorber implements Gadget{
      
         return false;
     }
+    
+    public void Action
     
 }

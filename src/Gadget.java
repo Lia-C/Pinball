@@ -4,4 +4,5 @@ public interface Gadget {
     public boolean isEmpty();
     @Override
     public String toString();
+    
 }
