@@ -7,10 +7,13 @@ public class SquareBumper implements Gadget{
     private final LineSegment top, bottom, left, right;
     private final int xCor, yCor;
     
-    private final int SIDE_LENGTH = 1;
     private final double COEFFICIENT_OF_REFLECTION = 1.0;
     
-    
+    /**
+     * 
+     * @param xCor
+     * @param yCor
+     */
     public SquareBumper(int xCor, int yCor){
         this.xCor = xCor;
         this.yCor = yCor;

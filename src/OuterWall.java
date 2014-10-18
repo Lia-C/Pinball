@@ -8,6 +8,13 @@ public class OuterWall implements Gadget{
     private final boolean isTransparent;
     private final LineSegment line;
     
+    /**
+     * 
+     * @param length
+     * @param x
+     * @param y
+     * @param isVertical
+     */
     public OuterWall(int length,int x, int y,boolean isVertical){
         this.length=length;
         this.x=x;
@@ -22,13 +29,20 @@ public class OuterWall implements Gadget{
         }
         
     }
+    
+    /**
+     * 
+     * @return
+     */
     public LineSegment getLineSegment(){
         return line;
     }
+    
     @Override
     public String toString(){
         return "."; 
     }
+    
     @Override
     public boolean isOccupying(int x, int y) {
         if (this.isTransparent){

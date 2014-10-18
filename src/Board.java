@@ -5,14 +5,20 @@ import physics.LineSegment;
 import physics.Vect;
 import warmup.Ball;
 
-
+/**
+ * An immutable class representing the board in the game.
+ * The board is the uppermost-level class, in that the game is run by calling board.run().
+ *
+ */
 public class Board {
+    
     private final Ball ball;
     private OuterWall top = new OuterWall(//TODO);
     private OuterWall bottom = new OuterWall(//TODO);
     private OuterWall left = new OuterWall(//TODO);
     private OuterWall right = new OuterWall(//TODO);
     private final Gadget[] gadgets;
+    
     private final int WIDTH = 20;
     private final int HEIGHT = 20;
     
@@ -23,14 +29,12 @@ public class Board {
      * @param boardName
      *          the name of the benchmark board you want
      *          must be one of "default", "absorber", "flippers"
-     * @return
-     *          a new Board representing the benchmark board
      */     
-    public Board Board(String boardName){
+    public Board(String boardName){
         switch (boardName) {
         case "default":
             //TODO
-                ball=
+                ball= 
                 Gadgets[] = 
                 Board default = new Board(ball, gadgets);
         case "absorber":
@@ -58,6 +62,9 @@ public class Board {
         this.gadgets = gadgets;
     }    
     
+    /**
+     * Start playing the game.
+     */
     public void run(){
         long deltaT = (long) (1000./20.);
         while(true){
@@ -71,6 +78,19 @@ public class Board {
         }
     }
     
+    
+    
+    /**
+     * Update the ball's position and velocity, according to how it moved in the time period specified
+     * 
+     * @param deltaT
+     *      the time in milliseconds to update the ball's movement over
+     */
+    
+    //////////////////////////////////////////////////////////////
+    //CURRENTLY THIS METHOD DOESN'T TAKE GADGETS INTO ACCOUNT///////
+    //IT ONLY ACCOUNTS FOR WALLS////////////////////////////////////
+    /////////////////////////////////////////////////////////////////
     public void translate(long deltaT) {
         double deltaX = this.ball.getVelocity().x() * deltaT/1000;
         double deltaY = this.ball.getVelocity().y() * deltaT/1000;
@@ -104,18 +124,19 @@ public class Board {
         }
         
         if (newX > 0 && newX < WIDTH && newY > 0 && newY < WIDTH){
-            moveWithoutCollision(newLoc);
+            moveBallWithoutWallCollision(newLoc);
         } else {
-            moveWithCollision(newLoc, collisionWall, deltaT);
+            moveBallWithWallCollision(newLoc, collisionWall, deltaT);
         }
     }
     
     /**
-     * Moves the ball on the board if there is no collision with a wall.
+     * Update the ball's position and velocity, 
+     * Call this method only if the ball did not collide with a wall.
      * @param newLoc
      *      //TODO
      */
-    private void moveWithoutCollision(Geometry.DoublePair newLoc){
+    private void moveBallWithoutWallCollision(Geometry.DoublePair newLoc){
         this.ball.setPosition(newLoc);
         double x=this.ball.getPosition().d1;
         double y=this.ball.getPosition().d2;
@@ -139,7 +160,8 @@ public class Board {
     }
   
     /**
-     * Moves the ball on the board if there is a collision with a wall.
+     * Update the ball's position and velocity,
+     * Call this method only if the ball DID collide with a wall.
      * @param newLoc
      *      //TODO
      * @param wall
@@ -147,7 +169,7 @@ public class Board {
      * @param deltaT
      *      //TODO
      */
-    private void moveWithCollision(Geometry.DoublePair newLoc, LineSegment wall, long deltaT){
+    private void moveBallWithWallCollision(Geometry.DoublePair newLoc, LineSegment wall, long deltaT){
         double n = Geometry.timeUntilWallCollision(wall, this.ball.getCircle(), this.ball.getVelocity());
         if (n != Double.POSITIVE_INFINITY){
             long timeUntilCollision = (long) n;
@@ -162,6 +184,31 @@ public class Board {
      */
     @Override
     public String toString(){
-        String[][] 
+        String[][] board = new String[][]();
+        //for each gadget in gadgets:
+        //
+        //     ask the gadget which tiles he occupies (aka what are the points in his bounding box?)
+        //
+        //          for those tiles, figure out which of those tiles have characters in them 
+        //          (i.e. for a flipper, the bounding box is 4 tiles but only 2 of those have characters in them)
+        //          WE MIGHT WANT TO HAVE THIS BE A PUBLIC METHOD IN GADGET
+        //
+        //              go into those tiles in the String[][] and fill in the gadget's character string
+        
+    }
+    
+    /**
+     * A helper method for toString:
+     * Replaces  
+     * @param boardArray
+     *      string array of the board we want to add the gadget character to
+     * @param xCor
+     *      the 
+     * @param yCor
+     * @param gadget
+     */
+    private void addGadgetCharacter(String[][] boardArray, int xCor, int yCor, Gadget gadget){
+        // for each gadget
+        //if xCor, yCor is occupied
     }
 }
