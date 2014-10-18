@@ -1,16 +1,17 @@
-
+/**
+ * An immutable class representing an empty space on the Board.
+ * Does not occupy any space on the board or interact with the ball.
+ */
 public class Empty implements Gadget {
 
     public Empty (){
         
     }
     
-    @Override
     public boolean isOccupying(int x, int y) {
         return false;
     }
 
-    @Override 
     public String toString(){
         return " ";
     }

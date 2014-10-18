@@ -7,7 +7,6 @@ import physics.*;
  * Default orientation (0 degrees) places corners in the northeast, 
  * northwest, and southwest. Requires that orientation is 0, 90, 180, or 270.
  * Coefficient of reflection: 1.0
- * Triggered when hit by the ball.
  */
 
 public class TriangleBumper implements Gadget {
@@ -25,6 +24,22 @@ public class TriangleBumper implements Gadget {
         this.xCor = xCor;
         this.yCor = yCor;
         this.orientation = orientation;
+    }
+    
+    public int getXCor(){
+        return xCor;
+    }
+    
+    public int getYCor(){
+        return yCor;
+    }
+    
+    public double getCoeffOfReflection(){
+        return COEFFICIENT_OF_REFLECTION;
+    }
+    
+    public int getOrientation() {
+        return orientation;
     }
     
     public boolean isOccupying(int x, int y) {

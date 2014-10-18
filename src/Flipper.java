@@ -11,7 +11,7 @@ import physics.*;
  * Requires that orientation is 0 or 90.
  * Requires that type is "left" or "right".
  * Coefficient of reflection: 0.95
- * Triggered when hit by the ball. Rotates 90 degrees.
+ * Rotates 90 degrees when hit by the ball.
  */
 public class Flipper implements Gadget {
     private final int xCor, yCor, orientation; //orientation must be 0 or 90
@@ -33,8 +33,28 @@ public class Flipper implements Gadget {
         this.orientation = orientation;
     }
     
+    public int getXCor(){
+        return xCor;
+    }
+    
+    public int getYCor(){
+        return yCor;
+    }
+    
+    public double getCoeffOfReflection(){
+        return COEFFICIENT_OF_REFLECTION;
+    }
+    
+    public int getOrientation() {
+        return orientation;
+    }
+    
+    public String getType() {
+        return type;
+    }
+    
     public boolean isOccupying(int x, int y) {
-        if (this.type.equalsIgnoreCase("left")) {
+        if (type.equalsIgnoreCase("left")) {
             if (orientation == 0) {
                 if (x == xCor && y >= yCor && y <= yCor+1) { return true; } 
                 else { return false; }
