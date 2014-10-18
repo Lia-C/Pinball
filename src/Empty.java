@@ -16,7 +16,6 @@ public class Empty implements Gadget {
         return " ";
     }
     
-    @Override
     public boolean isEmpty() {
         return true;
     }
