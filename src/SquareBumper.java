@@ -20,10 +20,26 @@ public class SquareBumper implements Gadget{
         this.right = new LineSegment(xCor+1, yCor, xCor+1, yCor+1);
     }
     
+    public boolean isOccupying(int x, int y){
+        return x == xCor && y == yCor;
+    }
+    
+    public boolean isEmpty(){
+        return false;
+    }
+    
+    /**
+     *
+     * @return xCor of upper-left corner of the square bumper's bounding box
+     */
     public int getXCor(){
         return xCor;
     }
     
+    /**
+     * 
+     * @return yCor of upper-left corner of the square bumper's bounding box
+     */
     public int getYCor(){
         return yCor;
     }

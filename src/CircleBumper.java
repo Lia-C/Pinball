@@ -17,10 +17,26 @@ public class CircleBumper implements Gadget{
         this.circle = new Circle(xCor+0.5, yCor+0.5, RADIUS);
     }
     
+    public boolean isOccupying(int x, int y){
+        return x == xCor && y == yCor;
+    }
+    
+    public boolean isEmpty(){
+        return false;
+    }
+    
+    /**
+    *
+    * @return xCor of upper-left corner of the circle bumper's bounding box
+    */
     public int getXCor(){
         return xCor;
     }
     
+    /**
+    *
+    * @return yCor of upper-left corner of the circle bumper's bounding box
+    */
     public int getYCor(){
         return yCor;
     }
