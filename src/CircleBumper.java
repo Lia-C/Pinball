@@ -26,6 +26,16 @@ public class CircleBumper implements Gadget{
     }
     
     /**
+     * Mutates the ball's velocity when the ball hits the bumper.
+     * 
+     * @param ball
+     *          the ball which hit the bumper
+     */
+    public void Action(Ball ball){
+       //TODO 
+    }
+    
+    /**
     *
     * @return xCor of upper-left corner of the circle bumper's bounding box
     */

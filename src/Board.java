@@ -132,11 +132,12 @@ public class Board {
     
     /**
      * Update the ball's position and velocity, 
-     * Call this method only if the ball did not collide with a wall.
+     * Call this method only if the ball did not collide with any gadget (including walls)
      * @param newLoc
      *      //TODO
      */
-    private void moveBallWithoutWallCollision(Geometry.DoublePair newLoc){
+    private void moveBallWithoutGadgetCollision(Geometry.DoublePair newLoc){
+        //TODO: update this for ALL gadgets; right now this only works with hitting walls
         this.ball.setPosition(newLoc);
         double x=this.ball.getPosition().d1;
         double y=this.ball.getPosition().d2;
@@ -169,7 +170,8 @@ public class Board {
      * @param deltaT
      *      //TODO
      */
-    private void moveBallWithWallCollision(Geometry.DoublePair newLoc, LineSegment wall, long deltaT){
+    private void moveBallWithGadgetCollision(Geometry.DoublePair newLoc, LineSegment wall, long deltaT){
+        //TODO: update this for ALL gadgets; right now this only works with hitting walls
         double n = Geometry.timeUntilWallCollision(wall, this.ball.getCircle(), this.ball.getVelocity());
         if (n != Double.POSITIVE_INFINITY){
             long timeUntilCollision = (long) n;
@@ -185,16 +187,13 @@ public class Board {
     @Override
     public String toString(){
         String[][] board = new String[][]();
-        //for each gadget in gadgets:
-        //
-        //     ask the gadget which tiles he occupies (aka what are the points in his bounding box?)
-        //
-        //          for those tiles, figure out which of those tiles have characters in them 
-        //          (i.e. for a flipper, the bounding box is 4 tiles but only 2 of those have characters in them)
-        //          WE MIGHT WANT TO HAVE THIS BE A PUBLIC METHOD IN GADGET
-        //
-        //              go into those tiles in the String[][] and fill in the gadget's character string
+        //fill with empty strings
+        //for each tile x,y
+        //      for each gadget in Gadgets[]
+        //          if gadget.isOccupying(x,y)
+        //              board[x][y] = gadget.toString()
         
+        // add ball
     }
     
     /**
