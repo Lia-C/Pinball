@@ -10,9 +10,11 @@ public class SquareBumper implements Gadget{
     private final double COEFFICIENT_OF_REFLECTION = 1.0;
     
     /**
-     * 
+     * Make new square bumper
      * @param xCor
+     *          x-coordinate of the desired upper-left of the bumper's bounding box
      * @param yCor
+     *          y-coordinate of the desired upper-left of the bumper's bounding box
      */
     public SquareBumper(int xCor, int yCor){
         this.xCor = xCor;
@@ -41,41 +43,54 @@ public class SquareBumper implements Gadget{
        //TODO 
     }
     
-    /**
-     *
-     * @return xCor of upper-left corner of the square bumper's bounding box
-     */
-    public int getXCor(){
-        return xCor;
-    }
+//    /**
+//     * Get the x-coordinate of the upper-left corner of the square bumper's bounding box
+//     * @return xCor of upper-left corner of the square bumper's bounding box
+//     */
+//    public int getXCor(){
+//        return xCor;
+//    }
+//    
+//    /**
+//     * Get the y-coordinate of the upper-left corner of the square bumper's bounding box
+//     * @return yCor of upper-left corner of the square bumper's bounding box
+//     */
+//    public int getYCor(){
+//        return yCor;
+//    }
+//    
+//    /**
+//     * Get the LineSegment representing the top of the bumper
+//     * @return the LineSegment representing the top of the bumper
+//     */
+//    public LineSegment getTop(){
+//        return top;
+//    }
+//    
+//    /**
+//     * Get the LineSegment representing the bottom of the bumper
+//     * @return the LineSegment representing the bottom of the bumper
+//     */
+//    public LineSegment getBottom(){
+//        return bottom;
+//    }
+//    
+//    /**
+//     * Get the LineSegment representing the left side of the bumper
+//     * @return the LineSegment representing the left side of the bumper
+//     */
+//    public LineSegment getLeft(){
+//        return left;
+//    }
+//    
+//    /**
+//     * Get the LineSegment representing the right side of the bumper
+//     * @return the LineSegment representing the right side of the bumper
+//     */
+//    public LineSegment getRight(){
+//        return right;
+//    }
     
-    /**
-     * 
-     * @return yCor of upper-left corner of the square bumper's bounding box
-     */
-    public int getYCor(){
-        return yCor;
-    }
-    
-    public LineSegment getTop(){
-        return top;
-    }
-    
-    public LineSegment getBottom(){
-        return bottom;
-    }
-    
-    public LineSegment getLeft(){
-        return left;
-    }
-    
-    public LineSegment getRight(){
-        return right;
-    }
-    
-    public double getCoeffOfReflection(){
-        return COEFFICIENT_OF_REFLECTION;
-    }
     
     @Override
     public String toString(){
