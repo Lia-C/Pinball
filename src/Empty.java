@@ -24,4 +24,9 @@ public class Empty implements Gadget {
         
     }
 
+    @Override
+    public void Action(Ball ball) {
+                
+    }
+
 }
