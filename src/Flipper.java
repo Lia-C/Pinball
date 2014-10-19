@@ -19,11 +19,20 @@ public class Flipper implements Gadget {
     
     private final double COEFFICIENT_OF_REFLECTION = 0.95;
     
+    //Rep invariant:
+    //  xCor, yCor are in the range [1, 19] inclusive
+    //  (19 because a flipper takes up two cells)
+    
+    //Abstraction function:
+    //  represents a flipper that can rotate 90 degrees about its own pivot point
+    //  and redirects the ball when they come into contact
+    
     public Flipper(int xCor, int yCor, String type) {
         this.xCor = xCor;
         this.yCor = yCor;
         this.type = type;
         this.orientation = 0;
+        checkRep();
     }
     
     public Flipper(int xCor, int yCor, String type, int orientation) {
@@ -35,6 +44,12 @@ public class Flipper implements Gadget {
         if (orientation == 0 || orientation == 90) {
             this.orientation = orientation;
         } else { throw new IllegalArgumentException("orientation must be 0 or 90"); }
+        checkRep();
+    }
+    
+    private void checkRep() {
+        assert(xCor >= 1 && xCor <= 19);
+        assert(yCor >= 1 && yCor <= 19);
     }
     
     //xCor, yCor, COEFFICIENT_OF_REFLECTION, orientation, and type will only be 

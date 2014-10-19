@@ -5,7 +5,9 @@ import physics.*;
  * 
  * Bounding box of size 1Lx1L
  * Default orientation (0 degrees) places corners in the northeast, 
- * northwest, and southwest. Requires that orientation is 0, 90, 180, or 270.
+ * northwest, and southwest. 
+ * Requires that xCor, yCor
+ * Requires that orientation is 0, 90, 180, or 270.
  * Coefficient of reflection: 1.0
  */
 
@@ -14,10 +16,18 @@ public class TriangleBumper implements Gadget {
     
     private final double COEFFICIENT_OF_REFLECTION = 1.0;
     
+    //Rep invariant:
+    //  xCor, yCor are in the range [1, 20] inclusive
+    
+    //Abstraction function:
+    //  represents a triangle-shaped bumper that redirects
+    //  the ball if they come into contact
+    
     public TriangleBumper(int xCor, int yCor) {
         this.xCor = xCor;
         this.yCor = yCor;
         this.orientation = 0;
+        checkRep();
     }
     
     public TriangleBumper(int xCor, int yCor, int orientation) {
@@ -26,6 +36,12 @@ public class TriangleBumper implements Gadget {
         if (orientation == 0 || orientation == 90 || orientation == 180 || orientation == 270) {
             this.orientation = orientation;
         } else { throw new IllegalArgumentException("orientation must be 0, 90, 180, or 270"); }
+        checkRep();
+    }
+    
+    private void checkRep() {
+        assert(xCor >= 1 && xCor <= 20);
+        assert(yCor >= 1 && yCor <= 20);
     }
     
     //xCor, yCor, COEFFICIENT_OF_REFLECTION, and orientation will only be used
@@ -65,7 +81,7 @@ public class TriangleBumper implements Gadget {
      *          the ball which hit the bumper
      */
     public void Action(Ball ball) {
-        
+        checkRep();
     }
     
     public boolean isEmpty() {
