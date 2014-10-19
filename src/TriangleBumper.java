@@ -52,10 +52,11 @@ public class TriangleBumper implements Gadget {
 //        return orientation;
 //    }
 //    
-//    public boolean isOccupying(int x, int y) {
-//        if (x >= xCor && x <= xCor+1 && y >= yCor && y <= yCor+1) { return true; } 
-//        else { return false; }
-//    }
+    
+    public boolean isOccupying(int x, int y) {
+        if (x >= xCor && x <= xCor+1 && y >= yCor && y <= yCor+1) { return true; } 
+        else { return false; }
+    }
     
     /**
      * Mutates the ball's velocity when the ball hits the bumper.
