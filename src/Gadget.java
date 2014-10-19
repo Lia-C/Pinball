@@ -22,7 +22,17 @@ public interface Gadget {
      */
     public boolean isEmpty();
     
+    /**
+     * @return A string rep of this Gadget for a single cell in the Board.
+     */
     @Override
     public String toString();
     
+    /**
+     * Modifies this gadget if need be, and mutates the Ball (typically the velocity)
+     * 
+     * @param ball An instance of Ball that is moving around the Board.
+     * 
+     */
+    public void Action(Ball ball);
 }

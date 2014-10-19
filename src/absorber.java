@@ -19,6 +19,7 @@ public class Absorber implements Gadget{
         this.balls=balls;
     }
     
+    
     public String toString(){
         return "=";
     }
