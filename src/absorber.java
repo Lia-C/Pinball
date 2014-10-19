@@ -6,7 +6,12 @@ public class Absorber implements Gadget{
     private final int x;
     private final int y;
     
-    //AF Absorber = int:height+int:width+int:x+int:y
+    /*
+     * Rep Invariant:
+     *     Defined in the Absorber constructor preconditions
+     * Abstraction Function:
+     *     Represents a Gadget that stops balls and shoots them out.
+     */
     /**
      * Absorbers move any ball that contact them to their bottom right corner, and then shoot them out soon afterwards.
      * 

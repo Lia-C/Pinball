@@ -8,7 +8,12 @@ public class OuterWall implements Gadget{
     private final boolean isTransparent;
     private final LineSegment line;
     
-    //AF OuterWall=int:length+int:x+int:y+boolean:isVertical+LineSegment:line
+    /*
+     * Rep Invariant:
+     *     Defined in the OuterWall constructor preconditions
+     * Abstraction Function:
+     *     Represents a Gadget that reflects ball if this is not transparent.
+     */
     /**
      * 
      * @param length Must be 21 for a 20x20 board
@@ -49,7 +54,7 @@ public class OuterWall implements Gadget{
             return false;
         }
         else{
-          //FIX THIS BASED ON IMPLEMENTATION of GRAPH
+          //IMPERFECT. NEEDS TO MAKE SURE WALL IS IN PROPER PLACE
             if (this.isVertical){
                 
                 if (x==0||x==length){
@@ -84,5 +89,5 @@ public class OuterWall implements Gadget{
         }
         ball.setVelocity(newVel);
     }
-
+    
 }
