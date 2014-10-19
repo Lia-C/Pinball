@@ -96,6 +96,8 @@ public class Board {
     //CURRENTLY THIS METHOD DOESN'T TAKE GADGETS INTO ACCOUNT///////
     //IT ONLY ACCOUNTS FOR WALLS////////////////////////////////////
     /////////////////////////////////////////////////////////////////
+    //TODO: add gravity, friction
+    //TODO: add hitting non-wall gadgets
     public void translate(long deltaT) {
         double deltaX = this.ball.getVelocity().x() * deltaT/1000;
         double deltaY = this.ball.getVelocity().y() * deltaT/1000;
@@ -201,20 +203,5 @@ public class Board {
         return null;
         
         // add ball
-    }
-    
-    /**
-     * A helper method for toString:
-     * Replaces  
-     * @param boardArray
-     *      string array of the board we want to add the gadget character to
-     * @param xCor
-     *      the 
-     * @param yCor
-     * @param gadget
-     */
-    private void addGadgetCharacter(String[][] boardArray, int xCor, int yCor, Gadget gadget){
-        // for each gadget
-        //if xCor, yCor is occupied
     }
 }
