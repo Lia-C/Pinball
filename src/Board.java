@@ -5,22 +5,28 @@ import physics.LineSegment;
 import physics.Vect;
 import warmup.Ball;
 
-/**
- * An immutable class representing the board in the game.
- * The board is the uppermost-level class, in that the game is run by calling board.run().
- *
- */
+
 public class Board {
     
     private final Ball ball;
     private final Gadget[] gadgets;
     
-    private final int WIDTH = 20;
-    private final int HEIGHT = 20;
+    private final int WIDTH = 22;
+    private final int HEIGHT = 22;
     private OuterWall top = new OuterWall(HEIGHT, HEIGHT, HEIGHT, false);
     private OuterWall bottom = new OuterWall(HEIGHT, HEIGHT, HEIGHT, false);
     private OuterWall left = new OuterWall(HEIGHT, HEIGHT, HEIGHT, false);
     private OuterWall right = new OuterWall(HEIGHT, HEIGHT, HEIGHT, false);
+    
+    /**
+     * An immutable class representing the board in the game.
+     * The board is the uppermost-level class, in that the game is run by calling board.run().
+     *
+     * Abstraction function: represents a board in the game
+     * Rep invariant: width and height of the board are 22
+     *
+     */
+    
     
     /**
      * Make a Benchmark Board
@@ -52,6 +58,7 @@ public class Board {
             throw new IllegalArgumentException();
             //break;
         }
+        checkRep();
     }
     
     /**
@@ -65,7 +72,12 @@ public class Board {
     private Board(Ball ball, Gadget[] gadgets){
         this.ball = ball;
         this.gadgets = gadgets;
+        checkRep();
     }    
+    
+    private void checkRep(){
+        assert WIDTH == 22 && HEIGHT == 22;
+    }
     
     /**
      * Start playing the game.
