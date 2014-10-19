@@ -5,9 +5,7 @@ import physics.*;
  * 
  * Bounding box of size 1Lx1L
  * Default orientation (0 degrees) places corners in the northeast, 
- * northwest, and southwest. 
- * Requires that xCor, yCor
- * Requires that orientation is 0, 90, 180, or 270.
+ * northwest, and southwest. Requires that orientation is 0, 90, 180, or 270.
  * Coefficient of reflection: 1.0
  */
 
