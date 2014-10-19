@@ -33,10 +33,16 @@ public class Flipper implements Gadget {
         this.orientation = orientation;
     }
     
+    /**
+    * @return xCor of upper-left corner of the flipper's bounding box
+    */
     public int getXCor(){
         return xCor;
     }
     
+    /**
+    * @return yCor of upper-left corner of the flipper's bounding box
+    */
     public int getYCor(){
         return yCor;
     }

@@ -1,6 +1,6 @@
 /**
- * Gadgets are objects on the Pingball board which interact with the ball when
- * they come into contact.
+ * Gadgets are objects on the Pingball board which perform some action
+ * when they come into contact with the ball.
  */
 public interface Gadget {
     

@@ -26,10 +26,16 @@ public class TriangleBumper implements Gadget {
         this.orientation = orientation;
     }
     
+    /**
+    * @return xCor of upper-left corner of the triangle bumper's bounding box
+    */
     public int getXCor(){
         return xCor;
     }
     
+    /**
+    * @return yCor of upper-left corner of the triangle bumper's bounding box
+    */
     public int getYCor(){
         return yCor;
     }
