@@ -13,14 +13,14 @@ import warmup.Ball;
 public class Board {
     
     private final Ball ball;
-    private OuterWall top = new OuterWall(//TODO);
-    private OuterWall bottom = new OuterWall(//TODO);
-    private OuterWall left = new OuterWall(//TODO);
-    private OuterWall right = new OuterWall(//TODO);
     private final Gadget[] gadgets;
     
     private final int WIDTH = 20;
     private final int HEIGHT = 20;
+    private OuterWall top = new OuterWall(HEIGHT, HEIGHT, HEIGHT, false);
+    private OuterWall bottom = new OuterWall(HEIGHT, HEIGHT, HEIGHT, false);
+    private OuterWall left = new OuterWall(HEIGHT, HEIGHT, HEIGHT, false);
+    private OuterWall right = new OuterWall(HEIGHT, HEIGHT, HEIGHT, false);
     
     /**
      * Make a Benchmark Board
@@ -31,12 +31,17 @@ public class Board {
      *          must be one of "default", "absorber", "flippers"
      */     
     public Board(String boardName){
+        //JUST TO MAKE IT COMPILE
+        gadgets=null;
+        ball=null;
         switch (boardName) {
         case "default":
             //TODO
-                ball= 
+                /*ball= 
                 Gadgets[] = 
                 Board default = new Board(ball, gadgets);
+                */
+            
         case "absorber":
             //TODO
             break;
@@ -45,7 +50,7 @@ public class Board {
             break;
         default:
             throw new IllegalArgumentException();
-            break;
+            //break;
         }
     }
     
@@ -124,9 +129,9 @@ public class Board {
         }
         
         if (newX > 0 && newX < WIDTH && newY > 0 && newY < WIDTH){
-            moveBallWithoutWallCollision(newLoc);
+            moveBallWithoutGadgetCollision(newLoc);
         } else {
-            moveBallWithWallCollision(newLoc, collisionWall, deltaT);
+            moveBallWithGadgetCollision(newLoc, collisionWall, deltaT);
         }
     }
     
@@ -187,12 +192,13 @@ public class Board {
      */
     @Override
     public String toString(){
-        String[][] board = new String[][]();
+        String[][] board = new String[20][20];
         //fill with empty strings
         //for each tile x,y
         //      for each gadget in Gadgets[]
         //          if gadget.isOccupying(x,y)
         //              board[x][y] = gadget.toString()
+        return null;
         
         // add ball
     }

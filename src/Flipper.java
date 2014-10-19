@@ -63,6 +63,8 @@ public class Flipper implements Gadget {
     }
     
     public boolean isOccupying(int x, int y) {
+        //JUST TO GET IT TO COMPILE
+        return false;
         //derp I just started implementing this without thinking. Not even sure if this is what this method should do.
         //Specs should be finished first
         
