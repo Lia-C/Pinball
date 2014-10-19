@@ -4,7 +4,7 @@
  */
 public class Empty implements Gadget {
 
-    public Empty (){
+    public Empty () {
         
     }
     
@@ -12,12 +12,16 @@ public class Empty implements Gadget {
         return false;
     }
 
-    public String toString(){
+    public String toString() {
         return " ";
     }
     
     public boolean isEmpty() {
         return true;
+    }
+    
+    public void Action(Ball ball) {
+        
     }
 
 }

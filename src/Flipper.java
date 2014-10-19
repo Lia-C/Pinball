@@ -30,7 +30,9 @@ public class Flipper implements Gadget {
         this.xCor = xCor;
         this.yCor = yCor;
         this.type = type;
-        this.orientation = orientation;
+        if (orientation == 0 || orientation == 90) {
+            this.orientation = orientation;
+        } else { throw new IllegalArgumentException("orientation must be 0 or 90"); }
     }
     
     /**
@@ -51,9 +53,10 @@ public class Flipper implements Gadget {
         return COEFFICIENT_OF_REFLECTION;
     }
     
-    public int getOrientation() {
+    //consider just using orientation within this class
+    /*public int getOrientation() {
         return orientation;
-    }
+    }*/ 
     
     public String getType() {
         return type;
@@ -86,8 +89,18 @@ public class Flipper implements Gadget {
         return true; //this should not be reached**/
     }
     
+    public void Action(Ball ball) {
+        
+    }
+    
     public boolean isEmpty() {
         return false;
+    }
+    
+    @Override
+    public String toString() {
+        if (orientation == 0) { return "|"; }
+        else { return "-"; }
     }
     
 }
