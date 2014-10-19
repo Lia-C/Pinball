@@ -23,7 +23,9 @@ public class TriangleBumper implements Gadget {
     public TriangleBumper(int xCor, int yCor, int orientation) {
         this.xCor = xCor;
         this.yCor = yCor;
-        this.orientation = orientation;
+        if (orientation == 0 || orientation == 90 || orientation == 180 || orientation == 270) {
+            this.orientation = orientation;
+        } else { throw new IllegalArgumentException("orientation must be 0, 90, 180, or 270"); }
     }
     
     /**
@@ -40,17 +42,23 @@ public class TriangleBumper implements Gadget {
         return yCor;
     }
     
-    public double getCoeffOfReflection(){
+    //consider just using coeff or reflection within this class
+    /*public double getCoeffOfReflection(){
         return COEFFICIENT_OF_REFLECTION;
-    }
+    }*/
     
-    public int getOrientation() {
+    //consider just using orientation within this class
+    /*public int getOrientation() {
         return orientation;
-    }
+    }*/ 
     
     public boolean isOccupying(int x, int y) {
         if (x >= xCor && x <= xCor+1 && y >= yCor && y <= yCor+1) { return true; } 
         else { return false; }
+    }
+    
+    public void Action(Ball ball) {
+        
     }
     
     public boolean isEmpty() {
