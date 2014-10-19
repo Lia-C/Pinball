@@ -28,27 +28,27 @@ public class TriangleBumper implements Gadget {
         } else { throw new IllegalArgumentException("orientation must be 0, 90, 180, or 270"); }
     }
     
+    //xCor, yCor, COEFFICIENT_OF_REFLECTION, and orientation will only be used
+    //within this class, so these getter methods are not necessary.
     /**
     * @return xCor of upper-left corner of the triangle bumper's bounding box
     */
-    public int getXCor(){
+    /*public int getXCor(){
         return xCor;
-    }
+    }*/
     
     /**
     * @return yCor of upper-left corner of the triangle bumper's bounding box
     */
-    public int getYCor(){
+    /*public int getYCor(){
         return yCor;
-    }
+    }*?
     
-    //consider just using coeff or reflection within this class
     /*public double getCoeffOfReflection(){
         return COEFFICIENT_OF_REFLECTION;
-    }*/
+    }
     
-    //consider just using orientation within this class
-    /*public int getOrientation() {
+    public int getOrientation() {
         return orientation;
     }*/ 
     
@@ -57,6 +57,12 @@ public class TriangleBumper implements Gadget {
         else { return false; }
     }
     
+    /**
+     * Mutates the ball's velocity when the ball hits the bumper.
+     * 
+     * @param ball
+     *          the ball which hit the bumper
+     */
     public void Action(Ball ball) {
         
     }
