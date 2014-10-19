@@ -182,7 +182,8 @@ public class Board {
     }
     
     /**
-     * Returns a printable string to represent the current state of the board.
+     * 
+     * @return A String representation of the board
      */
     @Override
     public String toString(){

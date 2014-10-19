@@ -72,4 +72,17 @@ public class OuterWall implements Gadget{
         return false;
     }
 
+    @Override
+    public void Action(Ball ball) {
+        Vect vel=ball.getVelocity();
+        Vect newVel;
+        if (this.isVertical){
+            newVel=new Vect(-vel.x(),vel.y());
+        }
+        else{
+            newVel=new Vect(vel.x(),-vel.y());
+        }
+        ball.setVelocity(newVel);
+    }
+
 }

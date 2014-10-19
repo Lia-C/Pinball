@@ -20,4 +20,9 @@ public class Empty implements Gadget {
         return true;
     }
 
+    @Override
+    public void Action(Ball ball) {
+                
+    }
+
 }
