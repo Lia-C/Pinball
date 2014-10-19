@@ -39,31 +39,31 @@ public class Flipper implements Gadget {
     
     //xCor, yCor, COEFFICIENT_OF_REFLECTION, orientation, and type will only be 
     //used within this class, so these getter methods are not necessary.
-    /**
-    * @return xCor of upper-left corner of the flipper's bounding box
-    */
-    /*public int getXCor(){
-        return xCor;
-    }*/
-    
-    /**
-    * @return yCor of upper-left corner of the flipper's bounding box
-    */
-    /*public int getYCor(){
-        return yCor;
-    }*/
-    
-    /*public double getCoeffOfReflection(){
-        return COEFFICIENT_OF_REFLECTION;
-    }
-    
-    public int getOrientation() {
-        return orientation;
-    } 
-    
-    public String getType() {
-        return type;
-    }*/
+//    /**
+//    * @return xCor of upper-left corner of the flipper's bounding box
+//    */
+//    public int getXCor(){
+//        return xCor;
+//    }
+//    
+//    /**
+//    * @return yCor of upper-left corner of the flipper's bounding box
+//    */
+//    public int getYCor(){
+//        return yCor;
+//    }
+//    
+//    public double getCoeffOfReflection(){
+//        return COEFFICIENT_OF_REFLECTION;
+//    }
+//    
+//    public int getOrientation() {
+//        return orientation;
+//    } 
+//    
+//    public String getType() {
+//        return type;
+//    }
     
     
     public boolean isOccupying(int x, int y) {
