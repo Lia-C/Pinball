@@ -105,7 +105,7 @@ public class Board {
         double yOver = Math.abs(newY - HEIGHT);
         Geometry.DoublePair newLoc = new Geometry.DoublePair(newX, newY); 
         LineSegment collisionWall = new LineSegment(0,0,0,0);
-        
+        /*
         if (newX >= WIDTH && newY <= HEIGHT && newY >= 0){
             collisionWall = right.getLineSegment();
         } else if (newX <= 0 && newY <= HEIGHT && newY >= 0){
@@ -127,7 +127,7 @@ public class Board {
             if (xOver > yOver){ collisionWall = left.getLineSegment(); }
             else { collisionWall = top.getLineSegment(); }
         }
-        
+        */
         if (newX > 0 && newX < WIDTH && newY > 0 && newY < WIDTH){
             moveBallWithoutGadgetCollision(newLoc);
         } else {

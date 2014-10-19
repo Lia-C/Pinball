@@ -8,12 +8,13 @@ public class OuterWall implements Gadget{
     private final boolean isTransparent;
     private final LineSegment line;
     
+    //AF OuterWall=int:length+int:x+int:y+boolean:isVertical+LineSegment:line
     /**
      * 
-     * @param length
-     * @param x
-     * @param y
-     * @param isVertical
+     * @param length Must be 21 for a 20x20 board
+     * @param x must be 0 or 22
+     * @param y must be 0 or 22
+     * @param isVertical determines whether the wall is horizontal or vertical
      */
     public OuterWall(int length,int x, int y,boolean isVertical){
         this.length=length;
@@ -27,16 +28,15 @@ public class OuterWall implements Gadget{
         else{
             this.line = new LineSegment(x, y, x+length, y);
         }
-        
+        checkRep();
     }
     
-    /**
-     * 
-     * @return
-     */
-    public LineSegment getLineSegment(){
-        return line;
+    private void checkRep() {
+        assert this.length==21;
+        assert this.x==0 || this.x==22;
+        assert this.y==0 || this.y==22;
     }
+    
     
     @Override
     public String toString(){
