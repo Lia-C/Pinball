@@ -38,6 +38,8 @@ public class Absorber implements Gadget{
         return false;
     }
     
-    public void Action
+    public void Action (Ball ball){
+        
+    }
     
 }
