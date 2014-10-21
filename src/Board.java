@@ -1,6 +1,7 @@
 import javax.management.RuntimeErrorException;
 
 import physics.Geometry;
+import physics.Geometry.DoublePair;
 import physics.LineSegment;
 import physics.Vect;
 
@@ -206,10 +207,51 @@ public class Board {
      * Responsible for moving all balls
      * @param timeDelta The time interval during which the balls are moving.
      */
-    public void translate(Ball ball,double timeDelta){
-        
+    private void translate(Ball ball,double timeDelta){
+        Gadget possibleGadget=this.getGadgetWithMinCollisionTime(ball, timeDelta);
+        Ball possibleBall=this.getBallWithMinCollisionTime(ball, timeDelta);
+        //If the ball won't collide with a Gadget within timeDelta.
+        if (possibleGadget.isEmpty()){
+            //If the ball won't collide with a Ball within timeDelta.
+            if (possibleBall.getPosition().equals(ball.getPosition())){
+                this.moveWithoutCollision(ball, timeDelta);
+            }
+            //If the ball will collide with a Ball within timeDelta.
+            else{
+                
+            }
+        }
+        //If the ball won't collide with a Gadget within timeDelta.
+        else{
+            //If the ball won't collide with a Ball within timeDelta.
+            if (possibleBall.getPosition().equals(ball.getPosition())){
+                this.moveWithoutCollision(ball, timeDelta);
+            }
+            //If the ball will possibly collide with both a ball and a Gadget.
+            else{
+                double gadgetTime=possibleGadget.getMinCollisionTime(ball);
+                double ballTime=Geometry.timeUntilBallBallCollision(ball.getCircle(), ball.getVelocity(), possibleBall.getCircle(), possibleBall.getVelocity());
+                //For now avoiding the case that a ball will hit a ball and gadget at the same time.
+                if (gadgetTime>ballTime){
+                    this.moveWithoutCollision(ball, gadgetTime);
+                    possibleGadget.Action(possibleBall);
+                }
+                else{
+                    
+                }
+            }
+        }
     }
     
+    
+    private void moveWithoutCollision(Ball ball,double timeDelta){
+        DoublePair priorPos = ball.getPosition();
+        Vect vel=ball.getVelocity();
+        double newX=priorPos.d1+vel.x()*timeDelta;
+        double newY=priorPos.d2+vel.y()*timeDelta;
+        ball.setPosition(new DoublePair(newX, newY));
+        ball.setTime(ball.getTime()-timeDelta);
+    }
     /**
      * 
      * @param ball One of the balls traversing the map
