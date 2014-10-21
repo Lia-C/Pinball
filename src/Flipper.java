@@ -81,7 +81,7 @@ public class Flipper implements Gadget {
 //    }
     
     
-    public boolean isOccupying(int x, int y) {
+    /*public boolean isOccupying(int x, int y) {
         if (type.equalsIgnoreCase("left")) {
             if (orientation == 0) {
                 if (x == xCor && y >= yCor && y <= yCor+1) { return true; } 
@@ -100,7 +100,7 @@ public class Flipper implements Gadget {
             } 
         }
         throw new RuntimeException("isOccupying error, did not return true or false");
-    }
+    }*/
     
     /**
      * Mutates the ball's velocity when the ball hits the bumper and 
