@@ -203,7 +203,7 @@ public class Board {
     public void translate(double timeDelta){
         
     }
-    private Gadget isGadgetOccupyingSpace(int x, int y){
+    private Gadget isGadgetOccupyingSpace(doubintle x, int y){
         Gadget returnedGadget = new Empty();
         for (Gadget gadget:gadgets){
             if (gadget.isOccupying(x, y)){
