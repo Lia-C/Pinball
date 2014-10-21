@@ -3,12 +3,12 @@ import javax.management.RuntimeErrorException;
 import physics.Geometry;
 import physics.LineSegment;
 import physics.Vect;
-import warmup.Ball;
+
 
 
 public class Board {
     
-    private final Ball ball;
+    private final Ball[] balls;
     private final Gadget[] gadgets;
     
     private final int WIDTH = 22;
@@ -39,7 +39,7 @@ public class Board {
     public Board(String boardName){
         //JUST TO MAKE IT COMPILE
         gadgets=null;
-        ball=null;
+        balls=null;
         switch (boardName) {
         case "default":
             //TODO
@@ -103,7 +103,7 @@ public class Board {
      * @param deltaT
      *      the time in milliseconds to update the ball's movement over
      */
-    
+    /*
     //////////////////////////////////////////////////////////////
     //CURRENTLY THIS METHOD DOESN'T TAKE GADGETS INTO ACCOUNT///////
     //IT ONLY ACCOUNTS FOR WALLS////////////////////////////////////
@@ -141,7 +141,7 @@ public class Board {
             if (xOver > yOver){ collisionWall = left.getLineSegment(); }
             else { collisionWall = top.getLineSegment(); }
         }
-        */
+        
         if (newX > 0 && newX < WIDTH && newY > 0 && newY < WIDTH){
             moveBallWithoutGadgetCollision(newLoc);
         } else {
@@ -154,7 +154,7 @@ public class Board {
      * Call this method only if the ball did not collide with any gadget (including walls)
      * @param newLoc
      *      //TODO
-     */
+     
     private void moveBallWithoutGadgetCollision(Geometry.DoublePair newLoc){
         //TODO: update this for ALL gadgets; right now this only works with hitting walls
         this.ball.setPosition(newLoc);
@@ -188,7 +188,7 @@ public class Board {
      *      //TODO
      * @param deltaT
      *      //TODO
-     */
+     
     private void moveBallWithGadgetCollision(Geometry.DoublePair newLoc, LineSegment wall, long deltaT){
         //TODO: update this for ALL gadgets; right now this only works with hitting walls
         double n = Geometry.timeUntilWallCollision(wall, this.ball.getCircle(), this.ball.getVelocity());
@@ -199,7 +199,63 @@ public class Board {
             this.translate(deltaT - timeUntilCollision);
         }
     }
+    */
+    public void translate(double timeDelta){
+        
+    }
     
+    /**
+     * 
+     * @param ball One of the balls traversing the map
+     * @param timeDelta The amount of time the ball will be moving.
+     * @return The Gadget with the least collision time with Ball. Returns an Empty Gadget if none will be collided with in the timeDelta.
+     */
+    private Gadget getGadgetWithMinCollisionTime(Ball ball,double timeDelta){
+        Gadget returnedGadget=new Empty();
+        double minTime=Double.POSITIVE_INFINITY;
+        for (Gadget gadget:gadgets){
+            double collisionTime=gadget.getMinCollisionTime(ball);
+            if (collisionTime<minTime){
+                minTime=collisionTime;
+                returnedGadget=gadget;
+            }
+        }
+        if (minTime<timeDelta){
+            return returnedGadget; 
+        }
+        else{
+            return new Empty();
+        }
+    }
+    
+    private void moveWithGravity
+    
+    /**
+     * 
+     * @param ball One of the Balls traversing the map
+     * @param timeDelta The amount of time the ball will be moving.
+     * @return The Ball with the least collision time with ball. Returns ball if none will be collided with in the timeDelta.
+     */
+    private Ball getBallWithMinCollisionTime(Ball ball,double timeDelta){
+        double minTime=Double.POSITIVE_INFINITY;
+        Ball otherBall=ball;
+        for (Ball other:balls){
+            //This the other ball is not ball.
+            if (!other.getPosition().equals(ball.getPosition())){
+                double collisionTime=Geometry.timeUntilBallBallCollision(ball.getCircle(), ball.getVelocity(), other.getCircle(), other.getVelocity());
+                if (collisionTime<minTime){
+                    minTime=collisionTime;
+                    otherBall=other;
+                }
+            }
+        }
+        if (minTime<timeDelta){
+            return otherBall; 
+        }
+        else{
+            return ball;
+        }
+    }
     /**
      * 
      * @return A String representation of the board

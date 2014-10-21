@@ -1,7 +1,9 @@
 import physics.*;
+import java.lang.Double;
 
 public class SquareBumper implements Gadget{
     private final LineSegment top, bottom, left, right;
+    private final Circle topLeftCorner, topRightCorner, bottomLeftCorner, bottomRightCorner;
     private final int xCor, yCor;
     
     private final double COEFFICIENT_OF_REFLECTION = 1.0;
@@ -36,6 +38,10 @@ public class SquareBumper implements Gadget{
         this.bottom = new LineSegment(xCor, yCor+1, xCor+1, yCor+1);
         this.left = new LineSegment(xCor, yCor, xCor, yCor+1);
         this.right = new LineSegment(xCor+1, yCor, xCor+1, yCor+1);
+        this.topLeftCorner = new Circle(xCor, yCor, 0);
+        this.topRightCorner = new Circle(xCor + 1, yCor, 0);
+        this.bottomLeftCorner = new Circle(xCor, yCor+1, 0);
+        this.bottomRightCorner = new Circle(xCor+1, yCor+1, 0);
         checkRep();
     }
     
@@ -48,13 +54,69 @@ public class SquareBumper implements Gadget{
     }
     
     /**
+     * Meant to be used to determine which, if any, Gadget that a ball would hit, and when.
+     * 
+     * @param ball One of the balls moving around the map
+     * @return The least time it would take for the ball to collide with any of the Geometry objects in this Gadget.
+     */
+    public double getMinCollisionTime(Ball ball){
+        double minCollisionTime = Double.POSITIVE_INFINITY;
+        double current = Double.POSITIVE_INFINITY;
+        
+        Circle[] circles = new Circle[] {topLeftCorner, topRightCorner, bottomLeftCorner, bottomRightCorner};
+        LineSegment[] lineSegments = new LineSegment[] {top, topRightCorner, bottomLeftCorner, bottomRightCorner};
+        
+        for(Circle circle:circles){
+            current = Geometry.timeUntilCircleCollision(circle, ball.getCircle(), ball.getVelocity());
+            if (current < minCollisionTime) minCollisionTime = current;
+        }
+        
+        timeUntilWallCollision(LineSegment line, Circle ball, Vect velocity);
+    }
+    
+    private get
+    //
+    
+    /**
      * Mutates the ball's velocity when the ball hits the bumper.
      * 
      * @param ball
      *          the ball which hit the bumper
      */
     public void Action(Ball ball){
-       //TODO 
+        Vect newVelocity = ball.getVelocity(); //just a throwaway initialization value
+        
+        //the ball hit the topLeftCorner
+        if(ball.getPosition().d1 == this.topLeftCorner.getCenter().x() && ball.getPosition().d2 == this.topLeftCorner.getCenter().y()) {
+            newVelocity = Geometry.reflectCircle(topLeftCorner.getCenter(), ball.getCircle().getCenter(), ball.getVelocity(), COEFFICIENT_OF_REFLECTION);
+        }
+        //the ball hit the topRightCorner
+        else if(ball.getPosition().d1 == this.topRightCorner.getCenter().x()  && ball.getPosition().d2 == this.topRightCorner.getCenter().y()) {
+            newVelocity = Geometry.reflectCircle(topRightCorner.getCenter(), ball.getCircle().getCenter(), ball.getVelocity(), COEFFICIENT_OF_REFLECTION);
+        }
+        
+        //the ball hit the bottomLeftCorner
+        else if(ball.getPosition().d1 == this.bottomLeftCorner.getCenter().x()  && ball.getPosition().d2 == this.bottomLeftCorner.getCenter().y()) {
+            newVelocity = Geometry.reflectCircle(bottomLeftCorner.getCenter(), ball.getCircle().getCenter(), ball.getVelocity(), COEFFICIENT_OF_REFLECTION);
+        }
+        
+        //the ball hit the bottomRightCorner
+        else if(ball.getPosition().d1 == this.bottomRightCorner.getCenter().x()  && ball.getPosition().d2 == this.bottomRightCorner.getCenter().y()) {
+            newVelocity = Geometry.reflectCircle(bottomRightCorner.getCenter(), ball.getCircle().getCenter(), ball.getVelocity(), COEFFICIENT_OF_REFLECTION);
+        }
+        
+        //the ball hit the top
+        else if(ball.getPosition().d1 > xCor && ball.getPosition().d1 < xCor+1 && ball.getPosition().d2 == this.bottomRightCorner.getCenter().y()) {
+            newVelocity = Geometry.reflectCircle(bottomRightCorner.getCenter(), ball.getCircle().getCenter(), ball.getVelocity(), COEFFICIENT_OF_REFLECTION);
+        }
+        
+        
+        
+        
+        ball.setVelocity(newVelocity);
+
+            
+        
     }
     
 //    /**

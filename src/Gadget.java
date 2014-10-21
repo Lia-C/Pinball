@@ -5,15 +5,12 @@
 public interface Gadget {
     
     /**
-     * Checks if a Gadget occupies the location at coordinates (x, y).
+     * Meant to be used to determine which, if any, Gadget that a ball would hit, and when.
      * 
-     * @param x 
-     *          x-coordinate of location being checked
-     * @param y 
-     *          y-coordinate of location being checked
-     * @return True if Gadget occupies location at (x, y). False otherwise.
+     * @param ball One of the balls moving around the map
+     * @return The least time it would take for the ball to collide with any of the Geometry objects in this Gadget.
      */
-    public boolean isOccupying(int x, int y);
+    public double getMinCollisionTime(Ball ball);
     
     /**
      * Checks if a Gadget is an Empty gadget.
