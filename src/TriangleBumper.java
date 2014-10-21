@@ -65,7 +65,7 @@ public class TriangleBumper implements Gadget {
             this.leftLeg = new LineSegment(xCor+1, yCor+1, xCor, yCor+1);
             this.rightLeg = new LineSegment(xCor+1, yCor+1, xCor+1, yCor);
             this.hypotenuse = new LineSegment(xCor, yCor+1, xCor+1, yCor);
-        } else if (orientation == 270) {
+        } else { //orientation == 270
             this.baseCorner = new Circle(xCor, yCor+1, 0);
             this.leftCorner = new Circle(xCor, yCor, 0);
             this.rightCorner = new Circle(xCor+1, yCor+1, 0);
@@ -106,10 +106,30 @@ public class TriangleBumper implements Gadget {
 //    }
 //    
     
-    public boolean isOccupying(int x, int y) {
+    /*public boolean isOccupying(int x, int y) {
         if (x >= xCor && x <= xCor+1 && y >= yCor && y <= yCor+1) { return true; } 
         else { return false; }
-    }
+    }*/
+    
+//    public double getMinCollisionTime(Ball ball) {
+//        double minCollisionTime = Double.POSITIVE_INFINITY;
+//        double current = Double.POSITIVE_INFINITY;
+//        
+//        Circle[] circles = new Circle[] {baseCorner, leftCorner, rightCorner};
+//        LineSegment[] lineSegments = new LineSegment[] {leftLeg, rightLeg, hypotenuse};
+//        
+//        for (Circle c : circles) {
+//            current = Geometry.timeUntilCircleCollision(c, ball.getCircle(), ball.getVelocity());
+//            if (current < minCollisionTime) { minCollisionTime = current; }
+//        }
+//        
+//        for (LineSegment ls : lineSegments) {
+//            current = Geometry.timeUntilWallCollision(ls, ball.getCircle(), ball.getVelocity());
+//            if (current < minCollisionTime) { minCollisionTime = current; }
+//        }
+//        
+//        return minCollisionTime;
+//    }
     
     /**
      * Mutates the ball's velocity when the ball hits the bumper.
@@ -118,7 +138,12 @@ public class TriangleBumper implements Gadget {
      *          the ball which hit the bumper
      */
     public void Action(Ball ball) {
-        checkRep();
+        Vect newVelocity = ball.getVelocity();
+        
+        //ball hits baseCorner
+        if (ball.getPosition().d1 == this.baseCorner.getCenter().x() && ball.getPosition().d2 == this.baseCorner.getCenter().y()) {
+            newVelocity = Geometry.reflectCircle(baseCorner.getCenter(), ball.getCircle().getCenter(), ball.getVelocity(), COEFFICIENT_OF_REFLECTION);
+        }
     }
     
     public boolean isEmpty() {
