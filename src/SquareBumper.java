@@ -60,22 +60,10 @@ public class SquareBumper implements Gadget{
      * @return The least time it would take for the ball to collide with any of the Geometry objects in this Gadget.
      */
     public double getMinCollisionTime(Ball ball){
-        double minCollisionTime = Double.POSITIVE_INFINITY;
-        double current = Double.POSITIVE_INFINITY;
-        
         Circle[] circles = new Circle[] {topLeftCorner, topRightCorner, bottomLeftCorner, bottomRightCorner};
-        LineSegment[] lineSegments = new LineSegment[] {top, topRightCorner, bottomLeftCorner, bottomRightCorner};
-        
-        for(Circle circle:circles){
-            current = Geometry.timeUntilCircleCollision(circle, ball.getCircle(), ball.getVelocity());
-            if (current < minCollisionTime) minCollisionTime = current;
-        }
-        
-        timeUntilWallCollision(LineSegment line, Circle ball, Vect velocity);
+        LineSegment[] lineSegments = new LineSegment[] {top, bottom, left, right};
+        return Util.getMinCollisionTime(circles, lineSegments, ball);
     }
-    
-    private get
-    //
     
     /**
      * Mutates the ball's velocity when the ball hits the bumper.
@@ -84,6 +72,31 @@ public class SquareBumper implements Gadget{
      *          the ball which hit the bumper
      */
     public void Action(Ball ball){
+        
+        double minCollisionTime = getMinCollisionTime(ball);
+        double current = Double.POSITIVE_INFINITY;
+        Object ballCollidedWithThis; //either a LineSegment or a Circle
+        
+        Circle[] circles = new Circle[] {topLeftCorner, topRightCorner, bottomLeftCorner, bottomRightCorner};
+        LineSegment[] lineSegments = new LineSegment[] {top, bottom, left, right};
+        
+        for(Circle circle:circles){
+            current = Geometry.timeUntilCircleCollision(circle, ball.getCircle(), ball.getVelocity());
+            if (current == minCollisionTime) ballCollidedWithThis = circle;
+        }
+        
+        for(LineSegment lineSegment:lineSegments){
+            
+            current = Geometry.timeUntilWallCollision(lineSegment, ball.getCircle(), ball.getVelocity());
+            if (current < minCollisionTime) minCollisionTime = current;
+        }
+        
+        
+        
+       
+        )
+        
+
         Vect newVelocity = ball.getVelocity(); //just a throwaway initialization value
         
         //the ball hit the topLeftCorner
