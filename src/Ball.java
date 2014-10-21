@@ -10,6 +10,7 @@ public class Ball {
     private Vect velocity;
     private Geometry.DoublePair position;
     private Circle circle;
+    private double time;
     
     private final double BALL_RADIUS = 0.25;
     
@@ -28,6 +29,13 @@ public class Ball {
     public void Action(Ball otherBall){
         //TODO
         // use reflectBalls(Vect center1, double mass1, Vect velocity1, Vect center2, double mass2, Vect velocity2)
+    }
+    
+    public void setTime(double time){
+        this.time=time;
+    }
+    public double getTime(){
+        return this.time;
     }
     
     public Vect getVelocity(){

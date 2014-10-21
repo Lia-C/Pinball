@@ -1,6 +1,7 @@
 import javax.management.RuntimeErrorException;
 
 import physics.Geometry;
+import physics.Geometry.DoublePair;
 import physics.LineSegment;
 import physics.Vect;
 
@@ -15,6 +16,7 @@ public class Board {
     private final double MU2=.001;
     private final int WIDTH = 22;
     private final int HEIGHT = 22;
+    private final double BALLMASS=1;
     private OuterWall top = new OuterWall(HEIGHT, HEIGHT, HEIGHT, false);
     private OuterWall bottom = new OuterWall(HEIGHT, HEIGHT, HEIGHT, false);
     private OuterWall left = new OuterWall(HEIGHT, HEIGHT, HEIGHT, false);
@@ -206,14 +208,69 @@ public class Board {
      * Responsible for moving all balls
      * @param timeDelta The time interval during which the balls are moving.
      */
-    public void translate(double timeDelta){
-        for (Ball ball:balls){
-            Gadget possiblyCollidedGadget=this.getGadgetWithMinCollisionTime(ball, timeDelta);
-            Ball 
-            this.updateVelWithAccel(ball, timeDelta);
+    private void translate(Ball ball,double timeDelta){
+        Gadget possibleGadget=this.getGadgetWithMinCollisionTime(ball, timeDelta);
+        Ball possibleBall=this.getBallWithMinCollisionTime(ball, timeDelta);
+        double gadgetTime=possibleGadget.getMinCollisionTime(ball);
+        double ballTime=Geometry.timeUntilBallBallCollision(ball.getCircle(), ball.getVelocity(), possibleBall.getCircle(), possibleBall.getVelocity());
+        //If the ball won't collide with a Gadget within timeDelta.
+        if (possibleGadget.isEmpty()){
+            //If the ball won't collide with a Ball within timeDelta.
+            if (possibleBall.getPosition().equals(ball.getPosition())){
+                this.moveWithoutCollision(ball, timeDelta);
+            }
+            //If the ball will collide with a Ball within timeDelta.
+            else{
+                this.moveWithoutCollision(ball, ballTime);
+                this.moveWithoutCollision(possibleBall, ballTime);
+                this.makeBallsCollide(ball, possibleBall);
+            }
+        }
+        //If the ball won't collide with a Gadget within timeDelta.
+        else{
+            //If the ball won't collide with a Ball within timeDelta.
+            if (possibleBall.getPosition().equals(ball.getPosition())){
+                this.moveWithoutCollision(ball, timeDelta);
+            }
+            //If the ball will possibly collide with both a ball and a Gadget.
+            else{
+                
+                //For now avoiding the case that a ball will hit a ball and gadget at the same time.
+                if (gadgetTime>ballTime){
+                    this.moveWithoutCollision(ball, gadgetTime);
+                    possibleGadget.Action(possibleBall);
+                    
+                }
+                else{
+                    this.moveWithoutCollision(ball, ballTime);
+                    this.moveWithoutCollision(possibleBall, ballTime);
+                    this.makeBallsCollide(ball, possibleBall);
+                }
+            }
+        }
+        //If the ball isn't done moving, make sure it keeps moving
+        if (ball.getTime()!=0){
+            this.translate(ball, ball.getTime());
         }
     }
     
+   
+    private void makeBallsCollide(Ball ball1, Ball ball2){
+        Vect pos1=new Vect(ball1.getPosition().d1,ball1.getPosition().d2);
+        Vect pos2=new Vect(ball2.getPosition().d1,ball2.getPosition().d2);
+        Geometry.VectPair newVels=Geometry.reflectBalls(pos1, this.BALLMASS, ball1.getVelocity(), pos2, this.BALLMASS, ball2.getVelocity());
+        ball1.setVelocity(newVels.v1);
+        ball2.setVelocity(newVels.v2);
+    }
+    
+    private void moveWithoutCollision(Ball ball,double timeDelta){
+        DoublePair priorPos = ball.getPosition();
+        Vect vel=ball.getVelocity();
+        double newX=priorPos.d1+vel.x()*timeDelta;
+        double newY=priorPos.d2+vel.y()*timeDelta;
+        ball.setPosition(new DoublePair(newX, newY));
+        ball.setTime(ball.getTime()-timeDelta);
+    }
     /**
      * 
      * @param ball One of the balls traversing the map
