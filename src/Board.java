@@ -206,12 +206,8 @@ public class Board {
      * Responsible for moving all balls
      * @param timeDelta The time interval during which the balls are moving.
      */
-    public void translate(double timeDelta){
-        for (Ball ball:balls){
-            Gadget possiblyCollidedGadget=this.getGadgetWithMinCollisionTime(ball, timeDelta);
-            Ball 
-            this.updateVelWithAccel(ball, timeDelta);
-        }
+    public void translate(Ball ball,double timeDelta){
+        
     }
     
     /**
