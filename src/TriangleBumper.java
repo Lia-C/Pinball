@@ -11,6 +11,11 @@ import physics.*;
 
 public class TriangleBumper implements Gadget {
     private final int xCor, yCor, orientation; //orientation must be 0, 90, 180, or 270
+    private final LineSegment leftLeg, rightLeg, hypotenuse; //leftLeg goes from baseCorner to leftCorner
+                                                             //rightLeg goes from baseCorner to rightCorner
+    private final Circle baseCorner, leftCorner, rightCorner; //baseCorner is the corner opposite the hypotenuse.
+                                                              //leftCorner, rightCorner are to the left and right if you
+                                                              //are sitting at the baseCorner and facing the hypotenuse.
     
     private final double COEFFICIENT_OF_REFLECTION = 1.0;
     
@@ -25,7 +30,12 @@ public class TriangleBumper implements Gadget {
         this.xCor = xCor;
         this.yCor = yCor;
         this.orientation = 0;
-        checkRep();
+        this.baseCorner = new Circle(xCor, yCor, 0);
+        this.leftCorner = new Circle(xCor+1, yCor, 0);
+        this.rightCorner = new Circle(xCor, yCor+1, 0);
+        this.leftLeg = new LineSegment(xCor, yCor, xCor+1, yCor);
+        this.rightLeg = new LineSegment(xCor, yCor, xCor, yCor+1);
+        this.hypotenuse = new LineSegment(xCor+1, yCor, xCor, yCor+1);
     }
     
     public TriangleBumper(int xCor, int yCor, int orientation) {
@@ -34,6 +44,35 @@ public class TriangleBumper implements Gadget {
         if (orientation == 0 || orientation == 90 || orientation == 180 || orientation == 270) {
             this.orientation = orientation;
         } else { throw new IllegalArgumentException("orientation must be 0, 90, 180, or 270"); }
+        if (orientation == 0) {
+            this.baseCorner = new Circle(xCor, yCor, 0);
+            this.leftCorner = new Circle(xCor+1, yCor, 0);
+            this.rightCorner = new Circle(xCor, yCor+1, 0);
+            this.leftLeg = new LineSegment(xCor, yCor, xCor+1, yCor);
+            this.rightLeg = new LineSegment(xCor, yCor, xCor, yCor+1);
+            this.hypotenuse = new LineSegment(xCor+1, yCor, xCor, yCor+1);
+        } else if (orientation == 90) {
+            this.baseCorner = new Circle(xCor+1, yCor, 0);
+            this.leftCorner = new Circle(xCor+1, yCor+1, 0);
+            this.rightCorner = new Circle(xCor, yCor, 0);
+            this.leftLeg = new LineSegment(xCor+1, yCor, xCor+1, yCor+1);
+            this.rightLeg = new LineSegment(xCor+1, yCor, xCor, yCor);
+            this.hypotenuse = new LineSegment(xCor, yCor, xCor+1, yCor+1);
+        } else if (orientation == 180) {
+            this.baseCorner = new Circle(xCor+1, yCor+1, 0);
+            this.leftCorner = new Circle(xCor, yCor+1, 0);
+            this.rightCorner = new Circle(xCor+1, yCor, 0);
+            this.leftLeg = new LineSegment(xCor+1, yCor+1, xCor, yCor+1);
+            this.rightLeg = new LineSegment(xCor+1, yCor+1, xCor+1, yCor);
+            this.hypotenuse = new LineSegment(xCor, yCor+1, xCor+1, yCor);
+        } else if (orientation == 270) {
+            this.baseCorner = new Circle(xCor, yCor+1, 0);
+            this.leftCorner = new Circle(xCor, yCor, 0);
+            this.rightCorner = new Circle(xCor+1, yCor+1, 0);
+            this.leftLeg = new LineSegment(xCor, yCor+1, xCor, yCor);
+            this.rightLeg = new LineSegment(xCor, yCor+1, xCor+1, yCor+1);
+            this.hypotenuse = new LineSegment(xCor, yCor, xCor+1, yCor+1);
+        }
         checkRep();
     }
     
