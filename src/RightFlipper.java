@@ -14,8 +14,10 @@ public class RightFlipper implements Gadget {
     private final int xCor, yCor, orientation; //orientation must be 0 or 90
     private final LineSegment flipper;
     private final Circle pivot, endpoint;
+    private final boolean rotating;
     
     private final double COEFFICIENT_OF_REFLECTION = 0.95;
+    private final double ANGULAR_VELOCITY = 1080.0;
     
     //Rep invariant:
     //  xCor, yCor are in the range [0, 18] inclusive
@@ -32,6 +34,7 @@ public class RightFlipper implements Gadget {
         this.flipper = new LineSegment(xCor+1, yCor, xCor+1, yCor+1);
         this.pivot = new Circle(xCor+1, yCor, 0);
         this.endpoint = new Circle(xCor+1, yCor+1, 0);
+        this.rotating = false;
         checkRep();
     }
     
@@ -47,6 +50,7 @@ public class RightFlipper implements Gadget {
             this.flipper = new LineSegment(xCor, yCor, xCor+1, yCor);
             this.endpoint = new Circle(xCor, yCor, 0);
         } else { throw new IllegalArgumentException("orientation must be 0 or 90"); }
+        this.rotating = false;
         checkRep();
     }
     

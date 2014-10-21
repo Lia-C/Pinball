@@ -42,9 +42,7 @@ public class TriangleBumper implements Gadget {
     public TriangleBumper(int xCor, int yCor, int orientation) {
         this.xCor = xCor;
         this.yCor = yCor;
-        if (orientation == 0 || orientation == 90 || orientation == 180 || orientation == 270) {
-            this.orientation = orientation;
-        } else { throw new IllegalArgumentException("orientation must be 0, 90, 180, or 270"); }
+        this.orientation = orientation;
         if (orientation == 0) {
             this.baseCorner = new Circle(xCor, yCor, 0);
             this.leftCorner = new Circle(xCor+1, yCor, 0);
@@ -66,14 +64,14 @@ public class TriangleBumper implements Gadget {
             this.leftLeg = new LineSegment(xCor+1, yCor+1, xCor, yCor+1);
             this.rightLeg = new LineSegment(xCor+1, yCor+1, xCor+1, yCor);
             this.hypotenuse = new LineSegment(xCor, yCor+1, xCor+1, yCor);
-        } else { //orientation == 270
+        } else if (orientation == 270) { 
             this.baseCorner = new Circle(xCor, yCor+1, 0);
             this.leftCorner = new Circle(xCor, yCor, 0);
             this.rightCorner = new Circle(xCor+1, yCor+1, 0);
             this.leftLeg = new LineSegment(xCor, yCor+1, xCor, yCor);
             this.rightLeg = new LineSegment(xCor, yCor+1, xCor+1, yCor+1);
             this.hypotenuse = new LineSegment(xCor, yCor, xCor+1, yCor+1);
-        }
+        } else { throw new IllegalArgumentException("orientation must be 0, 90, 180, or 270"); }
         checkRep();
     }
     
@@ -139,10 +137,10 @@ public class TriangleBumper implements Gadget {
      *          the ball which hit the bumper
      */
     public void Action(Ball ball) {
-        LineSegment wall = new LineSegment(0,0,0,0); //throwaway init value
-        Circle corner = new Circle(0,0,0); //throwaway init value
-        
-        //if (Util.getPartOfGadgetThatBallWillCollideWith()
+//        LineSegment wall = new LineSegment(0,0,0,0); //throwaway init value
+//        Circle corner = new Circle(0,0,0); //throwaway init value
+//        
+//        if (Util.getPartOfGadgetThatBallWillCollideWith()
     }
     
     public boolean isEmpty() {

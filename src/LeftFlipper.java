@@ -6,7 +6,7 @@ import physics.*;
  * Bounding box of size 2Lx2L
  * The flipper's pivot point is in the northwest corner of its bounding box, and its
  * initial rotation is counterclockwise for the default orientation (0 degrees).
- * Requires that orientation is 0 or 90.
+ * Requires that orientation is 0, 90, 180, or 270.
  * Coefficient of reflection: 0.95
  * Rotates 90 degrees when triggered.
  */
@@ -14,8 +14,10 @@ public class LeftFlipper implements Gadget {
     private final int xCor, yCor, orientation; //orientation must be 0 or 90
     private final LineSegment flipper;
     private final Circle pivot, endpoint;
+    private final boolean rotating;
     
     private final double COEFFICIENT_OF_REFLECTION = 0.95;
+    private final double ANGULAR_VELOCITY = 1080.0;
     
     //Rep invariant:
     //  xCor, yCor are in the range [0, 18] inclusive
@@ -32,6 +34,7 @@ public class LeftFlipper implements Gadget {
         this.flipper = new LineSegment(xCor, yCor, xCor, yCor+1);
         this.pivot = new Circle(xCor, yCor, 0);
         this.endpoint = new Circle(xCor, yCor+1, 0);
+        this.rotating = false;
         checkRep();
     }
     
@@ -39,14 +42,17 @@ public class LeftFlipper implements Gadget {
         this.xCor = xCor;
         this.yCor = yCor;
         this.orientation = orientation;
-        this.pivot = new Circle(xCor, yCor, 0);
         if (orientation == 0) {
             this.flipper = new LineSegment(xCor, yCor, xCor, yCor+1);
+            this.pivot = new Circle(xCor+1, yCor, 0)
             this.endpoint = new Circle(xCor, yCor+1, 0);
         } else if (orientation == 90) {
             this.flipper = new LineSegment(xCor, yCor, xCor+1, yCor);
             this.endpoint = new Circle(xCor+1, yCor, 0);
-        } else { throw new IllegalArgumentException("orientation must be 0 or 90"); }
+        } else if (orientation == 180) {
+            this.flipper = new LineSegment(xCor)
+        }
+        this.rotating = false;
         checkRep();
     }
     
@@ -113,6 +119,7 @@ public class LeftFlipper implements Gadget {
      *          the ball which hit the bumper
      */
     public void Action(Ball ball) {
+        rotating = true;
         
     }
     
