@@ -10,7 +10,9 @@ public class Board {
     
     private final Ball[] balls;
     private final Gadget[] gadgets;
-    
+    private final double GRAVITY=10;
+    private final double MU=.005;
+    private final double MU2=.001;
     private final int WIDTH = 22;
     private final int HEIGHT = 22;
     private OuterWall top = new OuterWall(HEIGHT, HEIGHT, HEIGHT, false);
@@ -200,8 +202,16 @@ public class Board {
         }
     }
     */
+    /**
+     * Responsible for moving all balls
+     * @param timeDelta The time interval during which the balls are moving.
+     */
     public void translate(double timeDelta){
-        
+        for (Ball ball:balls){
+            Gadget possiblyCollidedGadget=this.getGadgetWithMinCollisionTime(ball, timeDelta);
+            Ball 
+            this.updateVelWithAccel(ball, timeDelta);
+        }
     }
     
     /**
@@ -228,7 +238,21 @@ public class Board {
         }
     }
     
-    private void moveWithGravity
+    /**
+     * Takes in a ball and discretely updates its velocity in accordance with the acceleration caused by friction and gr
+     * 
+     * @param ball One of the Balls traversing the map
+     * @param timeDelta The amount of time the ball will be moving.
+     */
+    private void updateVelWithAccel(Ball ball,double timeDelta){
+        //Updating with Friction
+        double magnitude=ball.getVelocity().length();
+        magnitude=magnitude*(1-this.MU*timeDelta-this.MU2*magnitude*timeDelta);
+        Vect intermediateVel=new Vect(ball.getVelocity().angle(), magnitude);
+        //Updating using Gravity
+        Vect withGrav=new Vect(intermediateVel.x(),intermediateVel.y()+this.GRAVITY*timeDelta);
+        ball.setVelocity(withGrav);
+    }
     
     /**
      * 
