@@ -73,28 +73,8 @@ public class SquareBumper implements Gadget{
      */
     public void Action(Ball ball){
         
-        double minCollisionTime = getMinCollisionTime(ball);
-        double current = Double.POSITIVE_INFINITY;
-        Object ballCollidedWithThis; //either a LineSegment or a Circle
+
         
-        Circle[] circles = new Circle[] {topLeftCorner, topRightCorner, bottomLeftCorner, bottomRightCorner};
-        LineSegment[] lineSegments = new LineSegment[] {top, bottom, left, right};
-        
-        for(Circle circle:circles){
-            current = Geometry.timeUntilCircleCollision(circle, ball.getCircle(), ball.getVelocity());
-            if (current == minCollisionTime) ballCollidedWithThis = circle;
-        }
-        
-        for(LineSegment lineSegment:lineSegments){
-            
-            current = Geometry.timeUntilWallCollision(lineSegment, ball.getCircle(), ball.getVelocity());
-            if (current < minCollisionTime) minCollisionTime = current;
-        }
-        
-        
-        
-       
-        )
         
 
         Vect newVelocity = ball.getVelocity(); //just a throwaway initialization value
