@@ -14,6 +14,11 @@ public class BallTest {
     public final void testBall() {
         fail("Not yet implemented"); // TODO
     }
+    
+    @Test
+    public final void testAction() {
+        fail("Not yet implemented"); // TODO
+    }
 
     @Test
     public final void testGetVelocity() {

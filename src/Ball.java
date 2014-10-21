@@ -19,6 +19,17 @@ public class Ball {
         this.circle = new Circle(position.d1, position.d2, BALL_RADIUS);
     }
     
+    /**
+     * Mutates the ball's velocity when the ball hits another ball.
+     * 
+     * @param otherBall
+     *          the ball which hit this ball
+     */
+    public void Action(Ball otherBall){
+        //TODO
+        // use reflectBalls(Vect center1, double mass1, Vect velocity1, Vect center2, double mass2, Vect velocity2)
+    }
+    
     public Vect getVelocity(){
         return this.velocity;
     }
@@ -39,4 +50,7 @@ public class Ball {
         this.position = newPosition;
         this.circle = new Circle(newPosition.d1, newPosition.d2, BALL_RADIUS);
     }
+    
+    
+    
 }
