@@ -14,7 +14,7 @@ public class LeftFlipper implements Gadget {
     private final int xCor, yCor, orientation; //orientation must be 0 or 90
     private final LineSegment flipper;
     private final Circle pivot, endpoint;
-    private final boolean rotating;
+    private boolean rotating;
     
     private final double COEFFICIENT_OF_REFLECTION = 0.95;
     private final double ANGULAR_VELOCITY = 1080.0;
@@ -44,14 +44,21 @@ public class LeftFlipper implements Gadget {
         this.orientation = orientation;
         if (orientation == 0) {
             this.flipper = new LineSegment(xCor, yCor, xCor, yCor+1);
-            this.pivot = new Circle(xCor+1, yCor, 0)
+            this.pivot = new Circle(xCor, yCor, 0);
             this.endpoint = new Circle(xCor, yCor+1, 0);
         } else if (orientation == 90) {
             this.flipper = new LineSegment(xCor, yCor, xCor+1, yCor);
-            this.endpoint = new Circle(xCor+1, yCor, 0);
+            this.pivot = new Circle(xCor+1, yCor, 0);
+            this.endpoint = new Circle(xCor, yCor, 0);
         } else if (orientation == 180) {
-            this.flipper = new LineSegment(xCor)
-        }
+            this.flipper = new LineSegment(xCor+1, yCor, xCor+1, yCor+1);
+            this.pivot = new Circle(xCor+1, yCor+1, 0);
+            this.endpoint = new Circle(xCor+1, yCor, 0);
+        } else if (orientation == 270) {
+            this.flipper = new LineSegment(xCor, yCor+1, xCor+1, yCor+1);
+            this.pivot = new Circle(xCor, yCor+1, 0);
+            this.endpoint = new Circle(xCor+1, yCor+1, 0);
+        } else { throw new IllegalArgumentException("orientation must be 0, 90, 180, or 270"); }
         this.rotating = false;
         checkRep();
     }
