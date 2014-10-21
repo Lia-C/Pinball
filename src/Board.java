@@ -3,7 +3,7 @@ import javax.management.RuntimeErrorException;
 import physics.Geometry;
 import physics.LineSegment;
 import physics.Vect;
-import warmup.Ball;
+
 
 
 public class Board {
@@ -203,25 +203,59 @@ public class Board {
     public void translate(double timeDelta){
         
     }
-    private Gadget isGadgetOccupyingSpace(doubintle x, int y){
-        Gadget returnedGadget = new Empty();
+    
+    /**
+     * 
+     * @param ball One of the balls traversing the map
+     * @param timeDelta The amount of time the ball will be moving.
+     * @return The Gadget with the least collision time with Ball. Returns an Empty Gadget if none will be collided with in the timeDelta.
+     */
+    private Gadget getGadgetWithMinCollisionTime(Ball ball,double timeDelta){
+        Gadget returnedGadget=new Empty();
+        double minTime=Double.POSITIVE_INFINITY;
         for (Gadget gadget:gadgets){
-            if (gadget.isOccupying(x, y)){
+            double collisionTime=gadget.getMinCollisionTime(ball);
+            if (collisionTime<minTime){
+                minTime=collisionTime;
                 returnedGadget=gadget;
             }
         }
-        return returnedGadget;
+        if (minTime<timeDelta){
+            return returnedGadget; 
+        }
+        else{
+            return new Empty();
+        }
     }
     
-    private boolean isBallOccupyingSpace(int x,int y){
-        for (Ball ball:balls){
-            if ((int) ball.getPosition().d1==x&&(int) ball.getPosition().d2==y){
-                return true;
+    private void moveWithGravity
+    
+    /**
+     * 
+     * @param ball One of the Balls traversing the map
+     * @param timeDelta The amount of time the ball will be moving.
+     * @return The Ball with the least collision time with ball. Returns ball if none will be collided with in the timeDelta.
+     */
+    private Ball getBallWithMinCollisionTime(Ball ball,double timeDelta){
+        double minTime=Double.POSITIVE_INFINITY;
+        Ball otherBall=ball;
+        for (Ball other:balls){
+            //This the other ball is not ball.
+            if (!other.getPosition().equals(ball.getPosition())){
+                double collisionTime=Geometry.timeUntilBallBallCollision(ball.getCircle(), ball.getVelocity(), other.getCircle(), other.getVelocity());
+                if (collisionTime<minTime){
+                    minTime=collisionTime;
+                    otherBall=other;
+                }
             }
         }
-        return false;
+        if (minTime<timeDelta){
+            return otherBall; 
+        }
+        else{
+            return ball;
+        }
     }
-    
     /**
      * 
      * @return A String representation of the board
