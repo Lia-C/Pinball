@@ -1,55 +1,58 @@
 import physics.*;
 
 /**
- * An immutable class representing a flipper.
+ * An immutable class representing a left flipper.
  * 
  * Bounding box of size 2Lx2L
- * For a left flipper, the pivot point is in the northwest corner, and its
+ * The flipper's pivot point is in the northwest corner of its bounding box, and its
  * initial rotation is counterclockwise for the default orientation (0 degrees).
- * For a right flipper, the pivot point is in the northeast corner, and its
- * initial rotation is clockwise for the default orientation (0 degrees).
  * Requires that orientation is 0 or 90.
- * Requires that type is "left" or "right".
  * Coefficient of reflection: 0.95
- * Rotates 90 degrees when hit by the ball.
+ * Rotates 90 degrees when triggered.
  */
-public class Flipper implements Gadget {
+public class LeftFlipper implements Gadget {
     private final int xCor, yCor, orientation; //orientation must be 0 or 90
-    private final String type; //must be "left" or "right"
+    private final LineSegment flipper;
+    private final Circle pivot, endpoint;
     
     private final double COEFFICIENT_OF_REFLECTION = 0.95;
     
     //Rep invariant:
-    //  xCor, yCor are in the range [1, 19] inclusive
-    //  (19 because a flipper takes up two cells)
+    //  xCor, yCor are in the range [0, 18] inclusive
+    //  (18 because a horizontal flipper takes up two cells)
     
     //Abstraction function:
-    //  represents a flipper that can rotate 90 degrees about its own pivot point
-    //  and redirects the ball when they come into contact
+    //  represents a flipper that can rotate 90 degrees counterclockwise about its 
+    //  own pivot point and redirects the ball when they come into contact
     
-    public Flipper(int xCor, int yCor, String type) {
+    public LeftFlipper(int xCor, int yCor) {
         this.xCor = xCor;
         this.yCor = yCor;
-        this.type = type;
         this.orientation = 0;
+        this.flipper = new LineSegment(xCor, yCor, xCor, yCor+1);
+        this.pivot = new Circle(xCor, yCor, 0);
+        this.endpoint = new Circle(xCor, yCor+1, 0);
         checkRep();
     }
     
-    public Flipper(int xCor, int yCor, String type, int orientation) {
+    public LeftFlipper(int xCor, int yCor, int orientation) {
         this.xCor = xCor;
         this.yCor = yCor;
-        if (type.equalsIgnoreCase("left") || type.equalsIgnoreCase("right")) {
-            this.type = type;
-        } else { throw new IllegalArgumentException("type must be \"left\" or \"right\""); }
-        if (orientation == 0 || orientation == 90) {
-            this.orientation = orientation;
+        this.orientation = orientation;
+        this.pivot = new Circle(xCor, yCor, 0);
+        if (orientation == 0) {
+            this.flipper = new LineSegment(xCor, yCor, xCor, yCor+1);
+            this.endpoint = new Circle(xCor, yCor+1, 0);
+        } else if (orientation == 90) {
+            this.flipper = new LineSegment(xCor, yCor, xCor+1, yCor);
+            this.endpoint = new Circle(xCor+1, yCor, 0);
         } else { throw new IllegalArgumentException("orientation must be 0 or 90"); }
         checkRep();
     }
     
     private void checkRep() {
-        assert(xCor >= 1 && xCor <= 19);
-        assert(yCor >= 1 && yCor <= 19);
+        assert(xCor >= 0 && xCor <= 18);
+        assert(yCor >= 0 && yCor <= 18);
     }
     
     //xCor, yCor, COEFFICIENT_OF_REFLECTION, orientation, and type will only be 

@@ -20,7 +20,7 @@ public class TriangleBumper implements Gadget {
     private final double COEFFICIENT_OF_REFLECTION = 1.0;
     
     //Rep invariant:
-    //  xCor, yCor are in the range [1, 20] inclusive
+    //  xCor, yCor are in the range [0, 19] inclusive
     
     //Abstraction function:
     //  represents a triangle-shaped bumper that redirects
@@ -36,6 +36,7 @@ public class TriangleBumper implements Gadget {
         this.leftLeg = new LineSegment(xCor, yCor, xCor+1, yCor);
         this.rightLeg = new LineSegment(xCor, yCor, xCor, yCor+1);
         this.hypotenuse = new LineSegment(xCor+1, yCor, xCor, yCor+1);
+        checkRep();
     }
     
     public TriangleBumper(int xCor, int yCor, int orientation) {
@@ -77,8 +78,8 @@ public class TriangleBumper implements Gadget {
     }
     
     private void checkRep() {
-        assert(xCor >= 1 && xCor <= 20);
-        assert(yCor >= 1 && yCor <= 20);
+        assert(xCor >= 0 && xCor <= 19);
+        assert(yCor >= 0 && yCor <= 19);
     }
     
     //xCor, yCor, COEFFICIENT_OF_REFLECTION, and orientation will only be used
@@ -138,12 +139,10 @@ public class TriangleBumper implements Gadget {
      *          the ball which hit the bumper
      */
     public void Action(Ball ball) {
-        Vect newVelocity = ball.getVelocity();
+        LineSegment wall = new LineSegment(0,0,0,0); //throwaway init value
+        Circle corner = new Circle(0,0,0); //throwaway init value
         
-        //ball hits baseCorner
-        if (ball.getPosition().d1 == this.baseCorner.getCenter().x() && ball.getPosition().d2 == this.baseCorner.getCenter().y()) {
-            newVelocity = Geometry.reflectCircle(baseCorner.getCenter(), ball.getCircle().getCenter(), ball.getVelocity(), COEFFICIENT_OF_REFLECTION);
-        }
+        //if (Util.getPartOfGadgetThatBallWillCollideWith()
     }
     
     public boolean isEmpty() {
