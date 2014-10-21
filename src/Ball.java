@@ -46,6 +46,7 @@ public class Ball {
         }
         return false;
     }
+    
     public Circle getCircle() {
         return this.circle;
     }
