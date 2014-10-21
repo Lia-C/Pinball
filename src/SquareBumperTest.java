@@ -26,6 +26,12 @@ public class SquareBumperTest {
     }
 
     @Test
+    public final void testGetMinCollisionTime() {
+        SquareBumper s = new SquareBumper(10,10);
+        
+    }
+    
+    @Test
     public final void testAction() {
         fail("Not yet implemented"); // TODO
     }

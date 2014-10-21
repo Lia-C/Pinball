@@ -32,4 +32,6 @@ public interface Gadget {
      * 
      */
     public void Action(Ball ball);
+    
+    
 }
