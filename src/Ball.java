@@ -27,6 +27,9 @@ public class Ball {
         return this.position;
     }
     
+    public double getRadius(){
+        return this.BALL_RADIUS;
+    }
     public Circle getCircle() {
         return this.circle;
     }

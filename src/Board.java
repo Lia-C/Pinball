@@ -8,7 +8,7 @@ import warmup.Ball;
 
 public class Board {
     
-    private final Ball ball;
+    private final Ball[] balls;
     private final Gadget[] gadgets;
     
     private final int WIDTH = 22;
@@ -39,7 +39,7 @@ public class Board {
     public Board(String boardName){
         //JUST TO MAKE IT COMPILE
         gadgets=null;
-        ball=null;
+        balls=null;
         switch (boardName) {
         case "default":
             //TODO
@@ -103,7 +103,7 @@ public class Board {
      * @param deltaT
      *      the time in milliseconds to update the ball's movement over
      */
-    
+    /*
     //////////////////////////////////////////////////////////////
     //CURRENTLY THIS METHOD DOESN'T TAKE GADGETS INTO ACCOUNT///////
     //IT ONLY ACCOUNTS FOR WALLS////////////////////////////////////
@@ -141,7 +141,7 @@ public class Board {
             if (xOver > yOver){ collisionWall = left.getLineSegment(); }
             else { collisionWall = top.getLineSegment(); }
         }
-        */
+        
         if (newX > 0 && newX < WIDTH && newY > 0 && newY < WIDTH){
             moveBallWithoutGadgetCollision(newLoc);
         } else {
@@ -154,7 +154,7 @@ public class Board {
      * Call this method only if the ball did not collide with any gadget (including walls)
      * @param newLoc
      *      //TODO
-     */
+     
     private void moveBallWithoutGadgetCollision(Geometry.DoublePair newLoc){
         //TODO: update this for ALL gadgets; right now this only works with hitting walls
         this.ball.setPosition(newLoc);
@@ -188,7 +188,7 @@ public class Board {
      *      //TODO
      * @param deltaT
      *      //TODO
-     */
+     
     private void moveBallWithGadgetCollision(Geometry.DoublePair newLoc, LineSegment wall, long deltaT){
         //TODO: update this for ALL gadgets; right now this only works with hitting walls
         double n = Geometry.timeUntilWallCollision(wall, this.ball.getCircle(), this.ball.getVelocity());
@@ -198,6 +198,28 @@ public class Board {
             this.ball.setVelocity(Geometry.reflectWall(wall, this.ball.getVelocity()));
             this.translate(deltaT - timeUntilCollision);
         }
+    }
+    */
+    public void translate(double timeDelta){
+        
+    }
+    private Gadget isGadgetOccupyingSpace(int x, int y){
+        Gadget returnedGadget = new Empty();
+        for (Gadget gadget:gadgets){
+            if (gadget.isOccupying(x, y)){
+                returnedGadget=gadget;
+            }
+        }
+        return returnedGadget;
+    }
+    
+    private boolean isBallOccupyingSpace(int x,int y){
+        for (Ball ball:balls){
+            if ((int) ball.getPosition().d1==x&&(int) ball.getPosition().d2==y){
+                return true;
+            }
+        }
+        return false;
     }
     
     /**
