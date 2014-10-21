@@ -37,9 +37,14 @@ public class Ball {
     public Geometry.DoublePair getPosition(){
         return this.position;
     }
+
     
-    public double getRadius(){
-        return this.BALL_RADIUS;
+    public boolean isInBallSpace(double x, double y){
+        double distFromOrigin=Math.sqrt(Math.pow((x-this.position.d1),2)+Math.pow((y-this.position.d2),2));
+        if (distFromOrigin<=this.BALL_RADIUS){
+            return true;
+        }
+        return false;
     }
     public Circle getCircle() {
         return this.circle;
