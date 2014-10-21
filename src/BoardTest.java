@@ -6,9 +6,7 @@ import org.junit.Test;
 
 public class BoardTest {
 
-    @BeforeClass
-    public static void setUpBeforeClass() throws Exception {
-    }
+    
 
     @Test
     public final void testBoard() {
