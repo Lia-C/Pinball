@@ -130,7 +130,7 @@ public class TriangleBumper implements Gadget {
     public void interactWithBall(Ball ball) {
         LineSegment[] lineSegments = new LineSegment[]{leftLeg, rightLeg, hypotenuse};
         Circle[] circles = new Circle[]{baseCorner, leftCorner, rightCorner};
-        
+
         Vect newVel = new Vect(0,0);
         if (Util.getPartOfGadgetThatBallWillCollideWith(circles, lineSegments, ball) instanceof LineSegment) {
             LineSegment wall = (LineSegment)Util.getPartOfGadgetThatBallWillCollideWith(circles, lineSegments, ball);

@@ -154,12 +154,13 @@ public class Board {
         while (true) {
             System.out.println(this);
             // updateGraph takes in seconds.
-            this.updateBoard(this.TIMEBETWEENFRAMES * 1000);
+            this.updateBoard(this.TIMEBETWEENFRAMES /1000);
             try {
                 Thread.sleep((long) (this.TIMEBETWEENFRAMES));
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            checkRep(); 
         }
     }
 
@@ -182,10 +183,8 @@ public class Board {
          */
         int gadgetIndex = this.getGadgetWithMinCollisionTime(ball, timeDelta);
         int ballIndex = this.getBallWithMinCollisionTime(ball, timeDelta);
-        double gadgetTime = this.gadgets[gadgetIndex].getMinCollisionTime(ball);
-        double ballTime = Geometry.timeUntilBallBallCollision(ball.getCircle(),
-                ball.getVelocity(), this.balls[ballIndex].getCircle(),
-                this.balls[ballIndex].getVelocity());
+        
+        
         // If any gadgets are triggered, they will be kept track of with this
         // and then their actions called.
         Gadget[] triggeredGadgets = new Gadget[] {};
@@ -197,23 +196,45 @@ public class Board {
             }
             // If the ball will collide with a Ball within timeDelta.
             else {
+                double ballTime=Geometry.timeUntilBallBallCollision(ball.getCircle(),
+                        ball.getVelocity(), this.balls[ballIndex].getCircle(),
+                        this.balls[ballIndex].getVelocity());
                 this.moveWithoutCollision(ball, ballTime);
                 this.moveWithoutCollision(this.balls[ballIndex], ballTime);
                 this.makeBallsCollide(ball, this.balls[ballIndex]);
             }
         }
-        // If the ball won't collide with a Gadget within timeDelta.
+        // If the ball will possibly collide with a Gadget within timeDelta.
         else {
+            System.out.println("AM I AT LEAST IN HERE FUCL?");
+            System.out.println("BALL PROPERTIES"+ball.getPosition().d1+" "+ball.getPosition().d2+" "+ball.getVelocity().x()+" "+ball.getVelocity().y()+" "+ball.getTime());
+            double gadgetTime = this.gadgets[gadgetIndex].getMinCollisionTime(ball);
             // If the ball won't collide with a Ball within timeDelta.
             if (this.balls.length == ballIndex) {
-                this.moveWithoutCollision(ball, timeDelta);
+                System.out.println("I AM IN HELL"+gadgetTime); 
+                this.moveWithoutCollision(ball, gadgetTime);
+                Vect priorVel=ball.getVelocity();
+                System.out.println("PRIOR VEL"+ball.getVelocity().x()+" "+ball.getVelocity().y());
+                this.gadgets[gadgetIndex].interactWithBall(ball);
+                Vect afterVel =ball.getVelocity();
+                System.out.println("AFTER VEL"+ball.getVelocity().x()+" "+ball.getVelocity().y());
+                System.out.println("CURRENTPOS"+ball.getPosition().d1+" "+ball.getPosition().d2);
+                if (afterVel.equals(priorVel)){
+                    throw new RuntimeErrorException(null, "SHIT IS FUCKED YO");
+                }
+                
+                triggeredGadgets = this.gadgets[gadgetIndex].trigger();
             }
             // If the ball will possibly collide with both a ball and a Gadget.
             else {
+                double ballTime=Geometry.timeUntilBallBallCollision(ball.getCircle(),
+                        ball.getVelocity(), this.balls[ballIndex].getCircle(),
+                        this.balls[ballIndex].getVelocity());
 
                 // For now avoiding the case that a ball will hit a ball and
                 // gadget at the same time.
-                if (gadgetTime > ballTime) {
+                if (gadgetTime < ballTime) {
+                    
                     this.moveWithoutCollision(ball, gadgetTime);
                     this.gadgets[gadgetIndex].interactWithBall(ball);
                     triggeredGadgets = this.gadgets[gadgetIndex].trigger();
@@ -229,7 +250,8 @@ public class Board {
             this.triggerGadgets(triggeredGadgets);
         }
         // If the ball isn't done moving, make sure it keeps moving
-        if (ball.getTime() != 0) {
+        if (!Util.doublesAreEqual(ball.getTime(), 0)) {
+            System.out.println("STUCK HERE?");
             this.translate(ball, ball.getTime());
         }
     }
@@ -287,11 +309,15 @@ public class Board {
             if (collisionTime < minTime) {
                 minTime = collisionTime;
                 index = i;
+               // System.out.println("Gadget "+gadgets[i].toString()+ " minTime"+minTime);
             }
         }
+       // System.out.println("HERE");
+       // System.out.println("min time "+minTime+" delta time "+timeDelta);
         if (minTime > timeDelta) {
             return this.gadgets.length;
         } else {
+            
             return index;
         }
     }
@@ -343,11 +369,13 @@ public class Board {
         if (!ball.isHeld()) {
             // Updating with Friction
             double magnitude = ball.getVelocity().length();
+            System.out.println("magnitude  "+magnitude);
             magnitude = magnitude
                     * (1 - this.MU * timeDelta - this.MU2 * magnitude
                             * timeDelta);
             Vect intermediateVel = new Vect(ball.getVelocity().angle(),
                     magnitude);
+            System.out.println("magnitude  "+magnitude);
             // Updating using Gravity
             Vect withGrav = new Vect(intermediateVel.x(), intermediateVel.y()
                     + this.GRAVITY * timeDelta);
@@ -380,7 +408,13 @@ public class Board {
         }
         // Update all of the balls' velocities to account for acceleration.
         for (Ball ball : this.balls) {
+            System.out.println("Before Gravity");
+            System.out.println(ball.getPosition().d1+" "+ball.getPosition().d2);
+            System.out.println(ball.getVelocity().x()+" "+ball.getVelocity().y());
             this.updateVelWithAccel(ball, timeDelta);
+            System.out.println("After Gravity");
+            System.out.println(ball.getPosition().d1+" "+ball.getPosition().d2);
+            System.out.println(ball.getVelocity().x()+" "+ball.getVelocity().y());
         }
         // Makes a gadget acting if it wasn't triggered this iteration, but is
         // still moving.
@@ -432,8 +466,8 @@ public class Board {
                         }
                     }
                     for (Ball ball : balls) {
-                        if ((int) ball.getPosition().d1 == i - 1
-                                && (int) ball.getPosition().d2 == j - 1) {
+                        if ((int) ball.getPosition().d1 == j - 1
+                                && (int) ball.getPosition().d2 == i - 1) {
                             board[j][i] = "*";
                             isOccupied = true;
                         }
@@ -447,7 +481,7 @@ public class Board {
         StringBuilder string = new StringBuilder();
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
-                string.append(board[i][j]);
+                string.append(board[j][i]);
             }
             string.append("\n");
         }

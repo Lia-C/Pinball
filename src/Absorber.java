@@ -42,7 +42,7 @@ public class Absorber implements Gadget{
      * @param yCor 
      *          must be in range [0,19]
      */
-    public Absorber(int xCor, int yCor, int height, int width, Gadget[] toTrigger) {
+    public Absorber(int xCor, int yCor, int width, int height, Gadget[] toTrigger) {
         this.xCor = xCor;
         this.yCor = yCor;
         this.height = height;
@@ -74,6 +74,7 @@ public class Absorber implements Gadget{
     }
     
     public boolean isOccupying(int x, int y) {
+        System.out.println("LOOK AT ME"+ xCor+" "+yCor+ " "+(xCor+width)+" "+(yCor+height));
         if (x >= xCor && x <= xCor+width && y >= yCor && y <= yCor+height){
             return true;
         }
