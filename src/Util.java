@@ -53,10 +53,10 @@ public class Util {
      *          in other words, this returns whichever circle/linesegment the ball would hit first
      *          NOTE: in the case that there is no minimum (this should NEVER happen), this method returns an empty gadget
      */
+    
     public static Object getPartOfGadgetThatBallWillCollideWith(Circle[] circles, LineSegment[] lineSegments, Ball ball){
         double minCollisionTime = getMinCollisionTime(circles, lineSegments, ball);
         double current = Double.POSITIVE_INFINITY;
-        Object ballWillCollideWithThis; //either a LineSegment or a Circle
         
         for(Circle circle:circles){
             current = Geometry.timeUntilCircleCollision(circle, ball.getCircle(), ball.getVelocity());

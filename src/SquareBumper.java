@@ -1,18 +1,18 @@
 import physics.*;
-import java.lang.Double;
+
 
 public class SquareBumper implements Gadget{
     private final LineSegment top, bottom, left, right;
     private final Circle topLeftCorner, topRightCorner, bottomLeftCorner, bottomRightCorner;
     private final int xCor, yCor;
     
-    private final double COEFFICIENT_OF_REFLECTION = 1.0;
+    private static final double COEFFICIENT_OF_REFLECTION = 1.0;
     
     /**
      * An immutable class representing a square bumper.
      * 
      * Abstraction function: represents a square bumper with a specific location on the board
-     * Rep invariant: xCor and yCor are in [1,20]
+     * Rep invariant: xCor and yCor are in [0,19]
      * 
      * Size and shape: a square shape with edge length 1L
      * Orientation: not applicable (symmetric to 90 degree rotations)
@@ -26,10 +26,10 @@ public class SquareBumper implements Gadget{
      * Make new square bumper
      * @param xCor
      *          x-coordinate of the desired upper-left of the bumper's bounding box
-     *          has to be in the range [1,20] (needs to be in the playing area)
+     *          has to be in the range [0,19] (needs to be in the playing area)
      * @param yCor
      *          y-coordinate of the desired upper-left of the bumper's bounding box
-     *          has to be in the range [1,20] (needs to be in the playing area)
+     *          has to be in the range [0,19] (needs to be in the playing area)
      */
     public SquareBumper(int xCor, int yCor){
         this.xCor = xCor;
@@ -45,10 +45,8 @@ public class SquareBumper implements Gadget{
         checkRep();
     }
     
-    public boolean isOccupying(int x, int y){
-        return x == xCor && y == yCor;
-    }
     
+    @Override
     public boolean isEmpty(){
         return false;
     }
@@ -59,6 +57,7 @@ public class SquareBumper implements Gadget{
      * @param ball One of the balls moving around the map
      * @return The least time it would take for the ball to collide with any of the Geometry objects in this Gadget.
      */
+    @Override
     public double getMinCollisionTime(Ball ball){
         Circle[] circles = new Circle[] {topLeftCorner, topRightCorner, bottomLeftCorner, bottomRightCorner};
         LineSegment[] lineSegments = new LineSegment[] {top, bottom, left, right};
@@ -71,97 +70,29 @@ public class SquareBumper implements Gadget{
      * @param ball
      *          the ball which hit the bumper
      */
+    @Override
     public void Action(Ball ball){
         
-
-        
-        
-
         Vect newVelocity = ball.getVelocity(); //just a throwaway initialization value
         
-        //the ball hit the topLeftCorner
-        if(ball.getPosition().d1 == this.topLeftCorner.getCenter().x() && ball.getPosition().d2 == this.topLeftCorner.getCenter().y()) {
-            newVelocity = Geometry.reflectCircle(topLeftCorner.getCenter(), ball.getCircle().getCenter(), ball.getVelocity(), COEFFICIENT_OF_REFLECTION);
+        Circle[] circles = new Circle[] {topLeftCorner, topRightCorner, bottomLeftCorner, bottomRightCorner};
+        LineSegment[] lineSegments = new LineSegment[] {top, bottom, left, right};
+        Object ballWillCollideWith = Util.getPartOfGadgetThatBallWillCollideWith(circles, lineSegments, ball);
+        
+        if (ballWillCollideWith instanceof LineSegment){
+            //reflectWall(LineSegment line, Vect velocity, double reflectionCoeff)
+            newVelocity = Geometry.reflectWall((LineSegment) ballWillCollideWith, ball.getVelocity(), COEFFICIENT_OF_REFLECTION);
         }
-        //the ball hit the topRightCorner
-        else if(ball.getPosition().d1 == this.topRightCorner.getCenter().x()  && ball.getPosition().d2 == this.topRightCorner.getCenter().y()) {
-            newVelocity = Geometry.reflectCircle(topRightCorner.getCenter(), ball.getCircle().getCenter(), ball.getVelocity(), COEFFICIENT_OF_REFLECTION);
+        else if (ballWillCollideWith instanceof Circle){
+            newVelocity = Geometry.reflectCircle(((Circle) ballWillCollideWith).getCenter(), ball.getCircle().getCenter(), ball.getVelocity(), COEFFICIENT_OF_REFLECTION);
         }
-        
-        //the ball hit the bottomLeftCorner
-        else if(ball.getPosition().d1 == this.bottomLeftCorner.getCenter().x()  && ball.getPosition().d2 == this.bottomLeftCorner.getCenter().y()) {
-            newVelocity = Geometry.reflectCircle(bottomLeftCorner.getCenter(), ball.getCircle().getCenter(), ball.getVelocity(), COEFFICIENT_OF_REFLECTION);
-        }
-        
-        //the ball hit the bottomRightCorner
-        else if(ball.getPosition().d1 == this.bottomRightCorner.getCenter().x()  && ball.getPosition().d2 == this.bottomRightCorner.getCenter().y()) {
-            newVelocity = Geometry.reflectCircle(bottomRightCorner.getCenter(), ball.getCircle().getCenter(), ball.getVelocity(), COEFFICIENT_OF_REFLECTION);
-        }
-        
-        //the ball hit the top
-        else if(ball.getPosition().d1 > xCor && ball.getPosition().d1 < xCor+1 && ball.getPosition().d2 == this.bottomRightCorner.getCenter().y()) {
-            newVelocity = Geometry.reflectCircle(bottomRightCorner.getCenter(), ball.getCircle().getCenter(), ball.getVelocity(), COEFFICIENT_OF_REFLECTION);
-        }
-        
-        
-        
         
         ball.setVelocity(newVelocity);
-
-            
         
     }
     
-//    /**
-//     * Get the x-coordinate of the upper-left corner of the square bumper's bounding box
-//     * @return xCor of upper-left corner of the square bumper's bounding box
-//     */
-//    public int getXCor(){
-//        return xCor;
-//    }
-//    
-//    /**
-//     * Get the y-coordinate of the upper-left corner of the square bumper's bounding box
-//     * @return yCor of upper-left corner of the square bumper's bounding box
-//     */
-//    public int getYCor(){
-//        return yCor;
-//    }
-//    
-//    /**
-//     * Get the LineSegment representing the top of the bumper
-//     * @return the LineSegment representing the top of the bumper
-//     */
-//    public LineSegment getTop(){
-//        return top;
-//    }
-//    
-//    /**
-//     * Get the LineSegment representing the bottom of the bumper
-//     * @return the LineSegment representing the bottom of the bumper
-//     */
-//    public LineSegment getBottom(){
-//        return bottom;
-//    }
-//    
-//    /**
-//     * Get the LineSegment representing the left side of the bumper
-//     * @return the LineSegment representing the left side of the bumper
-//     */
-//    public LineSegment getLeft(){
-//        return left;
-//    }
-//    
-//    /**
-//     * Get the LineSegment representing the right side of the bumper
-//     * @return the LineSegment representing the right side of the bumper
-//     */
-//    public LineSegment getRight(){
-//        return right;
-//    }
-    
     private void checkRep(){
-        assert xCor >= 1 && xCor <= 20 && yCor >= 1 && yCor <= 20;
+        assert xCor >= 0 && xCor <= 19 && yCor >= 0 && yCor <= 19;
     }
     
     @Override
