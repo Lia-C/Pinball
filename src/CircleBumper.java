@@ -39,10 +39,7 @@ public class CircleBumper implements Gadget{
         checkRep();
     }
     
-    @Override
-    public boolean isEmpty(){
-        return false;
-    }
+
     
     /**
      * Meant to be used to determine which, if any, Gadget that a ball would hit, and when.
@@ -64,7 +61,7 @@ public class CircleBumper implements Gadget{
      *          the ball which hit the bumper
      */
     @Override
-    public void Action(Ball ball){
+    public void Action(){
         Vect newVelocity = Geometry.reflectCircle(circle.getCenter(), ball.getCircle().getCenter(), ball.getVelocity(), COEFFICIENT_OF_REFLECTION);
         ball.setVelocity(newVelocity);
     }

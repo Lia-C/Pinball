@@ -46,11 +46,7 @@ public class SquareBumper implements Gadget{
         checkRep();
     }
     
-    
-    @Override
-    public boolean isEmpty(){
-        return false;
-    }
+
     
     /**
      * Meant to be used to determine which, if any, Gadget that a ball would hit, and when.

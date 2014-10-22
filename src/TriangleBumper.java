@@ -175,10 +175,7 @@ public class TriangleBumper implements Gadget {
         return Util.getMinCollisionTime(circles, lineSegments, ball);
     }
     
-    public boolean isEmpty() {
-        return false;
-    }
-    
+
     @Override
     public String toString() {
         if (orientation == 0 || orientation == 180) {
