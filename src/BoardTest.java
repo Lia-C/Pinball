@@ -21,21 +21,7 @@ public class BoardTest {
         board = new Board("test");
     }
 
-    @Test
-    public final void testBoard() {
-        fail("Not yet implemented"); // TODO
-    }
-
-    @Test
-    public final void testRun() {
-        fail("Not yet implemented"); // TODO
-    }
-
-    @Test
-    public final void testTranslate() {
-        fail("Not yet implemented"); // TODO
-    }
-
+    
     // Checks that two colliding balls along the Y axis will reflect.
     // (Intentional pun)
     @Test
