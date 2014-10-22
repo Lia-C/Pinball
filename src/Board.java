@@ -207,11 +207,22 @@ public class Board {
         // If the ball will possibly collide with a Gadget within timeDelta.
         else {
             System.out.println("AM I AT LEAST IN HERE FUCL?");
+            System.out.println("BALL PROPERTIES"+ball.getPosition().d1+" "+ball.getPosition().d2+" "+ball.getVelocity().x()+" "+ball.getVelocity().y()+" "+ball.getTime());
             double gadgetTime = this.gadgets[gadgetIndex].getMinCollisionTime(ball);
             // If the ball won't collide with a Ball within timeDelta.
             if (this.balls.length == ballIndex) {
+                System.out.println("I AM IN HELL"+gadgetTime); 
                 this.moveWithoutCollision(ball, gadgetTime);
+                Vect priorVel=ball.getVelocity();
+                System.out.println("PRIOR VEL"+ball.getVelocity().x()+" "+ball.getVelocity().y());
                 this.gadgets[gadgetIndex].interactWithBall(ball);
+                Vect afterVel =ball.getVelocity();
+                System.out.println("AFTER VEL"+ball.getVelocity().x()+" "+ball.getVelocity().y());
+                System.out.println("CURRENTPOS"+ball.getPosition().d1+" "+ball.getPosition().d2);
+                if (afterVel.equals(priorVel)){
+                    throw new RuntimeErrorException(null, "SHIT IS FUCKED YO");
+                }
+                
                 triggeredGadgets = this.gadgets[gadgetIndex].trigger();
             }
             // If the ball will possibly collide with both a ball and a Gadget.
@@ -239,7 +250,8 @@ public class Board {
             this.triggerGadgets(triggeredGadgets);
         }
         // If the ball isn't done moving, make sure it keeps moving
-        if (ball.getTime() != 0) {
+        if (!Util.doublesAreEqual(ball.getTime(), 0)) {
+            System.out.println("STUCK HERE?");
             this.translate(ball, ball.getTime());
         }
     }

@@ -130,14 +130,15 @@ public class TriangleBumper implements Gadget {
     public void interactWithBall(Ball ball) {
         LineSegment[] lineSegments = new LineSegment[]{leftLeg, rightLeg, hypotenuse};
         Circle[] circles = new Circle[]{baseCorner, leftCorner, rightCorner};
-        
+        Vect newVel=new Vect(0,0);
         if (Util.getPartOfGadgetThatBallWillCollideWith(circles, lineSegments, ball) instanceof LineSegment) {
             LineSegment wall = (LineSegment)Util.getPartOfGadgetThatBallWillCollideWith(circles, lineSegments, ball);
-            Geometry.reflectWall(wall, ball.getVelocity(), COEFFICIENT_OF_REFLECTION);
+            newVel=Geometry.reflectWall(wall, ball.getVelocity(), COEFFICIENT_OF_REFLECTION);
         } else if (Util.getPartOfGadgetThatBallWillCollideWith(circles, lineSegments, ball) instanceof Circle) { 
             Circle corner = (Circle)Util.getPartOfGadgetThatBallWillCollideWith(circles, lineSegments, ball);
-            Geometry.reflectCircle(corner.getCenter(), ball.getCircle().getCenter(), ball.getVelocity(), COEFFICIENT_OF_REFLECTION);
+            newVel=Geometry.reflectCircle(corner.getCenter(), ball.getCircle().getCenter(), ball.getVelocity(), COEFFICIENT_OF_REFLECTION);
         }
+        ball.setVelocity(newVel);
     }
     
     public Gadget[] trigger() {
