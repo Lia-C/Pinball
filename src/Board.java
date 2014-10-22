@@ -122,6 +122,7 @@ public class Board {
      *            moving.
      */
     private void translate(Ball ball, double timeDelta) {
+   
         /*
          * The point of indexing into the arrays rather than, for example, using
          * Ball ball=this.getBallWithMinCollisionTime(ball, timeDelta) is that
@@ -133,6 +134,8 @@ public class Board {
         double ballTime = Geometry.timeUntilBallBallCollision(ball.getCircle(),
                 ball.getVelocity(), this.balls[ballIndex].getCircle(),
                 this.balls[ballIndex].getVelocity());
+        //If any gadgets are triggered, they will be kept track of with this and then their actions called.
+        Gadget[] triggeredGadgets = new Gadget[] {};
         // If the ball won't collide with a Gadget within timeDelta.
         if (gadgetIndex == this.gadgets.length) {
             // If the ball won't collide with a Ball within timeDelta.
@@ -159,7 +162,8 @@ public class Board {
                 // gadget at the same time.
                 if (gadgetTime > ballTime) {
                     this.moveWithoutCollision(ball, gadgetTime);
-                    this.gadgets[gadgetIndex].Action(ball);
+                    this.gadgets[gadgetIndex].interactWithBall(ball);
+                    triggeredGadgets=this.gadgets[gadgetIndex].trigger();
 
                 } else {
                     this.moveWithoutCollision(ball, ballTime);
