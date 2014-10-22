@@ -15,8 +15,8 @@ public class Board {
     private final double BALLMASS = 1;
     private final int WIDTH = 20;
     private final int HEIGHT = 20;
-    private final int MAX_X_COORDINATE = WIDTH-1;
-    private final int MAX_Y_COORDINATE = HEIGHT-1;
+    private final int MAX_X_COORDINATE = WIDTH - 1;
+    private final int MAX_Y_COORDINATE = HEIGHT - 1;
     private OuterWall top = new OuterWall(0, 0, false);
     private OuterWall bottom = new OuterWall(0, MAX_Y_COORDINATE, false);
     private OuterWall left = new OuterWall(0, 0, true);
@@ -46,23 +46,13 @@ public class Board {
         // JUST TO MAKE IT COMPILE
         gadgets = null;
         balls = null;
-        /*switch (boardName) {
-        case "default":
-            // TODO
-            /*
-             * ball= Gadgets[] = Board default = new Board(ball, gadgets);
-             /
-
-        case "absorber":
-            // TODO
-            break;
-        case "flippers":
-            // TODO
-            break;
-        default:
-            throw new IllegalArgumentException();
-            // break;
-        }*/
+        /*
+         * switch (boardName) { case "default": // TODO /* ball= Gadgets[] =
+         * Board default = new Board(ball, gadgets); /
+         * 
+         * case "absorber": // TODO break; case "flippers": // TODO break;
+         * default: throw new IllegalArgumentException(); // break; }
+         */
         checkRep();
     }
 
@@ -72,26 +62,32 @@ public class Board {
      * @param ball
      *            Ball object representing the ball
      * @param gadgets
-     *            an array of the gadgets that are on the board (the outer walls need not be on the board).
+     *            an array of the gadgets that are on the board (the outer walls
+     *            need not be on the board).
      */
     public Board(Ball[] balls, Gadget[] gadgets) {
         this.balls = balls;
         this.gadgets = gadgets;
         checkRep();
     }
-    
-    //RI is that all object on the board are within the width and height of board, and that gravity and friction coefficients are greater than zero..
+
+    // RI is that all object on the board are within the width and height of
+    // board, and that gravity and friction coefficients are greater than zero..
     private void checkRep() {
-        for (Ball ball:balls){
-            assert ball.getPosition().d1>=0&&ball.getPosition().d1<=WIDTH-1;
-            assert ball.getPosition().d2>=0&&ball.getPosition().d2<=HEIGHT-1;
+        for (Ball ball : balls) {
+            assert ball.getPosition().d1 >= 0
+                    && ball.getPosition().d1 <= WIDTH - 1;
+            assert ball.getPosition().d2 >= 0
+                    && ball.getPosition().d2 <= HEIGHT - 1;
         }
-        for (Gadget gadget:gadgets){
-            assert gadget.getPosition().d1>=0&&gadget.getPosition().d1<=WIDTH-1;
-            assert gadget.getPosition().d2>=0&&gadget.getPosition().d2<=HEIGHT-1;
+        for (Gadget gadget : gadgets) {
+            assert gadget.getPosition().d1 >= 0
+                    && gadget.getPosition().d1 <= WIDTH - 1;
+            assert gadget.getPosition().d2 >= 0
+                    && gadget.getPosition().d2 <= HEIGHT - 1;
         }
-        
-        assert GRAVITY>0&&MU2>0&&MU>0;
+
+        assert GRAVITY > 0 && MU2 > 0 && MU > 0;
     }
 
     /**
@@ -122,6 +118,7 @@ public class Board {
      *            moving.
      */
     private void translate(Ball ball, double timeDelta) {
+
         /*
          * The point of indexing into the arrays rather than, for example, using
          * Ball ball=this.getBallWithMinCollisionTime(ball, timeDelta) is that
@@ -133,6 +130,9 @@ public class Board {
         double ballTime = Geometry.timeUntilBallBallCollision(ball.getCircle(),
                 ball.getVelocity(), this.balls[ballIndex].getCircle(),
                 this.balls[ballIndex].getVelocity());
+        // If any gadgets are triggered, they will be kept track of with this
+        // and then their actions called.
+        Gadget[] triggeredGadgets = new Gadget[] {};
         // If the ball won't collide with a Gadget within timeDelta.
         if (gadgetIndex == this.gadgets.length) {
             // If the ball won't collide with a Ball within timeDelta.
@@ -159,7 +159,8 @@ public class Board {
                 // gadget at the same time.
                 if (gadgetTime > ballTime) {
                     this.moveWithoutCollision(ball, gadgetTime);
-                    this.gadgets[gadgetIndex].Action(ball);
+                    this.gadgets[gadgetIndex].interactWithBall(ball);
+                    triggeredGadgets = this.gadgets[gadgetIndex].trigger();
 
                 } else {
                     this.moveWithoutCollision(ball, ballTime);
@@ -167,6 +168,9 @@ public class Board {
                     this.makeBallsCollide(ball, this.balls[ballIndex]);
                 }
             }
+        }
+        if (triggeredGadgets.length != 0) {
+            this.triggerGadgets(triggeredGadgets);
         }
         // If the ball isn't done moving, make sure it keeps moving
         if (ball.getTime() != 0) {
@@ -304,7 +308,7 @@ public class Board {
      */
     private void updateBoard(double timeDelta) {
         // Initialize timeDeltas for all gadgets
-        for (Gadget gadget:gadgets){
+        for (Gadget gadget : gadgets) {
             gadget.setTime(timeDelta);
         }
         // Initialize timeDeltas for all balls
@@ -322,7 +326,32 @@ public class Board {
         for (Ball ball : this.balls) {
             this.updateVelWithAccel(ball, timeDelta);
         }
+        // Makes a gadget acting if it wasn't triggered this iteration, but is
+        // still moving.
+        for (Gadget gadget : gadgets) {
+            if (gadget.isActing()) {
+                gadget.Action();
+            }
+        }
         checkRep();
+    }
+
+    /**
+     * Calls .Action() on the gadgets referenced to in the gadgetArray.
+     * 
+     * @param gadgetArray
+     *            Contains copies of the Gadgets in gadgets, used to index into
+     *            gadgets and find the referenced gadgets.
+     */
+    private void triggerGadgets(Gadget[] gadgetArray) {
+        for (Gadget gadget : gadgetArray) {
+            Geometry.DoublePair gadgLoc = gadget.getPosition();
+            for (int i = 0; i < this.gadgets.length; i++) {
+                if (gadgets[i].getPosition().equals(gadgLoc)) {
+                    gadgets[i].Action();
+                }
+            }
+        }
     }
 
     /**
@@ -331,41 +360,42 @@ public class Board {
      */
     @Override
     public String toString() {
-        //The + 2 is to account for drawing the walls.
-        String[][] board = new String[this.HEIGHT+2][this.WIDTH+2];
-        for (int i=0; i<board.length;i++){
-            for (int j=0; j<board[i].length;j++){
-                if (i==0||j==0||i==board.length-1||j==board[i].length-1){
-                    board[j][i]=".";
-                }
-                else{
-                    boolean isOccupied=false;
-                    for (Gadget gadget:gadgets){
-                        if (gadget.isOccupying(j-1, i-1)){
-                            board[j][i]=gadget.toString();
-                            isOccupied=true;
-                        }   
-                    }
-                    for (Ball ball:balls){
-                        if ((int)ball.getPosition().d1==i-1&&(int)ball.getPosition().d2==j-1){
-                            board[j][i]="*";
-                            isOccupied=true;
+        // The + 2 is to account for drawing the walls.
+        String[][] board = new String[this.HEIGHT + 2][this.WIDTH + 2];
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                if (i == 0 || j == 0 || i == board.length - 1
+                        || j == board[i].length - 1) {
+                    board[j][i] = ".";
+                } else {
+                    boolean isOccupied = false;
+                    for (Gadget gadget : gadgets) {
+                        if (gadget.isOccupying(j - 1, i - 1)) {
+                            board[j][i] = gadget.toString();
+                            isOccupied = true;
                         }
                     }
-                    if (!isOccupied){
-                        board[j][i]=" ";
+                    for (Ball ball : balls) {
+                        if ((int) ball.getPosition().d1 == i - 1
+                                && (int) ball.getPosition().d2 == j - 1) {
+                            board[j][i] = "*";
+                            isOccupied = true;
+                        }
+                    }
+                    if (!isOccupied) {
+                        board[j][i] = " ";
                     }
                 }
             }
         }
         StringBuilder string = new StringBuilder();
-        for (int i=0;i<board.length;i++){
-            for (int j=0;j<board[i].length;j++){
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
                 string.append(board[i][j]);
             }
             string.append("\n");
         }
         return string.toString();
-        
+
     }
 }

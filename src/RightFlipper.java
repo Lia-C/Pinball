@@ -11,14 +11,17 @@ import physics.*;
  * Rotates 90 degrees when triggered.
  */
 public class RightFlipper implements Gadget {
-    private final int xCor, yCor, orientation; //orientation must be 0 or 90
-    private final LineSegment flipper;
-    private final Circle pivot, endpoint;
-    private final boolean flipping;
-    private final boolean isVertical;
+    private final int xCor, yCor, orientation;
+    private double time;
+    private LineSegment flipper;
+    private Circle endpoint;
+    private final Circle pivot;
+    private final Gadget[] toTrigger;
+    private boolean flipping;
+    private boolean isVertical;
     
     private final double COEFFICIENT_OF_REFLECTION = 0.95;
-    private final double ANGULAR_VELOCITY = 1080.0;
+    private final double ANGULAR_VELOCITY = -1080.0; //RightFlippers always rotate clockwise
     
     //Rep invariant:
     //  xCor, yCor are in the range [0, 18] inclusive
@@ -41,10 +44,11 @@ public class RightFlipper implements Gadget {
      *          rotation in degrees from the default orientation
      *          must be 0, 90, 180, or 270
      */
-    public RightFlipper(int xCor, int yCor, int orientation) {
+    public RightFlipper(int xCor, int yCor, int orientation, Gadget[] toTrigger) {
         this.xCor = xCor;
         this.yCor = yCor;
         this.orientation = orientation;
+        this.toTrigger = toTrigger;
         if (orientation == 0) {
             this.flipper = new LineSegment(xCor+1, yCor, xCor+1, yCor+1);
             this.pivot = new Circle(xCor+1, yCor, 0);
@@ -83,10 +87,11 @@ public class RightFlipper implements Gadget {
      *          rotation in degrees from the default orientation
      *          must be 0, 90, 180, or 270
      */
-    public RightFlipper(int xCor, int yCor) {
+    public RightFlipper(int xCor, int yCor, Gadget[] toTrigger) {
         this.xCor = xCor;
         this.yCor = yCor;
         this.orientation = 0;
+        this.toTrigger = toTrigger;
         this.flipper = new LineSegment(xCor+1, yCor, xCor+1, yCor+1);
         this.pivot = new Circle(xCor+1, yCor, 0);
         this.endpoint = new Circle(xCor+1, yCor+1, 0);
@@ -132,6 +137,14 @@ public class RightFlipper implements Gadget {
         return new Geometry.DoublePair(xCor, yCor);
     }
     
+    public void setTime(double time) {
+        this.time = time;
+    }
+    
+    public boolean isActing() {
+        return flipping;
+    }
+    
     public boolean isOccupying(int x, int y) {
         if (orientation == 0) {
             if (isVertical) {
@@ -174,15 +187,46 @@ public class RightFlipper implements Gadget {
         return Util.getMinCollisionTime(circles, lineSegments, ball);
     }
     
-    /**
-     * Mutates the ball's velocity when the ball hits the bumper and 
-     * rotates itself 90 degrees around its pivot point.
-     * 
-     * @param ball
-     *          the ball which hit the bumper
-     */
-    public void Action(Ball ball) {//TODO
+    public void Action() {
+        flipping = true;
+        Angle angleRotated = new Angle(Math.toRadians(ANGULAR_VELOCITY * time));
+        if (angleRotated.compareTo(Angle.DEG_90) >= 0) { 
+            flipping = false;
+            angleRotated = Angle.DEG_90;
+            isVertical = !isVertical;
+        }
+        flipper = Geometry.rotateAround(flipper, pivot.getCenter(), angleRotated);
+        endpoint = Geometry.rotateAround(endpoint, pivot.getCenter(), angleRotated);
+        time = 0;
+    }
+    
+    public void interactWithBall(Ball ball) {
+        LineSegment[] lineSegments = new LineSegment[]{flipper};
+        Circle[] circles = new Circle[]{pivot, endpoint};
         
+        if (Util.getPartOfGadgetThatBallWillCollideWith(circles, lineSegments, ball) instanceof LineSegment) {
+            LineSegment wall = (LineSegment)Util.getPartOfGadgetThatBallWillCollideWith(circles, lineSegments, ball);
+            if (flipping) {
+                Geometry.reflectRotatingWall(wall, pivot.getCenter(), ANGULAR_VELOCITY, ball.getCircle(), ball.getVelocity(), COEFFICIENT_OF_REFLECTION);
+            } else {
+                Geometry.reflectWall(wall, ball.getVelocity(), COEFFICIENT_OF_REFLECTION);
+            }
+        } else if (Util.getPartOfGadgetThatBallWillCollideWith(circles, lineSegments, ball) instanceof Circle) { 
+            Circle corner = (Circle)Util.getPartOfGadgetThatBallWillCollideWith(circles, lineSegments, ball);
+            if (flipping && corner.getCenter().x() == pivot.getCenter().x() && corner.getCenter().y() == pivot.getCenter().y()) {
+                //corner is pivot, is not moving
+                Geometry.reflectCircle(corner.getCenter(), ball.getCircle().getCenter(), ball.getVelocity(), COEFFICIENT_OF_REFLECTION);
+            } else if(flipping) { //corner is endpoint, is moving
+                Geometry.reflectRotatingCircle(endpoint, pivot.getCenter(), ANGULAR_VELOCITY, ball.getCircle(), ball.getVelocity(), COEFFICIENT_OF_REFLECTION);
+            } else { //not flipping
+                Geometry.reflectCircle(corner.getCenter(), ball.getCircle().getCenter(), ball.getVelocity(), COEFFICIENT_OF_REFLECTION);
+            }
+        }
+    }
+    
+    
+    public Gadget[] trigger() {
+        return toTrigger;
     }
     
     public boolean isEmpty() {
@@ -191,7 +235,7 @@ public class RightFlipper implements Gadget {
     
     @Override
     public String toString() {
-        if (orientation == 0) { return "|"; }
+        if (isVertical) { return "|"; }
         else { return "-"; }
     }
     

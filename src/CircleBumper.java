@@ -41,7 +41,6 @@ public class CircleBumper implements Gadget{
         checkRep();
     }
     
-    
     /**
      * Meant to be used to determine which, if any, Gadget that a ball would hit, and when.
      * 
@@ -80,11 +79,9 @@ public class CircleBumper implements Gadget{
     public void setTime(double time){
     }
     
-   
     private void checkRep(){
         assert xCor >= 0 && xCor <= 19 && yCor >= 0 && yCor <= 19;
     }
-    
     
     @Override
     public String toString(){

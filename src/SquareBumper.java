@@ -47,7 +47,6 @@ public class SquareBumper implements Gadget{
         checkRep();
     }
     
-
     @Override
     public double getMinCollisionTime(Ball ball){
         Circle[] circles = new Circle[] {topLeftCorner, topRightCorner, bottomLeftCorner, bottomRightCorner};

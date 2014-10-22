@@ -16,6 +16,7 @@ public class TriangleBumper implements Gadget {
     private final Circle baseCorner, leftCorner, rightCorner; //baseCorner is the corner opposite the hypotenuse.
                                                               //leftCorner, rightCorner are to the left and right if you
                                                               //are sitting at the baseCorner and facing the hypotenuse.
+    private final Gadget[] toTrigger;
     
     private final double COEFFICIENT_OF_REFLECTION = 1.0;
     
@@ -39,10 +40,11 @@ public class TriangleBumper implements Gadget {
      *          rotation in degrees from the default orientation
      *          must be 0, 90, 180, or 270
      */
-    public TriangleBumper(int xCor, int yCor, int orientation) {
+    public TriangleBumper(int xCor, int yCor, int orientation, Gadget[] toTrigger) {
         this.xCor = xCor;
         this.yCor = yCor;
         this.orientation = orientation;
+        this.toTrigger = toTrigger;
         if (orientation == 0) {
             this.baseCorner = new Circle(xCor, yCor, 0);
             this.leftCorner = new Circle(xCor+1, yCor, 0);
@@ -85,10 +87,11 @@ public class TriangleBumper implements Gadget {
      *          y-coordinate of the upper-left corner of the bumper's bounding box
      *          must be in the range [0,19]
      */
-    public TriangleBumper(int xCor, int yCor) {
+    public TriangleBumper(int xCor, int yCor, Gadget[] toTrigger) {
         this.xCor = xCor;
         this.yCor = yCor;
         this.orientation = 0;
+        this.toTrigger = toTrigger;
         this.baseCorner = new Circle(xCor, yCor, 0);
         this.leftCorner = new Circle(xCor+1, yCor, 0);
         this.rightCorner = new Circle(xCor, yCor+1, 0);
@@ -136,14 +139,20 @@ public class TriangleBumper implements Gadget {
         if (x >= xCor && x <= xCor+1 && y >= yCor && y <= yCor+1) { return true; } 
         else { return false; }
     }
+
+    public void Action() {
+        //TriangleBumper has no action
+    }
     
-    /**
-     * Mutates the ball's velocity when the ball hits the bumper.
-     * 
-     * @param ball
-     *          the ball which hit the bumper
-     */
-    public void Action(Ball ball) {
+    public boolean isActing() {
+        return false; //TriangleBumper has no action
+    }
+    
+    public void setTime(double time) {
+        //TriangleBumper is not time dependent
+    }
+    
+    public void interactWithBall(Ball ball) {
         LineSegment[] lineSegments = new LineSegment[]{leftLeg, rightLeg, hypotenuse};
         Circle[] circles = new Circle[]{baseCorner, leftCorner, rightCorner};
         
@@ -156,16 +165,17 @@ public class TriangleBumper implements Gadget {
         }
     }
     
+    public Gadget[] trigger() {
+        return toTrigger;
+    }
+    
     public double getMinCollisionTime(Ball ball) {
         LineSegment[] lineSegments = new LineSegment[]{leftLeg, rightLeg, hypotenuse};
         Circle[] circles = new Circle[]{baseCorner, leftCorner, rightCorner};
         return Util.getMinCollisionTime(circles, lineSegments, ball);
     }
     
-    public boolean isEmpty() {
-        return false;
-    }
-    
+
     @Override
     public String toString() {
         if (orientation == 0 || orientation == 180) {
