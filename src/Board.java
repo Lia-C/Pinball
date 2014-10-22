@@ -12,11 +12,6 @@ public class Board {
     private final double GRAVITY = 10;
     private final double MU = .005;
     private final double MU2 = .001;
-<<<<<<< HEAD
-    private final int WIDTH = 20;
-    private final int HEIGHT = 20;
-=======
->>>>>>> ca792f3b599d629f88fc17a96c7cb0f569c25d72
     private final double BALLMASS = 1;
     private final int WIDTH = 20;
     private final int HEIGHT = 20;
@@ -77,8 +72,7 @@ public class Board {
      * @param ball
      *            Ball object representing the ball
      * @param gadgets
-     *            an array of the gadgets that are on the board, NOT including
-     *            the outer walls
+     *            an array of the gadgets that are on the board (the outer walls need not be on the board).
      */
     public Board(Ball[] balls, Gadget[] gadgets) {
         this.balls = balls;
@@ -88,7 +82,12 @@ public class Board {
     
     //RI is that all object on the board are within the width and height of board, and that gravity and friction coefficients are greater than zero..
     private void checkRep() {
-        assert WIDTH == 20 && HEIGHT == 20;
+        for (Ball ball:balls){
+            assert ball.getPosition().d1>=0&&ball.getPosition().d1<=WIDTH-1;
+            assert ball.getPosition().d2>=0&&ball.getPosition().d2<=HEIGHT-1;
+        }
+        
+        assert GRAVITY>0&&MU2>0&&MU>0;
     }
 
     /**
@@ -315,7 +314,7 @@ public class Board {
         for (Ball ball : this.balls) {
             this.updateVelWithAccel(ball, timeDelta);
         }
-
+        checkRep();
     }
 
     /**
@@ -324,14 +323,41 @@ public class Board {
      */
     @Override
     public String toString() {
-        String[][] board = new String[20][20];
-        // fill with empty strings
-        // for each tile x,y
-        // for each gadget in Gadgets[]
-        // if gadget.isOccupying(x,y)
-        // board[x][y] = gadget.toString()
-        return null;
-
-        // add ball
+        //The + 2 is to account for drawing the walls.
+        String[][] board = new String[this.HEIGHT+2][this.WIDTH+2];
+        for (int i=0; i<board.length;i++){
+            for (int j=0; j<board[i].length;j++){
+                if (i==0||j==0||i==board.length-1||j==board[i].length-1){
+                    board[j][i]=".";
+                }
+                else{
+                    boolean isOccupied=false;
+                    for (Gadget gadget:gadgets){
+                        if (gadget.isOccupying(j-1, i-1)){
+                            board[j][i]=gadget.toString();
+                            isOccupied=true;
+                        }   
+                    }
+                    for (Ball ball:balls){
+                        if ((int)ball.getPosition().d1==i-1&&(int)ball.getPosition().d2==j-1){
+                            board[j][i]="*";
+                            isOccupied=true;
+                        }
+                    }
+                    if (!isOccupied){
+                        board[j][i]=" ";
+                    }
+                }
+            }
+        }
+        StringBuilder string = new StringBuilder();
+        for (int i=0;i<board.length;i++){
+            for (int j=0;j<board[i].length;j++){
+                string.append(board[i][j]);
+            }
+            string.append("\n");
+        }
+        return string.toString();
+        
     }
 }

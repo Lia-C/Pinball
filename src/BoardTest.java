@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import physics.*;
 
+//Testing Strategies described above tests.
 
 public class BoardTest {
     private static Ball ball1;
@@ -66,6 +67,7 @@ public class BoardTest {
         
     }
     
+    //Test that a ball, not set on a path for collision, will move to the desired place and use up all of it's time.
     @Test
     public final void testMoveWithoutCollision() {
         double timeDelta=1;
@@ -94,6 +96,9 @@ public class BoardTest {
         
     }
     
+    /*Test that when multiple balls may collide with a single ball, the one that will 
+    *collide first is found. Also, if no ball will collide, that is also determined accurately.
+    */
     @Test
     public final void testGetBallWithMinCollisionTime(){
         double timeDelta=1;
@@ -102,7 +107,7 @@ public class BoardTest {
         ball3=new Ball(new Vect( 0,1.), new Geometry.DoublePair(3,1));
         ball4=new Ball(new Vect( 0,1.), new Geometry.DoublePair(6,6));
         Ball[] balls={ball1,ball2,ball3,ball4};
-        Board newBoard=new Board(balls, null);
+        Board newBoard=new Board(balls, new Gadget[] {});
         try {
             java.lang.reflect.Method method = newBoard.getClass().getDeclaredMethod("getBallWithMinCollisionTime", new Class[] {Ball.class,double.class} );
             method.setAccessible(true);
@@ -131,5 +136,16 @@ public class BoardTest {
        }
         
     }
-
+    
+    //Print out the board, and make sure that objects near the edge are properly represented.
+    @Test
+    public final void testToString(){
+        ball1=new Ball(new Vect(0,-1),new Geometry.DoublePair(3, 4));
+        ball2=new Ball(new Vect(0,0),new Geometry.DoublePair(3, 3));
+        ball3=new Ball(new Vect( 0,1.), new Geometry.DoublePair(3,0));
+        ball4=new Ball(new Vect( 0,1.), new Geometry.DoublePair(19,19));
+        Ball[] balls={ball1,ball2,ball3,ball4};
+        Board newBoard=new Board(balls, new Gadget[] {});
+        System.out.print(newBoard.toString());
+    }
 }
