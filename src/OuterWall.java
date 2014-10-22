@@ -9,10 +9,14 @@ public class OuterWall implements Gadget{
     private final Circle startCircle, endCircle;
     private final Gadget[] gadgetsThisTriggers;
 
-    private static final int LENGTH = 20;
     private static final double COEFFICIENT_OF_REFLECTION = 1.0;
     
-    private final int MAX_COORDINATE = LENGTH-1;
+    private static final int LENGTH = 20;
+    private static final int MAX_COORDINATE = LENGTH-1;
+    
+    //how much we shift the walls outside the top and bottom of the playing field
+    //also, the radius of the circles at the ends of the line segments
+    private static final double EPSILON = 0.00000000000001; 
     
     /*
      * Rep Invariant:
@@ -43,16 +47,35 @@ public class OuterWall implements Gadget{
         this.y=y;
         this.isVertical=isVertical;
         this.isTransparent=false;
-        if (isVertical){
-            this.line = new LineSegment(x, y, x, y+LENGTH);
-            this.startCircle = new Circle(x,y,0);
-            this.endCircle = new Circle(x,y+LENGTH,0);
+        
+        //left wall
+        if (isVertical && x == 0){
+            this.line = new LineSegment(x-EPSILON, y, x-EPSILON, y+LENGTH);
+            this.startCircle = new Circle(x-EPSILON,y,EPSILON);
+            this.endCircle = new Circle(x-EPSILON, y+LENGTH,EPSILON);
         }
-        else{
-            this.line = new LineSegment(x, y, x+LENGTH, y);
-            this.startCircle = new Circle(x,y,0);
-            this.endCircle = new Circle(x+LENGTH,y,0);
+        
+        //right wall
+        else if (isVertical && x == MAX_COORDINATE){
+            this.line = new LineSegment(x+EPSILON, y, x+EPSILON, y+LENGTH);
+            this.startCircle = new Circle(x+EPSILON,y, EPSILON);
+            this.endCircle = new Circle(x+EPSILON, y+LENGTH,EPSILON);
         }
+        
+        //top wall
+        else if (!isVertical && y == 0){
+            this.line = new LineSegment(x, y-EPSILON, x+LENGTH, y-EPSILON);
+            this.startCircle = new Circle(x, y-EPSILON,EPSILON);
+            this.endCircle = new Circle(x+LENGTH, y-EPSILON, EPSILON);
+        }
+        
+        //bottom wall
+        else { //(!isVertical && y == MAX_COORDINATE)
+            this.line = new LineSegment(x, y+EPSILON, x+LENGTH, y+EPSILON);
+            this.startCircle = new Circle(x, y+EPSILON,EPSILON);
+            this.endCircle = new Circle(x+LENGTH, y+EPSILON, EPSILON);
+        }
+        
         this.gadgetsThisTriggers = gadgetsThisTriggers;
         checkRep();
         
