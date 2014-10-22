@@ -1,5 +1,4 @@
 import physics.*;
-import physics.Geometry.DoublePair;
 
 
 public class SquareBumper implements Gadget{
@@ -99,15 +98,13 @@ public class SquareBumper implements Gadget{
 
     @Override
     public boolean isOccupying(int x, int y) {
-        // TODO Auto-generated method stub
-        return false;
+        return x == xCor && y == yCor;
     }
 
 
     @Override
-    public DoublePair getPosition() {
-        // TODO Auto-generated method stub
-        return null;
+    public Geometry.DoublePair getPosition() {
+        return new Geometry.DoublePair((double) xCor, (double) yCor);
     }
     
 }

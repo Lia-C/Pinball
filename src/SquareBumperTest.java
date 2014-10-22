@@ -19,6 +19,12 @@ public class SquareBumperTest {
      *          -ball hits a line segment
      *      ToString:
      *          -returns #
+     *      IsOccupying:
+     *          -True: upper-left bounding box corner
+     *          -False: outside
+     *      GetPosition:
+     *          -returns position
+     *          
      */
 
     //a square bumper in the "center" of the board
@@ -129,11 +135,21 @@ public class SquareBumperTest {
         assertTrue(Util.doublesAreEqual(initialYVelocity, finalYVelocity));
     }
     
-    
 
     @Test
     public final void testToString() {
         assertTrue(bumperInMiddle.toString().equals("#"));
     }
 
+    @Test
+    public final void testIsOccupying() {
+        assertTrue(bumperInMiddle.isOccupying(HALF_OF_MAX_COORDINATE,HALF_OF_MAX_COORDINATE));
+        assertFalse(bumperInMiddle.isOccupying(HALF_OF_MAX_COORDINATE+1,HALF_OF_MAX_COORDINATE+1));
+    }
+
+    @Test
+    public final void testgetPosition() {
+        assertEquals(bumperInMiddle.getPosition(), new Geometry.DoublePair(HALF_OF_MAX_COORDINATE, HALF_OF_MAX_COORDINATE));
+    }
+    
 }

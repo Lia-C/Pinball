@@ -82,14 +82,12 @@ public class CircleBumper implements Gadget{
 
     @Override
     public boolean isOccupying(int x, int y) {
-        // TODO Auto-generated method stub
-        return false;
+        return x == this.xCor && y == this.yCor;
     }
 
     @Override
     public DoublePair getPosition() {
-        // TODO Auto-generated method stub
-        return null;
+        return new Geometry.DoublePair((double) xCor, (double) yCor);
     }
     
     
