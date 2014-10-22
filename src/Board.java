@@ -17,10 +17,10 @@ public class Board {
     private final int HEIGHT = 20;
     private final int MAX_X_COORDINATE = WIDTH - 1;
     private final int MAX_Y_COORDINATE = HEIGHT - 1;
-    private OuterWall top = new OuterWall(0, 0, false);
-    private OuterWall bottom = new OuterWall(0, MAX_Y_COORDINATE, false);
-    private OuterWall left = new OuterWall(0, 0, true);
-    private OuterWall right = new OuterWall(MAX_X_COORDINATE, 0, true);
+    private OuterWall top = new OuterWall(0, 0, false, new Gadget[]{});
+    private OuterWall bottom = new OuterWall(0, MAX_Y_COORDINATE, false, new Gadget[]{});
+    private OuterWall left = new OuterWall(0, 0, true, new Gadget[]{});
+    private OuterWall right = new OuterWall(MAX_X_COORDINATE, 0, true, new Gadget[]{});
     private final double TIMEBETWEENFRAMES = 1000. / 60.;// Given in
                                                          // milliseconds;
 
@@ -51,16 +51,16 @@ public class Board {
          */
          if (boardName.equals("default")){
              Ball ball1=new Ball(new Vect(0,0),new Geometry.DoublePair(1.25,1.25));
-             Gadget circle=new CircleBumper(1, 10);
+             Gadget circle=new CircleBumper(1, 10, new Gadget[]{});
              Gadget triangle = new TriangleBumper(12, 15, 180, new Gadget[] {});
-             Gadget square1=new SquareBumper(0, 17);
-             Gadget square2=new SquareBumper(1, 17);
-             Gadget square3=new SquareBumper(2, 17);
-             Gadget circle1=new CircleBumper(7, 18);
-             Gadget circle2=new CircleBumper(8, 18);
-             Gadget circle3=new CircleBumper(9, 18);
+             Gadget square1=new SquareBumper(0, 17, new Gadget[]{});
+             Gadget square2=new SquareBumper(1, 17, new Gadget[]{});
+             Gadget square3=new SquareBumper(2, 17, new Gadget[]{});
+             Gadget circle1=new CircleBumper(7, 18, new Gadget[]{});
+             Gadget circle2=new CircleBumper(8, 18, new Gadget[]{});
+             Gadget circle3=new CircleBumper(9, 18, new Gadget[]{});
              this.balls=new Ball[]{ball1};
-             this.gadgets=new Gadget[]{circle,triangle,square1,square2,square3,circle1,circle2,circle3};
+             this.gadgets=new Gadget[]{circle,triangle,square1,square2,square3,circle1,circle2,circle3,top,bottom,left,right};
              
              
          }
@@ -68,15 +68,15 @@ public class Board {
              Ball ball1=new Ball(new Vect(0,0),new Geometry.DoublePair(10.25,15.25));
              Ball ball2=new Ball(new Vect(0,0),new Geometry.DoublePair(19.25,3.25));
              Ball ball3=new Ball(new Vect(0,0),new Geometry.DoublePair(1.25,5.25));
-             Gadget absorber = new Absorber(0, 18, 20, 2);
-             Gadget triangle = new TriangleBumper(19, 0,90, new Gadget[]{absorber});
-             Gadget circle1 = new CircleBumper(1,10);
-             Gadget circle2 = new CircleBumper(2,10);
-             Gadget circle3 = new CircleBumper(3,10);
-             Gadget circle4 = new CircleBumper(4,10);
-             Gadget circle5 = new CircleBumper(5,10);
+             Gadget absorber = new Absorber(0, 18, 20, 2, new Gadget[]{});
+             Gadget triangle = new TriangleBumper(19, 0,90, new Gadget[]{});
+             Gadget circle1 = new CircleBumper(1,10, new Gadget[]{absorber});
+             Gadget circle2 = new CircleBumper(2,10, new Gadget[]{absorber});
+             Gadget circle3 = new CircleBumper(3,10, new Gadget[]{absorber});
+             Gadget circle4 = new CircleBumper(4,10, new Gadget[]{absorber});
+             Gadget circle5 = new CircleBumper(5,10, new Gadget[]{absorber});
              this.balls=new Ball[]{ball1,ball2,ball3};
-             this.gadgets=new Gadget[]{absorber,triangle,circle1,circle2,circle3,circle4,circle5};
+             this.gadgets=new Gadget[]{absorber,triangle,circle1,circle2,circle3,circle4,circle5,top,bottom,left,right};
          }
 
          else if (boardName.equals("flippers")){
@@ -89,17 +89,19 @@ public class Board {
              Gadget left2 = new LeftFlipper(4, 10,90, new Gadget[]{});
              Gadget left3 = new LeftFlipper(9, 8,90, new Gadget[]{});
              Gadget left4 = new LeftFlipper(15, 8,90, new Gadget[]{});
-             Gadget circle1=new CircleBumper(5, 18);
-             Gadget circle2=new CircleBumper(7, 13);
-             Gadget circle3=new CircleBumper(0, 5);
-             Gadget circle4=new CircleBumper(5, 5);
-             Gadget circle5=new CircleBumper(10, 5);
-             Gadget circle6=new CircleBumper(15, 5);
+             Gadget circle1=new CircleBumper(5, 18, new Gadget[]{});
+             Gadget circle2=new CircleBumper(7, 13, new Gadget[]{});
+             Gadget circle3=new CircleBumper(0, 5, new Gadget[]{left1});
+             Gadget circle4=new CircleBumper(5, 5, new Gadget[]{});
+             Gadget circle5=new CircleBumper(10, 5, new Gadget[]{left3});
+             Gadget circle6=new CircleBumper(15, 5, new Gadget[]{left4});
              Gadget triangle1=new TriangleBumper(19, 0,90, new Gadget[]{});
-             Gadget tirangle2=new TriangleBumper(10, 18,180, new Gadget[]{});
+             Gadget triangle2=new TriangleBumper(10, 18,180, new Gadget[]{});
              Gadget right1= new RightFlipper(2, 15,0, new Gadget[]{});
              Gadget right2= new RightFlipper(17, 15,0, new Gadget[]{});
              Gadget absorber=new Absorber(0,19,20,1,new Gadget[]{right1,right2,new Absorber(0,19,20,1,new Gadget[]{})});
+             this.balls=new Ball[]{ball1,ball2,ball3,ball4,ball5};
+             this.gadgets=new Gadget[]{left1,left2,left3,left4,circle1,circle2,circle3,circle4,circle5,circle6,triangle1,triangle2,right1,right2,absorber,top,bottom,left,right};
          }
          else{
              this.gadgets = new Gadget[] {};
