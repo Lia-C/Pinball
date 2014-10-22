@@ -50,4 +50,10 @@ public interface Gadget {
     public Geometry.DoublePair getPosition();      
   
 
+    /**
+     * 
+     * @param time a positive valued number that denotes the amount of time a Gadget has to move, it the Gadget does move during Action.
+     */
+    public void setTime(double time);
+    
 }
