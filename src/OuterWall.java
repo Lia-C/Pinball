@@ -122,7 +122,7 @@ public class OuterWall implements Gadget{
 
     @Override
     public boolean isOccupying(int x, int y) {
-        return x == this.x && y == this.y;
+        return false;
     }
 
     @Override
