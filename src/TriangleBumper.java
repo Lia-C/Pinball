@@ -128,30 +128,14 @@ public class TriangleBumper implements Gadget {
 //    }
 //    
     
-    /*public boolean isOccupying(int x, int y) {
+    public Geometry.DoublePair getPosition() {
+        return new Geometry.DoublePair(xCor, yCor);
+    }
+    
+    public boolean isOccupying(int x, int y) {
         if (x >= xCor && x <= xCor+1 && y >= yCor && y <= yCor+1) { return true; } 
         else { return false; }
-    }*/
-    
-//    public double getMinCollisionTime(Ball ball) {
-//        double minCollisionTime = Double.POSITIVE_INFINITY;
-//        double current = Double.POSITIVE_INFINITY;
-//        
-//        Circle[] circles = new Circle[] {baseCorner, leftCorner, rightCorner};
-//        LineSegment[] lineSegments = new LineSegment[] {leftLeg, rightLeg, hypotenuse};
-//        
-//        for (Circle c : circles) {
-//            current = Geometry.timeUntilCircleCollision(c, ball.getCircle(), ball.getVelocity());
-//            if (current < minCollisionTime) { minCollisionTime = current; }
-//        }
-//        
-//        for (LineSegment ls : lineSegments) {
-//            current = Geometry.timeUntilWallCollision(ls, ball.getCircle(), ball.getVelocity());
-//            if (current < minCollisionTime) { minCollisionTime = current; }
-//        }
-//        
-//        return minCollisionTime;
-//    }
+    }
     
     /**
      * Mutates the ball's velocity when the ball hits the bumper.
