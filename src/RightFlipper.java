@@ -191,7 +191,7 @@ public class RightFlipper implements Gadget {
     
     @Override
     public String toString() {
-        if (orientation == 0) { return "|"; }
+        if (isVertical) { return "|"; }
         else { return "-"; }
     }
     

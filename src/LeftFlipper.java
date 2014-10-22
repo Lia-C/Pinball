@@ -129,6 +129,10 @@ public class LeftFlipper implements Gadget {
         return new Geometry.DoublePair(xCor, yCor);
     }
     
+    public void setTime(double time) {
+        this.time = time;
+    }
+    
     public boolean isOccupying(int x, int y) {
         if (orientation == 0) {
             if (isVertical) {
@@ -202,7 +206,7 @@ public class LeftFlipper implements Gadget {
     
     @Override
     public String toString() {
-        if (orientation == 0) { return "|"; }
+        if (isVertical) { return "|"; }
         else { return "-"; }
     }
     
