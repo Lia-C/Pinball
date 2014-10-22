@@ -105,34 +105,6 @@ public class RightFlipper implements Gadget {
         assert(yCor >= 0 && yCor <= 18);
     }
     
-    //xCor, yCor, COEFFICIENT_OF_REFLECTION, orientation, and type will only be 
-    //used within this class, so these getter methods are not necessary.
-//    /**
-//    * @return xCor of upper-left corner of the flipper's bounding box
-//    */
-//    public int getXCor(){
-//        return xCor;
-//    }
-//    
-//    /**
-//    * @return yCor of upper-left corner of the flipper's bounding box
-//    */
-//    public int getYCor(){
-//        return yCor;
-//    }
-//    
-//    public double getCoeffOfReflection(){
-//        return COEFFICIENT_OF_REFLECTION;
-//    }
-//    
-//    public int getOrientation() {
-//        return orientation;
-//    } 
-//    
-//    public String getType() {
-//        return type;
-//    }
-    
     public Geometry.DoublePair getPosition() {
         return new Geometry.DoublePair(xCor, yCor);
     }
@@ -223,8 +195,7 @@ public class RightFlipper implements Gadget {
             }
         }
     }
-    
-    
+     
     public Gadget[] trigger() {
         return toTrigger;
     }
