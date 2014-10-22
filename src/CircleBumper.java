@@ -5,14 +5,14 @@ public class CircleBumper implements Gadget{
     private final int xCor, yCor;
     private final Circle circle;
     
-    private final double RADIUS = 0.5;
-    private final double COEFFICIENT_OF_REFLECTION = 1.0;
+    private static final double RADIUS = 0.5;
+    private static final double COEFFICIENT_OF_REFLECTION = 1.0;
     
     /**
      * An immutable class representing a circle bumper.
      * 
      * Abstraction function: represents a circle bumper with a specific location on the board
-     * Rep invariant: xCor and yCor are in [1,20]
+     * Rep invariant: xCor and yCor are in [0,19]
      * 
      * Size and shape: a circular shape with diameter 1L
      * Coefficient of reflection: 1.0
@@ -26,10 +26,10 @@ public class CircleBumper implements Gadget{
      * Make new circle bumper
      * @param xCor
      *          x-coordinate of the desired upper-left of the bumper's bounding box
-     *          has to be in the range [1,20] (needs to be in the playing area)
+     *          has to be in the range [0,19] (needs to be in the playing area)
      * @param yCor
      *          y-coordinate of the desired upper-left of the bumper's bounding box
-     *          has to be in the range [1,20] (needs to be in the playing area)
+     *          has to be in the range [0,19] (needs to be in the playing area)
      */
     public CircleBumper(int xCor, int yCor){
         this.xCor = xCor;
@@ -38,13 +38,22 @@ public class CircleBumper implements Gadget{
         checkRep();
     }
     
-    
-    public boolean isOccupying(int x, int y){
-        return x == xCor && y == yCor;
-    }
-    
+    @Override
     public boolean isEmpty(){
         return false;
+    }
+    
+    /**
+     * Meant to be used to determine which, if any, Gadget that a ball would hit, and when.
+     * 
+     * @param ball One of the balls moving around the map
+     * @return The least time it would take for the ball to collide with any of the Geometry objects in this Gadget.
+     */
+    @Override
+    public double getMinCollisionTime(Ball ball){
+        Circle[] circles = new Circle[] {circle};
+        LineSegment[] lineSegments = new LineSegment[0];
+        return Util.getMinCollisionTime(circles, lineSegments, ball);
     }
     
     /**
@@ -53,30 +62,15 @@ public class CircleBumper implements Gadget{
      * @param ball
      *          the ball which hit the bumper
      */
+    @Override
     public void Action(Ball ball){
-       //TODO 
-        
+        Vect newVelocity = Geometry.reflectCircle(circle.getCenter(), ball.getCircle().getCenter(), ball.getVelocity(), COEFFICIENT_OF_REFLECTION);
+        ball.setVelocity(newVelocity);
     }
     
    
-//    /**
-//    * Get the x-coordinate of upper-left corner of the circle bumper's bounding box
-//    * @return xCor of upper-left corner of the circle bumper's bounding box
-//    */
-//    public int getXCor(){
-//        return xCor;
-//    }
-//    
-//    /**
-//    * Get the y-coordinate of upper-left corner of the circle bumper's bounding box
-//    * @return yCor of upper-left corner of the circle bumper's bounding box
-//    */
-//    public int getYCor(){
-//        return yCor;
-//    }
-   
     private void checkRep(){
-        assert xCor >= 1 && xCor <= 20 && yCor >= 1 && yCor <= 20;
+        assert xCor >= 0 && xCor <= 19 && yCor >= 0 && yCor <= 19;
     }
     
     

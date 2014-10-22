@@ -1,74 +1,65 @@
 import physics.*;
 
 public class OuterWall implements Gadget{
-    private final int length;
     private final int x;
     private final int y;
     private final boolean isVertical;
-    private final boolean isTransparent;
+    private final boolean isTransparent; // we don't use transparent walls in this phase of the project, but we put this here for future phases
     private final LineSegment line;
+
+    private static final int LENGTH = 20;
+    private static final double COEFFICIENT_OF_REFLECTION = 1.0;
+    
+    private final int MAX_COORDINATE = LENGTH-1;
     
     /*
      * Rep Invariant:
-     *     Defined in the OuterWall constructor preconditions
+     *     Defined in the OuterWall constructor preconditions:
+     *         x must be 0 or MAX_COORDINATE
+     *         y must be 0 or MAX_COORDINATE
+     *         x and y cannot both be MAX_COORDINATE
+     *         
      * Abstraction Function:
      *     Represents a Gadget that reflects ball if this is not transparent.
      */
+    
     /**
-     * 
-     * @param length Must be 21 for a 20x20 board
-     * @param x must be 0 or 22
-     * @param y must be 0 or 22
+     * Make a new non-transparent outer wall. 
+     * @param x 
+     *          the x-coordinate of the upper-left corner of the outer wall
+     *          must be 0 or MAX_COORDINATE
+     * @param y 
+     *          the y-coordinate of the upper-left corner of the outer wall
+     *          must be 0 or MAX_COORDINATE
      * @param isVertical determines whether the wall is horizontal or vertical
+     * 
+     *  x and y cannot both be MAX_COORDINATE
+     * 
      */
-    public OuterWall(int length,int x, int y,boolean isVertical){
-        this.length=length;
+    public OuterWall(int x, int y,boolean isVertical){
         this.x=x;
         this.y=y;
         this.isVertical=isVertical;
         this.isTransparent=false;
         if (isVertical){
-            this.line = new LineSegment(x, y, x, y+length);
+            this.line = new LineSegment(x, y, x, y+LENGTH);
         }
         else{
-            this.line = new LineSegment(x, y, x+length, y);
+            this.line = new LineSegment(x, y, x+LENGTH, y);
         }
         checkRep();
     }
     
     private void checkRep() {
-        assert this.length==21;
-        assert this.x==0 || this.x==22;
-        assert this.y==0 || this.y==22;
+        assert this.x==0 || this.x==MAX_COORDINATE; // x must be 0 or MAX_COORDINATE
+        assert this.y==0 || this.y==MAX_COORDINATE; // y must be 0 or MAX_COORDINATE
+        assert ! (this.x==MAX_COORDINATE && this.y==MAX_COORDINATE); // x and y cannot both be MAX_COORDINATE
     }
     
     
     @Override
     public String toString(){
         return "."; 
-    }
-    
-    @Override
-    public boolean isOccupying(int x, int y) {
-        if (this.isTransparent){
-            return false;
-        }
-        else{
-          //IMPERFECT. NEEDS TO MAKE SURE WALL IS IN PROPER PLACE
-            if (this.isVertical){
-                
-                if (x==0||x==length){
-                    return true;
-                }
-                return false;
-            }
-            else{
-                if (y==0||y==length){
-                    return true;
-                }
-                return false;
-            }
-        }
     }
 
     
@@ -77,17 +68,28 @@ public class OuterWall implements Gadget{
         return false;
     }
 
+    /**
+     * Meant to be used to determine which, if any, Gadget that a ball would hit, and when.
+     * 
+     * @param ball One of the balls moving around the map
+     * @return The least time it would take for the ball to collide with any of the Geometry objects in this Gadget.
+     */
+    public double getMinCollisionTime(Ball ball){
+        Circle[] circles = new Circle[0];
+        LineSegment[] lineSegments = new LineSegment[]{line};
+        return Util.getMinCollisionTime(circles, lineSegments, ball);
+    }
+    
+    /**
+     * Mutates the ball's velocity when it hits this OuterWall
+     * 
+     * @param ball An instance of Ball that is moving around the Board.
+     * 
+     */
     @Override
     public void Action(Ball ball) {
-        Vect vel=ball.getVelocity();
-        Vect newVel;
-        if (this.isVertical){
-            newVel=new Vect(-vel.x(),vel.y());
-        }
-        else{
-            newVel=new Vect(vel.x(),-vel.y());
-        }
-        ball.setVelocity(newVel);
+        Vect newVelocity = Geometry.reflectWall(line, ball.getVelocity(), COEFFICIENT_OF_REFLECTION);
+        ball.setVelocity(newVelocity);
     }
     
 }
