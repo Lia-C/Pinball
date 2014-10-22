@@ -28,6 +28,7 @@ public class Absorber implements Gadget{
      * Abstraction Function:
      *     Represents a Gadget that stops balls and shoots them out.
      */
+    
     /**
      * Absorbers move any ball that contact them to their bottom right corner
      * and then shoot them out when triggered again.

@@ -106,37 +106,12 @@ public class TriangleBumper implements Gadget {
         assert(yCor >= 0 && yCor <= 19);
     }
     
-    //xCor, yCor, COEFFICIENT_OF_REFLECTION, and orientation will only be used
-    //within this class, so these getter methods are not necessary.
-//    /**
-//    * @return xCor of upper-left corner of the triangle bumper's bounding box
-//    */
-//    public int getXCor(){
-//        return xCor;
-//    }
-//    
-//    /**
-//    * @return yCor of upper-left corner of the triangle bumper's bounding box
-//    */
-//    public int getYCor(){
-//        return yCor;
-//    }
-//    
-//    public double getCoeffOfReflection(){
-//        return COEFFICIENT_OF_REFLECTION;
-//    }
-//    
-//    public int getOrientation() {
-//        return orientation;
-//    }
-//    
-    
     public Geometry.DoublePair getPosition() {
         return new Geometry.DoublePair(xCor, yCor);
     }
     
     public boolean isOccupying(int x, int y) {
-        if (x >= xCor && x <= xCor+1 && y >= yCor && y <= yCor+1) { return true; } 
+        if (x == xCor && y == yCor) { return true; } 
         else { return false; }
     }
 
@@ -175,7 +150,6 @@ public class TriangleBumper implements Gadget {
         return Util.getMinCollisionTime(circles, lineSegments, ball);
     }
     
-
     @Override
     public String toString() {
         if (orientation == 0 || orientation == 180) {
