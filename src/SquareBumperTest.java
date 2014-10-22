@@ -3,40 +3,36 @@ import static org.junit.Assert.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class FlipperTest {
-    
+
+public class SquareBumperTest {
+
     @BeforeClass
-    public static void setUpBeforeClass() {
+    public static void setUpBeforeClass() throws Exception {
     }
 
     @Test
-    public void testFlipperInvalidLoc() {
-        fail("Not yet implemented"); // TODO
-    }
-    
-    @Test
-    public void testFlipperOrientation() {
+    public final void testSquareBumper() {
         fail("Not yet implemented"); // TODO
     }
 
     @Test
-    public void testIsOccupying() {
+    public final void testIsEmpty() {
         fail("Not yet implemented"); // TODO
     }
 
     @Test
-    public void testIsEmpty() {
+    public final void testGetMinCollisionTime() {
         fail("Not yet implemented"); // TODO
     }
 
     @Test
-    public void testAction() {
+    public final void testAction() {
         fail("Not yet implemented"); // TODO
     }
 
     @Test
-    public void testToString() {
+    public final void testToString() {
         fail("Not yet implemented"); // TODO
     }
-    
+
 }

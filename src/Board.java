@@ -12,13 +12,20 @@ public class Board {
     private final double GRAVITY = 10;
     private final double MU = .005;
     private final double MU2 = .001;
+<<<<<<< HEAD
     private final int WIDTH = 20;
     private final int HEIGHT = 20;
+=======
+>>>>>>> ca792f3b599d629f88fc17a96c7cb0f569c25d72
     private final double BALLMASS = 1;
-    private OuterWall top = new OuterWall(HEIGHT, HEIGHT, HEIGHT, false);
-    private OuterWall bottom = new OuterWall(HEIGHT, HEIGHT, HEIGHT, false);
-    private OuterWall left = new OuterWall(HEIGHT, HEIGHT, HEIGHT, false);
-    private OuterWall right = new OuterWall(HEIGHT, HEIGHT, HEIGHT, false);
+    private final int WIDTH = 20;
+    private final int HEIGHT = 20;
+    private final int MAX_X_COORDINATE = WIDTH-1;
+    private final int MAX_Y_COORDINATE = HEIGHT-1;
+    private OuterWall top = new OuterWall(0, 0, false);
+    private OuterWall bottom = new OuterWall(0, MAX_Y_COORDINATE, false);
+    private OuterWall left = new OuterWall(0, 0, true);
+    private OuterWall right = new OuterWall(MAX_X_COORDINATE, 0, true);
     private final double TIMEBETWEENFRAMES = 1000. / 60.;// Given in
                                                          // milliseconds;
 

@@ -14,7 +14,7 @@ public class LeftFlipper implements Gadget {
     private final int xCor, yCor, orientation; //orientation must be 0 or 90
     private final LineSegment flipper;
     private final Circle pivot, endpoint;
-    private boolean rotating;
+    private boolean flipping; 
     
     private final double COEFFICIENT_OF_REFLECTION = 0.95;
     private final double ANGULAR_VELOCITY = 1080.0;
@@ -61,7 +61,7 @@ public class LeftFlipper implements Gadget {
             this.pivot = new Circle(xCor, yCor+1, 0);
             this.endpoint = new Circle(xCor+1, yCor+1, 0);
         } else { throw new IllegalArgumentException("orientation must be 0, 90, 180, or 270"); }
-        this.rotating = false;
+        this.flipping = false;
         checkRep();
     }
     
@@ -82,7 +82,7 @@ public class LeftFlipper implements Gadget {
         this.flipper = new LineSegment(xCor, yCor, xCor, yCor+1);
         this.pivot = new Circle(xCor, yCor, 0);
         this.endpoint = new Circle(xCor, yCor+1, 0);
-        this.rotating = false;
+        this.flipping = false;
         checkRep();
     }
     
@@ -155,8 +155,19 @@ public class LeftFlipper implements Gadget {
      *          the ball which hit the bumper
      */
     public void Action(Ball ball) {
-        rotating = true;
+        flipping = true;
+        double angleRotated = 0;
+        while
+        LineSegment[] lineSegments = new LineSegment[]{flipper};
+        Circle[] circles = new Circle[]{pivot, endpoint};
         
+        if (Util.getPartOfGadgetThatBallWillCollideWith(circles, lineSegments, ball) instanceof LineSegment) {
+            LineSegment wall = (LineSegment)Util.getPartOfGadgetThatBallWillCollideWith(circles, lineSegments, ball);
+            Geometry.reflectWall(wall, ball.getVelocity(), COEFFICIENT_OF_REFLECTION);
+        } else if (Util.getPartOfGadgetThatBallWillCollideWith(circles, lineSegments, ball) instanceof Circle) { 
+            Circle corner = (Circle)Util.getPartOfGadgetThatBallWillCollideWith(circles, lineSegments, ball);
+            Geometry.reflectCircle(corner.getCenter(), ball.getCircle().getCenter(), ball.getVelocity(), COEFFICIENT_OF_REFLECTION);
+        }
     }
     
     public boolean isEmpty() {
