@@ -5,6 +5,7 @@ import physics.Geometry.DoublePair;
 public class CircleBumper implements Gadget{
     private final int xCor, yCor;
     private final Circle circle;
+    private final Gadget[] gadgetsThisTriggers;
     
     private static final double RADIUS = 0.5;
     private static final double COEFFICIENT_OF_REFLECTION = 1.0;
@@ -32,14 +33,13 @@ public class CircleBumper implements Gadget{
      *          y-coordinate of the desired upper-left of the bumper's bounding box
      *          has to be in the range [0,19] (needs to be in the playing area)
      */
-    public CircleBumper(int xCor, int yCor){
+    public CircleBumper(int xCor, int yCor, Gadget[] gadgetsThisTriggers){
         this.xCor = xCor;
         this.yCor = yCor;
-        this.circle = new Circle(xCor+0.5, yCor+0.5, RADIUS);
+        this.circle = new Circle(xCor+RADIUS, yCor+RADIUS, RADIUS);
+        this.gadgetsThisTriggers = gadgetsThisTriggers;
         checkRep();
     }
-    
-
     
     /**
      * Meant to be used to determine which, if any, Gadget that a ball would hit, and when.
@@ -61,16 +61,27 @@ public class CircleBumper implements Gadget{
      *          the ball which hit the bumper
      */
     @Override
-    public void Action(){
+    public void interactWithBall(Ball ball){
         Vect newVelocity = Geometry.reflectCircle(circle.getCenter(), ball.getCircle().getCenter(), ball.getVelocity(), COEFFICIENT_OF_REFLECTION);
         ball.setVelocity(newVelocity);
     }
     
-   
+    @Override
+    public Gadget[] trigger(){
+        return gadgetsThisTriggers;
+    }
+    
+    @Override
+    public void Action(){
+    }
+    
+    @Override
+    public void setTime(double time){
+    }
+    
     private void checkRep(){
         assert xCor >= 0 && xCor <= 19 && yCor >= 0 && yCor <= 19;
     }
-    
     
     @Override
     public String toString(){
@@ -79,14 +90,12 @@ public class CircleBumper implements Gadget{
 
     @Override
     public boolean isOccupying(int x, int y) {
-        // TODO Auto-generated method stub
-        return false;
+        return x == this.xCor && y == this.yCor;
     }
 
     @Override
     public DoublePair getPosition() {
-        // TODO Auto-generated method stub
-        return null;
+        return new Geometry.DoublePair((double) xCor, (double) yCor);
     }
     
     

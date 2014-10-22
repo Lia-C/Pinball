@@ -15,6 +15,12 @@ public class Ball {
     
     private final double BALL_RADIUS = 0.25;
     
+    /**
+     * 
+     * @param velocity
+     * @param position
+     *          the center of the ball
+     */
     public Ball(Vect velocity, Geometry.DoublePair position){
         this.velocity = velocity;
         this.position = position;
