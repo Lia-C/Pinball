@@ -15,11 +15,11 @@ public class Board {
     private final double BALLMASS = 1;
     private final int WIDTH = 20;
     private final int HEIGHT = 20;
-   
-    private OuterWall top = new OuterWall(0, 0, false, new Gadget[]{});
-    private OuterWall bottom = new OuterWall(0, HEIGHT, false, new Gadget[]{});
-    private OuterWall left = new OuterWall(0, 0, true, new Gadget[]{});
-    private OuterWall right = new OuterWall(WIDTH, 0, true, new Gadget[]{});
+
+    private OuterWall top = new OuterWall(0, 0, false, new Gadget[] {});
+    private OuterWall bottom = new OuterWall(0, HEIGHT, false, new Gadget[] {});
+    private OuterWall left = new OuterWall(0, 0, true, new Gadget[] {});
+    private OuterWall right = new OuterWall(WIDTH, 0, true, new Gadget[] {});
     private final double TIMEBETWEENFRAMES = 1000. / 60.;// Given in
                                                          // milliseconds;
 
@@ -42,72 +42,82 @@ public class Board {
      *            "default", "absorber", "flippers"
      */
     public Board(String boardName) {
-        
-        
-        
+
         /*
          * Created according to the specs online.
          */
-         if (boardName.equals("default")){
-             Ball ball1=new Ball(new Vect(0,0),new Geometry.DoublePair(1.25,1.25));
-             Gadget circle=new CircleBumper(1, 10, new Gadget[]{});
-             Gadget triangle = new TriangleBumper(12, 15, 180, new Gadget[] {});
-             Gadget square1=new SquareBumper(0, 17, new Gadget[]{});
-             Gadget square2=new SquareBumper(1, 17, new Gadget[]{});
-             Gadget square3=new SquareBumper(2, 17, new Gadget[]{});
-             Gadget circle1=new CircleBumper(7, 18, new Gadget[]{});
-             Gadget circle2=new CircleBumper(8, 18, new Gadget[]{});
-             Gadget circle3=new CircleBumper(9, 18, new Gadget[]{});
-             this.balls=new Ball[]{ball1};
-             this.gadgets=new Gadget[]{circle,triangle,square1,square2,square3,circle1,circle2,circle3,top,bottom,left,right};
-             
-             
-         }
-         else if (boardName.equals("absorber")){
-             Ball ball1=new Ball(new Vect(0,0),new Geometry.DoublePair(10.25,15.25));
-             Ball ball2=new Ball(new Vect(0,0),new Geometry.DoublePair(19.25,3.25));
-             Ball ball3=new Ball(new Vect(0,0),new Geometry.DoublePair(1.25,5.25));
-             Gadget absorber = new Absorber(0, 18, 20, 2, new Gadget[]{});
-             Gadget triangle = new TriangleBumper(19, 0,90, new Gadget[]{});
-             Gadget circle1 = new CircleBumper(1,10, new Gadget[]{absorber});
-             Gadget circle2 = new CircleBumper(2,10, new Gadget[]{absorber});
-             Gadget circle3 = new CircleBumper(3,10, new Gadget[]{absorber});
-             Gadget circle4 = new CircleBumper(4,10, new Gadget[]{absorber});
-             Gadget circle5 = new CircleBumper(5,10, new Gadget[]{absorber});
-             this.balls=new Ball[]{ball1,ball2,ball3};
-             this.gadgets=new Gadget[]{absorber,triangle,circle1,circle2,circle3,circle4,circle5,top,left,right,bottom};
-         }
+        if (boardName.equals("default")) {
+            Ball ball1 = new Ball(new Vect(0, 0), new Geometry.DoublePair(1.25,
+                    1.25));
+            Gadget circle = new CircleBumper(1, 10, new Gadget[] {});
+            Gadget triangle = new TriangleBumper(12, 15, 180, new Gadget[] {});
+            Gadget square1 = new SquareBumper(0, 17, new Gadget[] {});
+            Gadget square2 = new SquareBumper(1, 17, new Gadget[] {});
+            Gadget square3 = new SquareBumper(2, 17, new Gadget[] {});
+            Gadget circle1 = new CircleBumper(7, 18, new Gadget[] {});
+            Gadget circle2 = new CircleBumper(8, 18, new Gadget[] {});
+            Gadget circle3 = new CircleBumper(9, 18, new Gadget[] {});
+            this.balls = new Ball[] { ball1 };
+            this.gadgets = new Gadget[] { circle, triangle, square1, square2,
+                    square3, circle1, circle2, circle3, top, bottom, left,
+                    right };
 
-         else if (boardName.equals("flippers")){
-             Ball ball1=new Ball(new Vect(0,0),new Geometry.DoublePair(.25,3.25));
-             Ball ball2=new Ball(new Vect(0,0),new Geometry.DoublePair(5.25,3.25));
-             Ball ball3=new Ball(new Vect(0,0),new Geometry.DoublePair(10.25,3.25));
-             Ball ball4=new Ball(new Vect(0,0),new Geometry.DoublePair(15.25,3.25));
-             Ball ball5=new Ball(new Vect(0,0),new Geometry.DoublePair(19.25,3.25));
-             Gadget left1 = new LeftFlipper(0, 8,90, new Gadget[]{});
-             Gadget left2 = new LeftFlipper(4, 10,90, new Gadget[]{});
-             Gadget left3 = new LeftFlipper(9, 8,90, new Gadget[]{});
-             Gadget left4 = new LeftFlipper(15, 8,90, new Gadget[]{});
-             Gadget circle1=new CircleBumper(5, 18, new Gadget[]{});
-             Gadget circle2=new CircleBumper(7, 13, new Gadget[]{});
-             Gadget circle3=new CircleBumper(0, 5, new Gadget[]{left1});
-             Gadget circle4=new CircleBumper(5, 5, new Gadget[]{});
-             Gadget circle5=new CircleBumper(10, 5, new Gadget[]{left3});
-             Gadget circle6=new CircleBumper(15, 5, new Gadget[]{left4});
-             Gadget triangle1=new TriangleBumper(19, 0,90, new Gadget[]{});
-             Gadget triangle2=new TriangleBumper(10, 18,180, new Gadget[]{});
-             Gadget right1= new RightFlipper(2, 15,0, new Gadget[]{});
-             Gadget right2= new RightFlipper(17, 15,0, new Gadget[]{});
-             Gadget absorber=new Absorber(0,19,20,1,new Gadget[]{right1,right2,new Absorber(0,19,20,1,new Gadget[]{})});
-             this.balls=new Ball[]{ball1,ball2,ball3,ball4,ball5};
-             this.gadgets=new Gadget[]{left1,left2,left3,left4,circle1,circle2,circle3,circle4,circle5,circle6,triangle1,triangle2,right1,right2,absorber,top,bottom,left,right};
-         }
-         else{
-             this.gadgets = new Gadget[] {};
-             this.balls = new Ball[] {};
-         }
-    
-         
+        } else if (boardName.equals("absorber")) {
+            Ball ball1 = new Ball(new Vect(0, 0), new Geometry.DoublePair(
+                    10.25, 15.25));
+            Ball ball2 = new Ball(new Vect(0, 0), new Geometry.DoublePair(
+                    19.25, 3.25));
+            Ball ball3 = new Ball(new Vect(0, 0), new Geometry.DoublePair(1.25,
+                    5.25));
+            Gadget absorber = new Absorber(0, 18, 20, 2, new Gadget[] {});
+            Gadget triangle = new TriangleBumper(19, 0, 90, new Gadget[] {});
+            Gadget circle1 = new CircleBumper(1, 10, new Gadget[] { absorber });
+            Gadget circle2 = new CircleBumper(2, 10, new Gadget[] { absorber });
+            Gadget circle3 = new CircleBumper(3, 10, new Gadget[] { absorber });
+            Gadget circle4 = new CircleBumper(4, 10, new Gadget[] { absorber });
+            Gadget circle5 = new CircleBumper(5, 10, new Gadget[] { absorber });
+            this.balls = new Ball[] { ball1, ball2, ball3 };
+            this.gadgets = new Gadget[] { absorber, triangle, circle1, circle2,
+                    circle3, circle4, circle5, top, left, right, bottom };
+        }
+
+        else if (boardName.equals("flippers")) {
+            Ball ball1 = new Ball(new Vect(0, 0), new Geometry.DoublePair(.25,
+                    3.25));
+            Ball ball2 = new Ball(new Vect(0, 0), new Geometry.DoublePair(5.25,
+                    3.25));
+            Ball ball3 = new Ball(new Vect(0, 0), new Geometry.DoublePair(
+                    10.25, 3.25));
+            Ball ball4 = new Ball(new Vect(0, 0), new Geometry.DoublePair(
+                    15.25, 3.25));
+            Ball ball5 = new Ball(new Vect(0, 0), new Geometry.DoublePair(
+                    19.25, 3.25));
+            Gadget left1 = new LeftFlipper(0, 8, 90, new Gadget[] {});
+            Gadget left2 = new LeftFlipper(4, 10, 90, new Gadget[] {});
+            Gadget left3 = new LeftFlipper(9, 8, 90, new Gadget[] {});
+            Gadget left4 = new LeftFlipper(15, 8, 90, new Gadget[] {});
+            Gadget circle1 = new CircleBumper(5, 18, new Gadget[] {});
+            Gadget circle2 = new CircleBumper(7, 13, new Gadget[] {});
+            Gadget circle3 = new CircleBumper(0, 5, new Gadget[] { left1 });
+            Gadget circle4 = new CircleBumper(5, 5, new Gadget[] {});
+            Gadget circle5 = new CircleBumper(10, 5, new Gadget[] { left3 });
+            Gadget circle6 = new CircleBumper(15, 5, new Gadget[] { left4 });
+            Gadget triangle1 = new TriangleBumper(19, 0, 90, new Gadget[] {});
+            Gadget triangle2 = new TriangleBumper(10, 18, 180, new Gadget[] {});
+            Gadget right1 = new RightFlipper(2, 15, 0, new Gadget[] {});
+            Gadget right2 = new RightFlipper(17, 15, 0, new Gadget[] {});
+            Gadget absorber = new Absorber(0, 19, 20, 1, new Gadget[] { right1,
+                    right2, new Absorber(0, 19, 20, 1, new Gadget[] {}) });
+            this.balls = new Ball[] { ball1, ball2, ball3, ball4, ball5 };
+            this.gadgets = new Gadget[] { left1, left2, left3, left4, circle1,
+                    circle2, circle3, circle4, circle5, circle6, triangle1,
+                    triangle2, right1, right2, absorber, top, bottom, left,
+                    right };
+        } else {
+            this.gadgets = new Gadget[] {};
+            this.balls = new Ball[] {};
+        }
+
         checkRep();
     }
 
@@ -153,13 +163,13 @@ public class Board {
         while (true) {
             System.out.println(this);
             // updateGraph takes in seconds.
-            this.updateBoard(this.TIMEBETWEENFRAMES /1000);
+            this.updateBoard(this.TIMEBETWEENFRAMES / 1000);
             try {
                 Thread.sleep((long) (this.TIMEBETWEENFRAMES));
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            checkRep(); 
+            checkRep();
         }
     }
 
@@ -182,8 +192,7 @@ public class Board {
          */
         int gadgetIndex = this.getGadgetWithMinCollisionTime(ball, timeDelta);
         int ballIndex = this.getBallWithMinCollisionTime(ball, timeDelta);
-        //System.out.println("BALL ID: "+ball.getPosition().d1+" " +ball.getPosition().d2);
-        
+
         // If any gadgets are triggered, they will be kept track of with this
         // and then their actions called.
         Gadget[] triggeredGadgets = new Gadget[] {};
@@ -195,8 +204,9 @@ public class Board {
             }
             // If the ball will collide with a Ball within timeDelta.
             else {
-                double ballTime=Geometry.timeUntilBallBallCollision(ball.getCircle(),
-                        ball.getVelocity(), this.balls[ballIndex].getCircle(),
+                double ballTime = Geometry.timeUntilBallBallCollision(
+                        ball.getCircle(), ball.getVelocity(),
+                        this.balls[ballIndex].getCircle(),
                         this.balls[ballIndex].getVelocity());
                 this.moveWithoutCollision(ball, ballTime);
                 this.moveWithoutCollision(this.balls[ballIndex], ballTime);
@@ -205,38 +215,35 @@ public class Board {
         }
         // If the ball will possibly collide with a Gadget within timeDelta.
         else {
-            //System.out.println("DO I ENTER HERE?");
-            //System.out.println("THIS IS THE INDEX "+gadgetIndex);
-            //System.out.println("I HIT THIS GADGET"+gadgets[gadgetIndex]);
-            //System.out.println("AM I AT LEAST IN HERE FUCL?");
-            //System.out.println("BALL PROPERTIES"+ball.getPosition().d1+" "+ball.getPosition().d2+" "+ball.getVelocity().x()+" "+ball.getVelocity().y()+" "+ball.getTime());
-            double gadgetTime = this.gadgets[gadgetIndex].getMinCollisionTime(ball);
+            double gadgetTime = this.gadgets[gadgetIndex]
+                    .getMinCollisionTime(ball);
             // If the ball won't collide with a Ball within timeDelta.
             if (this.balls.length == ballIndex) {
-                //System.out.println("I AM IN HELL"+gadgetTime); 
+
                 this.moveWithoutCollision(ball, gadgetTime);
-                Vect priorVel=ball.getVelocity();
-                //System.out.println("PRIOR VEL"+ball.getVelocity().x()+" "+ball.getVelocity().y());
+                Vect priorVel = ball.getVelocity();
+                ;
                 this.gadgets[gadgetIndex].interactWithBall(ball);
-                Vect afterVel =ball.getVelocity();
-               // System.out.println("AFTER VEL"+ball.getVelocity().x()+" "+ball.getVelocity().y());
-                //System.out.println("CURRENTPOS"+ball.getPosition().d1+" "+ball.getPosition().d2);
-                if (afterVel.equals(priorVel)){
+                Vect afterVel = ball.getVelocity();
+
+                if (afterVel.equals(priorVel)) {
                     throw new RuntimeErrorException(null, "SHIT IS FUCKED YO");
                 }
-                
+
                 triggeredGadgets = this.gadgets[gadgetIndex].trigger();
+
             }
             // If the ball will possibly collide with both a ball and a Gadget.
             else {
-                double ballTime=Geometry.timeUntilBallBallCollision(ball.getCircle(),
-                        ball.getVelocity(), this.balls[ballIndex].getCircle(),
+                double ballTime = Geometry.timeUntilBallBallCollision(
+                        ball.getCircle(), ball.getVelocity(),
+                        this.balls[ballIndex].getCircle(),
                         this.balls[ballIndex].getVelocity());
 
                 // For now avoiding the case that a ball will hit a ball and
                 // gadget at the same time.
                 if (gadgetTime < ballTime) {
-                    
+
                     this.moveWithoutCollision(ball, gadgetTime);
                     this.gadgets[gadgetIndex].interactWithBall(ball);
                     triggeredGadgets = this.gadgets[gadgetIndex].trigger();
@@ -249,11 +256,12 @@ public class Board {
             }
         }
         if (triggeredGadgets.length != 0) {
+
             this.triggerGadgets(triggeredGadgets);
         }
         // If the ball isn't done moving, make sure it keeps moving
         if (!Util.doublesAreEqual(ball.getTime(), 0)) {
-            //System.out.println("STUCK HERE?");
+
             this.translate(ball, ball.getTime());
         }
     }
@@ -311,15 +319,14 @@ public class Board {
             if (collisionTime < minTime) {
                 minTime = collisionTime;
                 index = i;
-               // System.out.println("Gadget "+gadgets[i].toString()+ " minTime"+minTime);
+
             }
         }
-       // System.out.println("HERE");
-       // System.out.println("min time "+minTime+" delta time "+timeDelta);
+
         if (minTime > timeDelta) {
             return this.gadgets.length;
         } else {
-            
+
             return index;
         }
     }
@@ -371,13 +378,12 @@ public class Board {
         if (!ball.isHeld()) {
             // Updating with Friction
             double magnitude = ball.getVelocity().length();
-            //System.out.println("magnitude  "+magnitude);
             magnitude = magnitude
                     * (1 - this.MU * timeDelta - this.MU2 * magnitude
                             * timeDelta);
             Vect intermediateVel = new Vect(ball.getVelocity().angle(),
                     magnitude);
-           // System.out.println("magnitude  "+magnitude);
+
             // Updating using Gravity
             Vect withGrav = new Vect(intermediateVel.x(), intermediateVel.y()
                     + this.GRAVITY * timeDelta);
@@ -410,13 +416,7 @@ public class Board {
         }
         // Update all of the balls' velocities to account for acceleration.
         for (Ball ball : this.balls) {
-          //  System.out.println("Before Gravity");
-           // System.out.println(ball.getPosition().d1+" "+ball.getPosition().d2);
-           // System.out.println(ball.getVelocity().x()+" "+ball.getVelocity().y());
             this.updateVelWithAccel(ball, timeDelta);
-           // System.out.println("After Gravity");
-           // System.out.println(ball.getPosition().d1+" "+ball.getPosition().d2);
-           // System.out.println(ball.getVelocity().x()+" "+ball.getVelocity().y());
         }
         // Makes a gadget acting if it wasn't triggered this iteration, but is
         // still moving.
@@ -425,11 +425,7 @@ public class Board {
                 gadget.Action();
             }
         }
-        
-        for(Ball ball:this.balls){
-            //System.out.println("FUCK A DUCK");
-            //System.out.println("BALL"+ball.getPosition().d1+" "+ball.getPosition().d2+" "+ball.getVelocity().x()+" "+ball.getVelocity().y());
-        }
+
         checkRep();
     }
 
@@ -441,9 +437,12 @@ public class Board {
      *            gadgets and find the referenced gadgets.
      */
     private void triggerGadgets(Gadget[] gadgetArray) {
+
         for (Gadget gadget : gadgetArray) {
+
             Geometry.DoublePair gadgLoc = gadget.getPosition();
             for (int i = 0; i < this.gadgets.length; i++) {
+
                 if (gadgets[i].getPosition().equals(gadgLoc)) {
                     gadgets[i].Action();
                 }

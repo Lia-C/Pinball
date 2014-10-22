@@ -1,8 +1,8 @@
 import physics.Geometry;
 
 /**
- * Gadgets are objects on the Pingball board which perform some action when 
- * they come into contact with the ball or are triggered by other gadgets.
+ * Gadgets are objects on the Pingball board which perform some action when they
+ * come into contact with the ball or are triggered by other gadgets.
  */
 public interface Gadget {
 
