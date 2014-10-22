@@ -28,12 +28,22 @@ public interface Gadget {
     public String toString();
     
     /**
-     * Modifies this gadget if need be, and mutates the Ball (typically the velocity)
+     * Mutates this gadget, to the extent it can in its timeDelta.
+     */
+    public void Action();
+    
+    /**
+     * 
+     * @return The Gadgets for which this Gadget controls the triggers.
+     */
+    public Gadget[] trigger();
+    
+    /**
+     * Changes the balls motion, or possibly position (as in Absorber)
      * 
      * @param ball An instance of Ball that is moving around the Board.
-     * 
      */
-    public void Action(Ball ball);
+    public void interactWithBall(Ball ball);
     
     /**
      * 
@@ -50,4 +60,10 @@ public interface Gadget {
     public Geometry.DoublePair getPosition();      
   
 
+    /**
+     * 
+     * @param time a positive valued number that denotes the amount of time a Gadget has to move, it the Gadget does move during Action.
+     */
+    public void setTime(double time);
+    
 }

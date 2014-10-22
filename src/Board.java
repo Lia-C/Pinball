@@ -303,6 +303,10 @@ public class Board {
      *            The amount of time in seconds the balls will each be moving.
      */
     private void updateBoard(double timeDelta) {
+        // Initialize timeDeltas for all gadgets
+        for (Gadget gadget:gadgets){
+            gadget.setTime(timeDelta);
+        }
         // Initialize timeDeltas for all balls
         for (Ball ball : this.balls) {
             ball.setTime(timeDelta);
