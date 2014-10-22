@@ -61,11 +61,11 @@ public class Absorber implements Gadget{
         assert yCor > 0 && yCor <= 19;
         assert xCor+width <= 20 && yCor+height <= 20;
     }
-    
-    public String toString(){
-        return "=";
-    }
 
+    public Geometry.DoublePair getPosition() {
+        return new Geometry.DoublePair(xCor, yCor);
+    }
+    
     public boolean isOccupying(int x, int y) {
         if (x >= xCor && x <= xCor+width && y >= yCor && y <= yCor+height){
             return true;
@@ -84,11 +84,7 @@ public class Absorber implements Gadget{
         return Util.getMinCollisionTime(circles, lineSegments, ball);
     }
     
-    public boolean isEmpty() {
-        return false;
-    }
-    
-    public void Action (Ball ball) {
+    public void Action (Ball ball) { //TODO
         if(!storedBalls.isEmpty()) {
             Ball launched = storedBalls.remove(0);
             launched.setVelocity(LAUNCH_VELOCITY);
@@ -98,6 +94,14 @@ public class Absorber implements Gadget{
         }
         storedBalls.add(ball);
         ball.hold();
+    }
+    
+    public boolean isEmpty() {
+        return false;
+    }
+    
+    public String toString(){
+        return "=";
     }
     
 }

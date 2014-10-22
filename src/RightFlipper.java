@@ -128,6 +128,9 @@ public class RightFlipper implements Gadget {
 //        return type;
 //    }
     
+    public Geometry.DoublePair getPosition() {
+        return new Geometry.DoublePair(xCor, yCor);
+    }
     
     public boolean isOccupying(int x, int y) {
         if (orientation == 0) {
@@ -178,7 +181,7 @@ public class RightFlipper implements Gadget {
      * @param ball
      *          the ball which hit the bumper
      */
-    public void Action(Ball ball) {
+    public void Action(Ball ball) {//TODO
         
     }
     

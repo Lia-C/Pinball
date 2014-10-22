@@ -125,6 +125,9 @@ public class LeftFlipper implements Gadget {
 //        return type;
 //    }
     
+    public Geometry.DoublePair getPosition() {
+        return new Geometry.DoublePair(xCor, yCor);
+    }
     
     public boolean isOccupying(int x, int y) {
         if (orientation == 0) {
