@@ -122,6 +122,7 @@ public class Board {
      *            moving.
      */
     private void translate(Ball ball, double timeDelta) {
+   
         /*
          * The point of indexing into the arrays rather than, for example, using
          * Ball ball=this.getBallWithMinCollisionTime(ball, timeDelta) is that
@@ -133,6 +134,8 @@ public class Board {
         double ballTime = Geometry.timeUntilBallBallCollision(ball.getCircle(),
                 ball.getVelocity(), this.balls[ballIndex].getCircle(),
                 this.balls[ballIndex].getVelocity());
+        //If any gadgets are triggered, they will be kept track of with this and then their actions called.
+        Gadget[] triggeredGadgets = new Gadget[] {};
         // If the ball won't collide with a Gadget within timeDelta.
         if (gadgetIndex == this.gadgets.length) {
             // If the ball won't collide with a Ball within timeDelta.
@@ -159,7 +162,8 @@ public class Board {
                 // gadget at the same time.
                 if (gadgetTime > ballTime) {
                     this.moveWithoutCollision(ball, gadgetTime);
-                    this.gadgets[gadgetIndex].Action(ball);
+                    this.gadgets[gadgetIndex].interactWithBall(ball);
+                    triggeredGadgets=this.gadgets[gadgetIndex].trigger();
 
                 } else {
                     this.moveWithoutCollision(ball, ballTime);
@@ -167,6 +171,9 @@ public class Board {
                     this.makeBallsCollide(ball, this.balls[ballIndex]);
                 }
             }
+        }
+        if (triggeredGadgets.length!=0){
+            this.triggerGadgets(triggeredGadgets);
         }
         // If the ball isn't done moving, make sure it keeps moving
         if (ball.getTime() != 0) {
@@ -303,6 +310,10 @@ public class Board {
      *            The amount of time in seconds the balls will each be moving.
      */
     private void updateBoard(double timeDelta) {
+        // Initialize timeDeltas for all gadgets
+        for (Gadget gadget:gadgets){
+            gadget.setTime(timeDelta);
+        }
         // Initialize timeDeltas for all balls
         for (Ball ball : this.balls) {
             ball.setTime(timeDelta);
@@ -318,9 +329,30 @@ public class Board {
         for (Ball ball : this.balls) {
             this.updateVelWithAccel(ball, timeDelta);
         }
+        // Makes a gadget acting if it wasn't triggered this iteration, but is still moving.
+        for (Gadget gadget:gadgets){
+            if (gadget.isActing()){
+                gadget.Action();
+            }
+        }
         checkRep();
     }
 
+    /**
+     * Calls .Action() on the gadgets referenced to in the gadgetArray.
+     * 
+     * @param gadgetArray Contains copies of the Gadgets in gadgets, used to index into gadgets and find the referenced gadgets. 
+     */
+    private void triggerGadgets(Gadget[] gadgetArray){
+        for (Gadget gadget:gadgetArray){
+            Geometry.DoublePair gadgLoc=gadget.getPosition();
+            for (int i=0;i<this.gadgets.length;i++){
+                if (gadgets[i].getPosition().equals(gadgLoc)){
+                    gadgets[i].Action();
+                }
+            }
+        }
+    }
     /**
      * 
      * @return A String representation of the board
