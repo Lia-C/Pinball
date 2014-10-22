@@ -12,9 +12,6 @@ public class OuterWallTest {
      *          -when ball will not collide with this, minCollisionTime is Double.POSITIVE_INFINITY 
      *      ToString: 
      *          -returns .
-     *      IsOccupying: 
-     *          -True: upper-left bounding box corner 
-     *          -False: outside
      *      GetPosition: 
      *          -returns position 
      *      InteractWithBall: 
@@ -25,16 +22,15 @@ public class OuterWallTest {
     private static final int MAX_COORDINATE = LENGTH - 1;
     private static final int HALF_OF_MAX_COORDINATE = MAX_COORDINATE / 2; //this is just to the right of the midpoint bc of interger division
     private static final double BALL_RADIUS = 0.25;
-
-    private static final OuterWall wall = new OuterWall(0, LENGTH, false,
-            new Gadget[0]); // bottom wall
+    private static final double EPSILON = .05;
+    
+    private static final OuterWall wall = new OuterWall(0, LENGTH, false, new Gadget[0]); // bottom wall
 
     @Test
     public void testGetMinCollisionTime() {
         Ball ballTouching = new Ball(new Vect(1, 1), new Geometry.DoublePair(
-                HALF_OF_MAX_COORDINATE, LENGTH - BALL_RADIUS));
-        assertTrue(Util.doublesAreEqual(wall.getMinCollisionTime(ballTouching),
-                0));
+                HALF_OF_MAX_COORDINATE, LENGTH - BALL_RADIUS + EPSILON));
+        assertTrue(Util.doublesAreEqual(wall.getMinCollisionTime(ballTouching),0));
 
         Ball ballNoCollision = new Ball(new Vect(-1, 0),
                 new Geometry.DoublePair(MAX_COORDINATE, MAX_COORDINATE));
@@ -69,13 +65,7 @@ public class OuterWallTest {
     public final void testToString() {
         assertTrue(wall.toString().equals("."));
     }
-
-    @Test
-    public final void testIsOccupying() {
-        assertTrue(wall.isOccupying(0, LENGTH));
-        assertFalse(wall.isOccupying(1, LENGTH + 1));
-    }
-
+    
     @Test
     public final void testgetPosition() {
         assertEquals(wall.getPosition(), new Geometry.DoublePair(0, LENGTH));

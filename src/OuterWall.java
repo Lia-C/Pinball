@@ -44,8 +44,7 @@ public class OuterWall implements Gadget {
      *            x and y cannot both be MAX_COORDINATE
      * 
      */
-    public OuterWall(int x, int y, boolean isVertical,
-            Gadget[] gadgetsThisTriggers) {
+    public OuterWall(int x, int y, boolean isVertical, Gadget[] gadgetsThisTriggers) {
         this.x = x;
         this.y = y;
         this.isVertical = isVertical;
