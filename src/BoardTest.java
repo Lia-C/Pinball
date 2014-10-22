@@ -21,7 +21,6 @@ public class BoardTest {
         board = new Board("test");
     }
 
-    
     // Checks that two colliding balls along the Y axis will reflect.
     // (Intentional pun)
     @Test
