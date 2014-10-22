@@ -19,7 +19,7 @@ public class Absorber implements Gadget{
     private double time;
     private boolean isActing;
     
-    private final Vect LAUNCH_VELOCITY = new Vect(Angle.DEG_90, 50.0);
+    private final Vect LAUNCH_VELOCITY = new Vect(0,-50.0);
     
     /*
      * Rep Invariant:
@@ -58,6 +58,7 @@ public class Absorber implements Gadget{
         this.bottomRight = new Circle(xCor+width, yCor+height, 0);
         this.storageLoc = new Geometry.DoublePair(xCor+width-.25, yCor+height-.25);
         this.isActing = false;
+        this.storedBalls= new ArrayList<Ball>();
         checkRep();
     }
     
@@ -74,7 +75,7 @@ public class Absorber implements Gadget{
     }
     
     public boolean isOccupying(int x, int y) {
-        System.out.println("LOOK AT ME"+ xCor+" "+yCor+ " "+(xCor+width)+" "+(yCor+height));
+        
         if (x >= xCor && x <= xCor+width && y >= yCor && y <= yCor+height){
             return true;
         }
@@ -84,7 +85,10 @@ public class Absorber implements Gadget{
     public double getMinCollisionTime(Ball ball) {
         double ballX = ball.getPosition().d1;
         double ballY = ball.getPosition().d2;
+        //System.out.println("ID THIS BALL "+ballX+" "+ballY);
+        //System.out.println("ABSORBERBOUDNS "+xCor+" "+(xCor+width)+" "+yCor+" "+(yCor+height));
         if (ballX >= xCor && ballX <= xCor+width && ballY >= yCor && ballY <= yCor + height) {
+            //System.out.println("THE FUCK AM I DOING IN HERE?");
             return Double.POSITIVE_INFINITY;
         }
         LineSegment[] lineSegments = new LineSegment[]{top, left, bottom, right};
@@ -97,9 +101,16 @@ public class Absorber implements Gadget{
     }
 
     public void Action() {
+        System.out.println("IS THIS CALLED?");
         if(!isActing && !storedBalls.isEmpty()) {
-            Ball launched = storedBalls.remove(0);
-            launched.setVelocity(LAUNCH_VELOCITY);
+            //System.out.println("CALLED" +storedBalls.get(0).getPosition().d1+" "+storedBalls.get(0).getPosition().d2);
+            //System.out.println(storedBalls.get(0).getVelocity().x()+" "+storedBalls.get(0).getVelocity().y());
+            storedBalls.get(0).setVelocity(LAUNCH_VELOCITY);
+            storedBalls.get(0).release();
+            
+            //System.out.println("AFTER" +storedBalls.get(0).getPosition().d1+" "+storedBalls.get(0).getPosition().d2);
+            //System.out.println(storedBalls.get(0).getVelocity().x()+" "+storedBalls.get(0).getVelocity().y());
+            this.storedBalls.remove(0);
             double distToRelease = storageLoc.d2 - yCor;
             double v = LAUNCH_VELOCITY.length();
             double timeToRelease = distToRelease / v;
