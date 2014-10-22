@@ -24,19 +24,18 @@ public class Util {
         double minCollisionTime = Double.POSITIVE_INFINITY;
         double current = Double.POSITIVE_INFINITY;
         
-        //System.out.println("VELO? "+ball.getVelocity().x()+" "+ball.getVelocity().y());
         for(Circle circle:circles){
             current = Geometry.timeUntilCircleCollision(circle, ball.getCircle(), ball.getVelocity());
             
             if (current < minCollisionTime) {
-                minCollisionTime = current; //System.out.println("ITS THIS BITCH");
+                minCollisionTime = current; 
             }
         }
         
         for(LineSegment lineSegment:lineSegments){
             current = Geometry.timeUntilWallCollision(lineSegment, ball.getCircle(), ball.getVelocity());
             if (current < minCollisionTime){
-                minCollisionTime = current;//System.out.println("NAW ITS THIS BITCH");
+                minCollisionTime = current;
             }
         }
        

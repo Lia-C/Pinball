@@ -10,6 +10,7 @@ import physics.*;
  * Coefficient of reflection: 0.95
  * Rotates 90 degrees when triggered.
  */
+
 public class RightFlipper implements Gadget {
     private final int xCor, yCor, orientation;
     private double time;

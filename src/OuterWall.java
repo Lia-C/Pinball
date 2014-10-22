@@ -102,7 +102,6 @@ public class OuterWall implements Gadget{
      * @return The least time it would take for the ball to collide with any of the Geometry objects in this Gadget.
      */
     public double getMinCollisionTime(Ball ball){
-        System.out.println("I AM BITCH");
         Circle[] circles = new Circle[]{startCircle,endCircle};
         LineSegment[] lineSegments = new LineSegment[]{line};
         return Util.getMinCollisionTime(circles, lineSegments, ball);

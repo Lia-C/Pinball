@@ -85,10 +85,7 @@ public class Absorber implements Gadget{
     public double getMinCollisionTime(Ball ball) {
         double ballX = ball.getPosition().d1;
         double ballY = ball.getPosition().d2;
-        System.out.println("ID THIS BALL "+ballX+" "+ballY);
-        //System.out.println("ABSORBERBOUDNS "+xCor+" "+(xCor+width)+" "+yCor+" "+(yCor+height));
-        if (ballX >= xCor && ballX <= xCor+width && ballY >= yCor && ballY <= yCor + height) {
-            //System.out.println("THE FUCK AM I DOING IN HERE?");
+       if (ballX >= xCor && ballX <= xCor+width && ballY >= yCor && ballY <= yCor + height) {
             return Double.POSITIVE_INFINITY;
         }
         LineSegment[] lineSegments = new LineSegment[]{top, left, bottom, right};
@@ -101,15 +98,10 @@ public class Absorber implements Gadget{
     }
 
     public void Action() {
-        System.out.println("IS THIS CALLED?");
         if(!isActing && !storedBalls.isEmpty()) {
-            //System.out.println("CALLED" +storedBalls.get(0).getPosition().d1+" "+storedBalls.get(0).getPosition().d2);
-            //System.out.println(storedBalls.get(0).getVelocity().x()+" "+storedBalls.get(0).getVelocity().y());
             storedBalls.get(0).setVelocity(LAUNCH_VELOCITY);
             storedBalls.get(0).release();
             
-            //System.out.println("AFTER" +storedBalls.get(0).getPosition().d1+" "+storedBalls.get(0).getPosition().d2);
-            //System.out.println(storedBalls.get(0).getVelocity().x()+" "+storedBalls.get(0).getVelocity().y());
             this.storedBalls.remove(0);
             double distToRelease = storageLoc.d2 - yCor;
             double v = LAUNCH_VELOCITY.length();
