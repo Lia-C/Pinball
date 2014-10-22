@@ -8,11 +8,20 @@ import physics.Vect;
 
 public class CircleBumperTest {
     /*
-     * Test Strategies: GetMinCollisionTime: -when ball is touching this,
-     * minCollisionTime is 0 -when ball will not collide with this,
-     * minCollisionTime is Double.POSITIVE_INFINITY InteractWithBall: -ball hits
-     * bumper head-on ToString: -returns O IsOccupying: -True: upper-left
-     * bounding box corner -False: outside GetPosition: -returns position
+     * Test Strategies: 
+     * 
+     *      GetMinCollisionTime: 
+     *          -when ball is touching this, minCollisionTime is 0 
+     *          -when ball will not collide with this, minCollisionTime is Double.POSITIVE_INFINITY 
+     *      InteractWithBall: 
+     *          -ball hits bumper head-on 
+     *      ToString: 
+     *          -returns O 
+     *      IsOccupying: 
+     *          -True: upper-left bounding box corner 
+     *          -False: outside 
+     *      GetPosition: 
+     *          -returns position
      */
 
     // a circle bumper in the "center" of the board

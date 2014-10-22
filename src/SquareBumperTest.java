@@ -7,31 +7,36 @@ import physics.*;
 
 public class SquareBumperTest {
     /*
-     * Test Strategies: GetMinCollisionTime: -when ball is touching this,
-     * minCollisionTime is 0 -when ball will not collide with this,
-     * minCollisionTime is Double.POSITIVE_INFINITY InteractWithBall: -ball hits
-     * a corner at an angle -ball hits a corner/line segment head-on ToString:
-     * -returns # IsOccupying: -True: upper-left bounding box corner -False:
-     * outside GetPosition: -returns position
+     * Test Strategies: 
+     * 
+     *      GetMinCollisionTime: 
+     *          -when ball is touching this, minCollisionTime is 0 
+     *          -when ball will not collide with this, minCollisionTime is Double.POSITIVE_INFINITY 
+     *      InteractWithBall: 
+     *          -ball hits a corner at an angle 
+     *          -ball hits a corner/line segment head-on 
+     *      ToString:
+     *          -returns # 
+     *      IsOccupying: 
+     *          -True: upper-left bounding box corner 
+     *          -False: outside 
+     *      GetPosition: 
+     *          -returns position
      */
 
     // a square bumper in the "center" of the board
     private static SquareBumper bumperInMiddle;
 
-    // a ball touching the top-left corner of bumperInMiddle, whose velocity is
-    // "due southeast"
+    // a ball touching the top-left corner of bumperInMiddle, whose velocity is "due southeast"
     private static Ball topLeftCornerBallCollideAtAngle;
 
-    // a ball touching the top-left corner of bumperInMiddle, whose velocity is
-    // "due east"
+    // a ball touching the top-left corner of bumperInMiddle, whose velocity is "due east"
     private static Ball topLeftCornerBallCollideHeadOn;
 
-    // a ball touching the left side of bumperInMiddle, whose velocity is
-    // "due east"
+    // a ball touching the left side of bumperInMiddle, whose velocity is "due east"
     private static Ball leftSideBall;
 
-    // a ball that will not collide with bumperInMiddle (moving parallel to the
-    // bumper)
+    // a ball that will not collide with bumperInMiddle (moving parallel to the bumper)
     private static Ball noCollisionBall;
 
     private static final int MAX_COORDINATE = 19;
@@ -82,8 +87,7 @@ public class SquareBumperTest {
                 .getMinCollisionTime(noCollisionBall)));
     }
 
-    // When a ball hits a corner at an angle; chose 45-degrees -> ball's x and y
-    // velocities are each flipped
+    // When a ball hits a corner at an angle; chose 45-degrees -> ball's x and y velocities are each flipped
     @Test
     public final void testinteractWithBallCornerAngle() {
 
@@ -108,8 +112,7 @@ public class SquareBumperTest {
         assertTrue(Util.doublesAreEqual(initialYVelocity, -finalYVelocity));
     }
 
-    // When a ball hits ball hits a corner/line segment; chose head-on collision
-    // with left side of bumper -> ball's x-velocity is flipped, y velocity same
+    // When a ball hits ball hits a corner/line segment; chose head-on collision with left side of bumper -> ball's x-velocity is flipped, y velocity same
     @Test
     public final void testinteractWithBallLineSegment() {
 

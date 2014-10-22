@@ -8,9 +8,11 @@ import physics.Vect;
 public class AbsorberTest {
 
     /*
-     * Test Strategies: isOccupying: -Test that an absorber occupies all of the
-     * space in its area, and not out of it. Action: -Test that a ball passed in
-     * is moved to the bottom right corner, and that a ball is launched.
+     * Test Strategies: 
+     *      isOccupying: 
+     *          -Test that an absorber occupies all of the space in its area, and not out of it. 
+     *      Action: 
+     *          -Test that a ball passed in is moved to the bottom right corner, and that a ball is launched.
      */
     @Test
     public void testIsOccupying() {
