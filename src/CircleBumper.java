@@ -5,6 +5,7 @@ import physics.Geometry.DoublePair;
 public class CircleBumper implements Gadget{
     private final int xCor, yCor;
     private final Circle circle;
+    private final Gadget[] gadgetsThisTriggers;
     
     private static final double RADIUS = 0.5;
     private static final double COEFFICIENT_OF_REFLECTION = 1.0;
@@ -32,10 +33,11 @@ public class CircleBumper implements Gadget{
      *          y-coordinate of the desired upper-left of the bumper's bounding box
      *          has to be in the range [0,19] (needs to be in the playing area)
      */
-    public CircleBumper(int xCor, int yCor){
+    public CircleBumper(int xCor, int yCor, Gadget[] gadgetsThisTriggers){
         this.xCor = xCor;
         this.yCor = yCor;
         this.circle = new Circle(xCor+RADIUS, yCor+RADIUS, RADIUS);
+        this.gadgetsThisTriggers = gadgetsThisTriggers;
         checkRep();
     }
     
@@ -67,7 +69,7 @@ public class CircleBumper implements Gadget{
     
     @Override
     public Gadget[] trigger(){
-        return new Gadget[0];
+        return gadgetsThisTriggers;
     }
     
     @Override

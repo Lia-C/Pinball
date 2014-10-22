@@ -7,6 +7,7 @@ public class OuterWall implements Gadget{
     private final boolean isTransparent; // we don't use transparent walls in this phase of the project, but we put this here for future phases
     private final LineSegment line;
     private final Circle startCircle, endCircle;
+    private final Gadget[] gadgetsThisTriggers;
 
     private static final int LENGTH = 20;
     private static final double COEFFICIENT_OF_REFLECTION = 1.0;
@@ -37,7 +38,7 @@ public class OuterWall implements Gadget{
      *  x and y cannot both be MAX_COORDINATE
      * 
      */
-    public OuterWall(int x, int y,boolean isVertical){
+    public OuterWall(int x, int y,boolean isVertical, Gadget[] gadgetsThisTriggers){
         this.x=x;
         this.y=y;
         this.isVertical=isVertical;
@@ -52,6 +53,7 @@ public class OuterWall implements Gadget{
             this.startCircle = new Circle(x,y,0);
             this.endCircle = new Circle(x+LENGTH,y,0);
         }
+        this.gadgetsThisTriggers = gadgetsThisTriggers;
         checkRep();
         
         
@@ -107,7 +109,7 @@ public class OuterWall implements Gadget{
     
     @Override
     public Gadget[] trigger(){
-        return new Gadget[0];
+        return gadgetsThisTriggers;
     }
     
     @Override

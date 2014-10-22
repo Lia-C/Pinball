@@ -5,6 +5,7 @@ public class SquareBumper implements Gadget{
     private final LineSegment top, bottom, left, right;
     private final Circle topLeftCorner, topRightCorner, bottomLeftCorner, bottomRightCorner;
     private final int xCor, yCor;
+    private final Gadget[] gadgetsThisTriggers;
     
     private static final double COEFFICIENT_OF_REFLECTION = 1.0;
     
@@ -31,7 +32,7 @@ public class SquareBumper implements Gadget{
      *          y-coordinate of the desired upper-left of the bumper's bounding box
      *          has to be in the range [0,19] (needs to be in the playing area)
      */
-    public SquareBumper(int xCor, int yCor){
+    public SquareBumper(int xCor, int yCor, Gadget[] gadgetsThisTriggers){
         this.xCor = xCor;
         this.yCor = yCor;
         this.top = new LineSegment(xCor, yCor, xCor+1, yCor);
@@ -42,6 +43,7 @@ public class SquareBumper implements Gadget{
         this.topRightCorner = new Circle(xCor + 1, yCor, 0);
         this.bottomLeftCorner = new Circle(xCor, yCor+1, 0);
         this.bottomRightCorner = new Circle(xCor+1, yCor+1, 0);
+        this.gadgetsThisTriggers = gadgetsThisTriggers;
         checkRep();
     }
     
@@ -80,7 +82,7 @@ public class SquareBumper implements Gadget{
     
     @Override
     public Gadget[] trigger(){
-        return new Gadget[0];
+        return gadgetsThisTriggers;
     }
     
     @Override
