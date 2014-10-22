@@ -32,5 +32,13 @@ public interface Gadget {
      * 
      */
     public void Action(Ball ball);
+    
+    /**
+     * 
+     * @param x The x coordinate of the location in question.
+     * @param y
+     * @return
+     */
+    public boolean isOccupying(int x, int y);
 
 }

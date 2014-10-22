@@ -12,8 +12,8 @@ public class Board {
     private final double GRAVITY = 10;
     private final double MU = .005;
     private final double MU2 = .001;
-    private final int WIDTH = 22;
-    private final int HEIGHT = 22;
+    private final int WIDTH = 20;
+    private final int HEIGHT = 20;
     private final double BALLMASS = 1;
     private OuterWall top = new OuterWall(HEIGHT, HEIGHT, HEIGHT, false);
     private OuterWall bottom = new OuterWall(HEIGHT, HEIGHT, HEIGHT, false);
@@ -73,12 +73,13 @@ public class Board {
      *            an array of the gadgets that are on the board, NOT including
      *            the outer walls
      */
-    private Board(Ball[] balls, Gadget[] gadgets) {
+    public Board(Ball[] balls, Gadget[] gadgets) {
         this.balls = balls;
         this.gadgets = gadgets;
         checkRep();
     }
-
+    
+    //RI is that all object on the board are within the width and height of board, and that gravity and friction coefficients are greater than zero..
     private void checkRep() {
         assert WIDTH == 20 && HEIGHT == 20;
     }
@@ -93,7 +94,7 @@ public class Board {
             // updateGraph takes in seconds.
             this.updateBoard(this.TIMEBETWEENFRAMES * 1000);
             try {
-                Thread.sleep((long) (1000. / 20.));
+                Thread.sleep((long) (this.TIMEBETWEENFRAMES));
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
