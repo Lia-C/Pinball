@@ -63,11 +63,7 @@ public class OuterWall implements Gadget{
         return "."; 
     }
 
-    
-    @Override
-    public boolean isEmpty() {
-        return false;
-    }
+
 
     /**
      * Meant to be used to determine which, if any, Gadget that a ball would hit, and when.

@@ -96,12 +96,40 @@ public class Absorber implements Gadget{
         ball.hold();
     }
     
-    public boolean isEmpty() {
-        return false;
-    }
+
     
     public String toString(){
         return "=";
+    }
+
+    @Override
+    public void Action() {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public Gadget[] trigger() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public void interactWithBall(Ball ball) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void setTime(double time) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public boolean isActing() {
+        // TODO Auto-generated method stub
+        return false;
     }
     
 }
