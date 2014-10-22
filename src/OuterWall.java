@@ -16,7 +16,7 @@ public class OuterWall implements Gadget{
     
     //how much we shift the walls outside the top and bottom of the playing field
     //also, the radius of the circles at the ends of the line segments
-    private static final double EPSILON = 0.00000000000001; 
+    private static final double EPSILON = .05; 
     
     /*
      * Rep Invariant:
@@ -51,29 +51,31 @@ public class OuterWall implements Gadget{
         //left wall
         if (isVertical && x == 0){
             this.line = new LineSegment(x-EPSILON, y, x-EPSILON, y+LENGTH);
-            this.startCircle = new Circle(x-EPSILON,y,EPSILON);
+            this.startCircle = new Circle(x-EPSILON,y,0);
             this.endCircle = new Circle(x-EPSILON, y+LENGTH,EPSILON);
         }
         
         //right wall
         else if (isVertical && x == MAX_COORDINATE){
             this.line = new LineSegment(x+EPSILON, y, x+EPSILON, y+LENGTH);
-            this.startCircle = new Circle(x+EPSILON,y, EPSILON);
+            this.startCircle = new Circle(x+EPSILON,y, 0);
             this.endCircle = new Circle(x+EPSILON, y+LENGTH,EPSILON);
         }
         
-        //top wall
-        else if (!isVertical && y == 0){
-            this.line = new LineSegment(x, y-EPSILON, x+LENGTH, y-EPSILON);
-            this.startCircle = new Circle(x, y-EPSILON,EPSILON);
-            this.endCircle = new Circle(x+LENGTH, y-EPSILON, EPSILON);
-        }
         
         //bottom wall
-        else { //(!isVertical && y == MAX_COORDINATE)
+        else if (!isVertical && y == MAX_COORDINATE){
             this.line = new LineSegment(x, y+EPSILON, x+LENGTH, y+EPSILON);
-            this.startCircle = new Circle(x, y+EPSILON,EPSILON);
+            this.startCircle = new Circle(x, y+EPSILON,0);
             this.endCircle = new Circle(x+LENGTH, y+EPSILON, EPSILON);
+            
+        }
+        
+      //top wall
+        else { //(!isVertical && y == MAX_COORDINATE)
+            this.line = new LineSegment(x, y-EPSILON, x+LENGTH, y-EPSILON);
+            this.startCircle = new Circle(x, y-EPSILON,0);
+            this.endCircle = new Circle(x+LENGTH, y-EPSILON, EPSILON);
         }
         
         this.gadgetsThisTriggers = gadgetsThisTriggers;
@@ -101,6 +103,7 @@ public class OuterWall implements Gadget{
      * @return The least time it would take for the ball to collide with any of the Geometry objects in this Gadget.
      */
     public double getMinCollisionTime(Ball ball){
+        System.out.println("I AM BITCH");
         Circle[] circles = new Circle[]{startCircle,endCircle};
         LineSegment[] lineSegments = new LineSegment[]{line};
         return Util.getMinCollisionTime(circles, lineSegments, ball);

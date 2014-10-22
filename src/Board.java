@@ -15,12 +15,11 @@ public class Board {
     private final double BALLMASS = 1;
     private final int WIDTH = 20;
     private final int HEIGHT = 20;
-    private final int MAX_X_COORDINATE = WIDTH - 1;
-    private final int MAX_Y_COORDINATE = HEIGHT - 1;
+   
     private OuterWall top = new OuterWall(0, 0, false, new Gadget[]{});
-    private OuterWall bottom = new OuterWall(0, MAX_Y_COORDINATE, false, new Gadget[]{});
+    private OuterWall bottom = new OuterWall(0, HEIGHT, false, new Gadget[]{});
     private OuterWall left = new OuterWall(0, 0, true, new Gadget[]{});
-    private OuterWall right = new OuterWall(MAX_X_COORDINATE, 0, true, new Gadget[]{});
+    private OuterWall right = new OuterWall(WIDTH, 0, true, new Gadget[]{});
     private final double TIMEBETWEENFRAMES = 1000. / 60.;// Given in
                                                          // milliseconds;
 
@@ -76,7 +75,7 @@ public class Board {
              Gadget circle4 = new CircleBumper(4,10, new Gadget[]{absorber});
              Gadget circle5 = new CircleBumper(5,10, new Gadget[]{absorber});
              this.balls=new Ball[]{ball1,ball2,ball3};
-             this.gadgets=new Gadget[]{absorber,triangle,circle1,circle2,circle3,circle4,circle5,top,bottom,left,right};
+             this.gadgets=new Gadget[]{absorber,triangle,circle1,circle2,circle3,circle4,circle5,top,left,right,bottom};
          }
 
          else if (boardName.equals("flippers")){
@@ -183,7 +182,7 @@ public class Board {
          */
         int gadgetIndex = this.getGadgetWithMinCollisionTime(ball, timeDelta);
         int ballIndex = this.getBallWithMinCollisionTime(ball, timeDelta);
-        System.out.println("BALL ID: "+ball.getPosition().d1+" " +ball.getPosition().d2);
+        //System.out.println("BALL ID: "+ball.getPosition().d1+" " +ball.getPosition().d2);
         
         // If any gadgets are triggered, they will be kept track of with this
         // and then their actions called.
@@ -206,8 +205,9 @@ public class Board {
         }
         // If the ball will possibly collide with a Gadget within timeDelta.
         else {
-            System.out.println("DO I ENTER HERE?");
-            System.out.println("I HIT THIS GADGET"+gadgets[gadgetIndex]);
+            //System.out.println("DO I ENTER HERE?");
+            //System.out.println("THIS IS THE INDEX "+gadgetIndex);
+            //System.out.println("I HIT THIS GADGET"+gadgets[gadgetIndex]);
             //System.out.println("AM I AT LEAST IN HERE FUCL?");
             //System.out.println("BALL PROPERTIES"+ball.getPosition().d1+" "+ball.getPosition().d2+" "+ball.getVelocity().x()+" "+ball.getVelocity().y()+" "+ball.getTime());
             double gadgetTime = this.gadgets[gadgetIndex].getMinCollisionTime(ball);
@@ -253,7 +253,7 @@ public class Board {
         }
         // If the ball isn't done moving, make sure it keeps moving
         if (!Util.doublesAreEqual(ball.getTime(), 0)) {
-            System.out.println("STUCK HERE?");
+            //System.out.println("STUCK HERE?");
             this.translate(ball, ball.getTime());
         }
     }
@@ -371,13 +371,13 @@ public class Board {
         if (!ball.isHeld()) {
             // Updating with Friction
             double magnitude = ball.getVelocity().length();
-            System.out.println("magnitude  "+magnitude);
+            //System.out.println("magnitude  "+magnitude);
             magnitude = magnitude
                     * (1 - this.MU * timeDelta - this.MU2 * magnitude
                             * timeDelta);
             Vect intermediateVel = new Vect(ball.getVelocity().angle(),
                     magnitude);
-            System.out.println("magnitude  "+magnitude);
+           // System.out.println("magnitude  "+magnitude);
             // Updating using Gravity
             Vect withGrav = new Vect(intermediateVel.x(), intermediateVel.y()
                     + this.GRAVITY * timeDelta);
@@ -427,8 +427,8 @@ public class Board {
         }
         
         for(Ball ball:this.balls){
-            System.out.println("FUCK A DUCK");
-            System.out.println("BALL"+ball.getPosition().d1+" "+ball.getPosition().d2+" "+ball.getVelocity().x()+" "+ball.getVelocity().y());
+            //System.out.println("FUCK A DUCK");
+            //System.out.println("BALL"+ball.getPosition().d1+" "+ball.getPosition().d2+" "+ball.getVelocity().x()+" "+ball.getVelocity().y());
         }
         checkRep();
     }
