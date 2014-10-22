@@ -1,4 +1,5 @@
 import physics.*;
+import physics.Geometry.DoublePair;
 
 public class OuterWall implements Gadget{
     private final int x;
@@ -90,6 +91,18 @@ public class OuterWall implements Gadget{
     public void Action(Ball ball) {
         Vect newVelocity = Geometry.reflectWall(line, ball.getVelocity(), COEFFICIENT_OF_REFLECTION);
         ball.setVelocity(newVelocity);
+    }
+
+    @Override
+    public boolean isOccupying(int x, int y) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public DoublePair getPosition() {
+        // TODO Auto-generated method stub
+        return null;
     }
     
 }
