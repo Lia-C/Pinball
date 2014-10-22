@@ -15,6 +15,7 @@ public class LeftFlipper implements Gadget {
     private final LineSegment flipper;
     private final Circle pivot, endpoint;
     private boolean flipping; 
+    private boolean isVertical;
     
     private final double COEFFICIENT_OF_REFLECTION = 0.95;
     private final double ANGULAR_VELOCITY = 1080.0;
@@ -48,18 +49,22 @@ public class LeftFlipper implements Gadget {
             this.flipper = new LineSegment(xCor, yCor, xCor, yCor+1);
             this.pivot = new Circle(xCor, yCor, 0);
             this.endpoint = new Circle(xCor, yCor+1, 0);
+            this.isVertical = true;
         } else if (orientation == 90) {
             this.flipper = new LineSegment(xCor, yCor, xCor+1, yCor);
             this.pivot = new Circle(xCor+1, yCor, 0);
             this.endpoint = new Circle(xCor, yCor, 0);
+            this.isVertical = false;
         } else if (orientation == 180) {
             this.flipper = new LineSegment(xCor+1, yCor, xCor+1, yCor+1);
             this.pivot = new Circle(xCor+1, yCor+1, 0);
             this.endpoint = new Circle(xCor+1, yCor, 0);
+            this.isVertical = true;
         } else if (orientation == 270) {
             this.flipper = new LineSegment(xCor, yCor+1, xCor+1, yCor+1);
             this.pivot = new Circle(xCor, yCor+1, 0);
             this.endpoint = new Circle(xCor+1, yCor+1, 0);
+            this.isVertical = false;
         } else { throw new IllegalArgumentException("orientation must be 0, 90, 180, or 270"); }
         this.flipping = false;
         checkRep();
@@ -83,6 +88,7 @@ public class LeftFlipper implements Gadget {
         this.pivot = new Circle(xCor, yCor, 0);
         this.endpoint = new Circle(xCor, yCor+1, 0);
         this.flipping = false;
+        this.isVertical = true;
         checkRep();
     }
     
@@ -120,26 +126,41 @@ public class LeftFlipper implements Gadget {
 //    }
     
     
-    /*public boolean isOccupying(int x, int y) {
-        if (type.equalsIgnoreCase("left")) {
-            if (orientation == 0) {
+    public boolean isOccupying(int x, int y) {
+        if (orientation == 0) {
+            if (isVertical) {
                 if (x == xCor && y >= yCor && y <= yCor+1) { return true; } 
                 else { return false; }
-            } else if (orientation == 90) {
+            } else {
                 if (x >= xCor && x <= xCor+1 && y == yCor) { return true; } 
                 else { return false; }
-            } 
-        } else if (type.equalsIgnoreCase("right")) {
-            if (orientation == 0) {
+            }
+        } else if (orientation == 90) {
+            if (isVertical) {
                 if (x == xCor+1 && y >= yCor && y <= yCor+1) { return true; } 
                 else { return false; }
-            } else if (orientation == 90) {
+            } else {
                 if (x >= xCor && x <= xCor+1 && y == yCor) { return true; } 
                 else { return false; }
-            } 
-        }
-        throw new RuntimeException("isOccupying error, did not return true or false");
-    }*/
+            }
+        } else if (orientation == 180) {
+            if (isVertical) {
+                if (x == xCor+1 && y >= yCor && y <= yCor+1) { return true; } 
+                else { return false; }
+            } else {
+                if (x >= xCor && x <= xCor+1 && y == yCor+1) { return true; } 
+                else { return false; }
+            }
+        } else if (orientation == 270) {
+            if (isVertical) {
+                if (x == xCor && y >= yCor && y <= yCor+1) { return true; } 
+                else { return false; }
+            } else {
+                if (x >= xCor && x <= xCor+1 && y == yCor+1) { return true; } 
+                else { return false; }
+            }
+        } else { throw new RuntimeException("isOccupying error, did not return true or false"); }
+    }
     
     public double getMinCollisionTime(Ball ball) {
         LineSegment[] lineSegments = new LineSegment[]{flipper};
@@ -154,10 +175,10 @@ public class LeftFlipper implements Gadget {
      * @param ball
      *          the ball which hit the bumper
      */
-    public void Action(Ball ball) {
+    public void Action(Ball ball) { //TODO
         flipping = true;
         double angleRotated = 0;
-        while
+        
         LineSegment[] lineSegments = new LineSegment[]{flipper};
         Circle[] circles = new Circle[]{pivot, endpoint};
         
@@ -168,6 +189,8 @@ public class LeftFlipper implements Gadget {
             Circle corner = (Circle)Util.getPartOfGadgetThatBallWillCollideWith(circles, lineSegments, ball);
             Geometry.reflectCircle(corner.getCenter(), ball.getCircle().getCenter(), ball.getVelocity(), COEFFICIENT_OF_REFLECTION);
         }
+        flipping = false;
+        isVertical = !isVertical;
     }
     
     public boolean isEmpty() {
