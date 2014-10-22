@@ -86,6 +86,10 @@ public class Board {
             assert ball.getPosition().d1>=0&&ball.getPosition().d1<=WIDTH-1;
             assert ball.getPosition().d2>=0&&ball.getPosition().d2<=HEIGHT-1;
         }
+        for (Gadget gadget:gadgets){
+            assert gadget.getPosition().d1>=0&&gadget.getPosition().d1<=WIDTH-1;
+            assert gadget.getPosition().d2>=0&&gadget.getPosition().d2<=HEIGHT-1;
+        }
         
         assert GRAVITY>0&&MU2>0&&MU>0;
     }
