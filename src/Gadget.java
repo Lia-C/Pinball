@@ -1,3 +1,5 @@
+import physics.Geometry;
+
 /**
  * Gadgets are objects on the Pingball board which perform some action
  * when they come into contact with the ball.
@@ -32,5 +34,20 @@ public interface Gadget {
      * 
      */
     public void Action(Ball ball);
+    
+    /**
+     * 
+     * @param x The x coordinate of the location in question.
+     * @param y The y coordinate of the location in question.
+     * @return True if the gadget is occupying the space at (x,y) otherwise False
+     */
+    public boolean isOccupying(int x, int y);
+    
+    /**
+     * 
+     * @return Returns the doublePair associated with the top left corner of a Gadget's bounding box.
+     */
+    public Geometry.DoublePair getPosition();      
+  
 
 }
