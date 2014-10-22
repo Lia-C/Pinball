@@ -154,12 +154,13 @@ public class Board {
         while (true) {
             System.out.println(this);
             // updateGraph takes in seconds.
-            this.updateBoard(this.TIMEBETWEENFRAMES * 1000);
+            this.updateBoard(this.TIMEBETWEENFRAMES /1000);
             try {
                 Thread.sleep((long) (this.TIMEBETWEENFRAMES));
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            checkRep(); 
         }
     }
 
@@ -205,10 +206,13 @@ public class Board {
         }
         // If the ball will possibly collide with a Gadget within timeDelta.
         else {
+            System.out.println("AM I AT LEAST IN HERE FUCL?");
             double gadgetTime = this.gadgets[gadgetIndex].getMinCollisionTime(ball);
             // If the ball won't collide with a Ball within timeDelta.
             if (this.balls.length == ballIndex) {
-                this.moveWithoutCollision(ball, timeDelta);
+                this.moveWithoutCollision(ball, gadgetTime);
+                this.gadgets[gadgetIndex].interactWithBall(ball);
+                triggeredGadgets = this.gadgets[gadgetIndex].trigger();
             }
             // If the ball will possibly collide with both a ball and a Gadget.
             else {
@@ -218,7 +222,8 @@ public class Board {
 
                 // For now avoiding the case that a ball will hit a ball and
                 // gadget at the same time.
-                if (gadgetTime > ballTime) {
+                if (gadgetTime < ballTime) {
+                    
                     this.moveWithoutCollision(ball, gadgetTime);
                     this.gadgets[gadgetIndex].interactWithBall(ball);
                     triggeredGadgets = this.gadgets[gadgetIndex].trigger();
@@ -292,11 +297,15 @@ public class Board {
             if (collisionTime < minTime) {
                 minTime = collisionTime;
                 index = i;
+               // System.out.println("Gadget "+gadgets[i].toString()+ " minTime"+minTime);
             }
         }
+       // System.out.println("HERE");
+       // System.out.println("min time "+minTime+" delta time "+timeDelta);
         if (minTime > timeDelta) {
             return this.gadgets.length;
         } else {
+            
             return index;
         }
     }
@@ -348,11 +357,13 @@ public class Board {
         if (!ball.isHeld()) {
             // Updating with Friction
             double magnitude = ball.getVelocity().length();
+            System.out.println("magnitude  "+magnitude);
             magnitude = magnitude
                     * (1 - this.MU * timeDelta - this.MU2 * magnitude
                             * timeDelta);
             Vect intermediateVel = new Vect(ball.getVelocity().angle(),
                     magnitude);
+            System.out.println("magnitude  "+magnitude);
             // Updating using Gravity
             Vect withGrav = new Vect(intermediateVel.x(), intermediateVel.y()
                     + this.GRAVITY * timeDelta);
@@ -443,8 +454,8 @@ public class Board {
                         }
                     }
                     for (Ball ball : balls) {
-                        if ((int) ball.getPosition().d1 == i - 1
-                                && (int) ball.getPosition().d2 == j - 1) {
+                        if ((int) ball.getPosition().d1 == j - 1
+                                && (int) ball.getPosition().d2 == i - 1) {
                             board[j][i] = "*";
                             isOccupied = true;
                         }
@@ -458,7 +469,7 @@ public class Board {
         StringBuilder string = new StringBuilder();
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
-                string.append(board[i][j]);
+                string.append(board[j][i]);
             }
             string.append("\n");
         }
