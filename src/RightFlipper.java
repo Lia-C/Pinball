@@ -176,22 +176,28 @@ public class RightFlipper implements Gadget {
         LineSegment[] lineSegments = new LineSegment[]{flipper};
         Circle[] circles = new Circle[]{pivot, endpoint};
         
+        Vect newVel = new Vect(0,0);
         if (Util.getPartOfGadgetThatBallWillCollideWith(circles, lineSegments, ball) instanceof LineSegment) {
             LineSegment wall = (LineSegment)Util.getPartOfGadgetThatBallWillCollideWith(circles, lineSegments, ball);
             if (flipping) {
-                Geometry.reflectRotatingWall(wall, pivot.getCenter(), ANGULAR_VELOCITY, ball.getCircle(), ball.getVelocity(), COEFFICIENT_OF_REFLECTION);
+                newVel = Geometry.reflectRotatingWall(wall, pivot.getCenter(), ANGULAR_VELOCITY, ball.getCircle(), ball.getVelocity(), COEFFICIENT_OF_REFLECTION);
+                ball.setVelocity(newVel);
             } else {
-                Geometry.reflectWall(wall, ball.getVelocity(), COEFFICIENT_OF_REFLECTION);
+                newVel = Geometry.reflectWall(wall, ball.getVelocity(), COEFFICIENT_OF_REFLECTION);
+                ball.setVelocity(newVel);
             }
         } else if (Util.getPartOfGadgetThatBallWillCollideWith(circles, lineSegments, ball) instanceof Circle) { 
             Circle corner = (Circle)Util.getPartOfGadgetThatBallWillCollideWith(circles, lineSegments, ball);
             if (flipping && corner.getCenter().x() == pivot.getCenter().x() && corner.getCenter().y() == pivot.getCenter().y()) {
                 //corner is pivot, is not moving
-                Geometry.reflectCircle(corner.getCenter(), ball.getCircle().getCenter(), ball.getVelocity(), COEFFICIENT_OF_REFLECTION);
+                newVel = Geometry.reflectCircle(corner.getCenter(), ball.getCircle().getCenter(), ball.getVelocity(), COEFFICIENT_OF_REFLECTION);
+                ball.setVelocity(newVel);
             } else if(flipping) { //corner is endpoint, is moving
-                Geometry.reflectRotatingCircle(endpoint, pivot.getCenter(), ANGULAR_VELOCITY, ball.getCircle(), ball.getVelocity(), COEFFICIENT_OF_REFLECTION);
+                newVel = Geometry.reflectRotatingCircle(endpoint, pivot.getCenter(), ANGULAR_VELOCITY, ball.getCircle(), ball.getVelocity(), COEFFICIENT_OF_REFLECTION);
+                ball.setVelocity(newVel);
             } else { //not flipping
-                Geometry.reflectCircle(corner.getCenter(), ball.getCircle().getCenter(), ball.getVelocity(), COEFFICIENT_OF_REFLECTION);
+                newVel = Geometry.reflectCircle(corner.getCenter(), ball.getCircle().getCenter(), ball.getVelocity(), COEFFICIENT_OF_REFLECTION);
+                ball.setVelocity(newVel);    
             }
         }
     }
