@@ -51,7 +51,7 @@ public class Util {
      * @return
      *          the circle/linesegment with the minimum collision time out of the array of circles and array of linesegments
      *          in other words, this returns whichever circle/linesegment the ball would hit first
-     *          NOTE: in the case that there is no minimum (this should NEVER happen), this method returns an empty gadget
+     *          NOTE: in the case that there is no minimum (this should NEVER happen), this method returns 0
      */
     
     public static Object getPartOfGadgetThatBallWillCollideWith(Circle[] circles, LineSegment[] lineSegments, Ball ball){
@@ -69,7 +69,7 @@ public class Util {
         }
       
         //this code should never be reached
-        return new Empty();
+        return 0;
         
     }
     
