@@ -16,6 +16,8 @@ public class TriangleBumper implements Gadget {
     private final Circle baseCorner, leftCorner, rightCorner; //baseCorner is the corner opposite the hypotenuse.
                                                               //leftCorner, rightCorner are to the left and right if you
                                                               //are sitting at the baseCorner and facing the hypotenuse.
+    private final LineSegment[] lineSegments = new LineSegment[]{leftLeg, rightLeg, hypotenuse};
+    private final Circle[] circles = new Circle[]{baseCorner, leftCorner, rightCorner};
     
     private final double COEFFICIENT_OF_REFLECTION = 1.0;
     
@@ -26,19 +28,19 @@ public class TriangleBumper implements Gadget {
     //  represents a triangle-shaped bumper that redirects
     //  the ball if they come into contact
     
-    public TriangleBumper(int xCor, int yCor) {
-        this.xCor = xCor;
-        this.yCor = yCor;
-        this.orientation = 0;
-        this.baseCorner = new Circle(xCor, yCor, 0);
-        this.leftCorner = new Circle(xCor+1, yCor, 0);
-        this.rightCorner = new Circle(xCor, yCor+1, 0);
-        this.leftLeg = new LineSegment(xCor, yCor, xCor+1, yCor);
-        this.rightLeg = new LineSegment(xCor, yCor, xCor, yCor+1);
-        this.hypotenuse = new LineSegment(xCor+1, yCor, xCor, yCor+1);
-        checkRep();
-    }
-    
+    /**
+     * Make new TriangleBumper
+     * 
+     * @param xCor
+     *          x-coordinate of the upper-left corner of the bumper's bounding box
+     *          must be in the range [0,19]
+     * @param yCor
+     *          y-coordinate of the upper-left corner of the bumper's bounding box
+     *          must be in the range [0,19]
+     * @param orientation
+     *          rotation in degrees from the default orientation
+     *          must be 0, 90, 180, or 270
+     */
     public TriangleBumper(int xCor, int yCor, int orientation) {
         this.xCor = xCor;
         this.yCor = yCor;
@@ -72,6 +74,29 @@ public class TriangleBumper implements Gadget {
             this.rightLeg = new LineSegment(xCor, yCor+1, xCor+1, yCor+1);
             this.hypotenuse = new LineSegment(xCor, yCor, xCor+1, yCor+1);
         } else { throw new IllegalArgumentException("orientation must be 0, 90, 180, or 270"); }
+        checkRep();
+    }
+    
+    /**
+     * Make new TriangleBumper with default orientation (0 degrees)
+     * 
+     * @param xCor
+     *          x-coordinate of the upper-left corner of the bumper's bounding box
+     *          must be in the range [0,19]
+     * @param yCor
+     *          y-coordinate of the upper-left corner of the bumper's bounding box
+     *          must be in the range [0,19]
+     */
+    public TriangleBumper(int xCor, int yCor) {
+        this.xCor = xCor;
+        this.yCor = yCor;
+        this.orientation = 0;
+        this.baseCorner = new Circle(xCor, yCor, 0);
+        this.leftCorner = new Circle(xCor+1, yCor, 0);
+        this.rightCorner = new Circle(xCor, yCor+1, 0);
+        this.leftLeg = new LineSegment(xCor, yCor, xCor+1, yCor);
+        this.rightLeg = new LineSegment(xCor, yCor, xCor, yCor+1);
+        this.hypotenuse = new LineSegment(xCor+1, yCor, xCor, yCor+1);
         checkRep();
     }
     
@@ -137,10 +162,16 @@ public class TriangleBumper implements Gadget {
      *          the ball which hit the bumper
      */
     public void Action(Ball ball) {
-//        LineSegment wall = new LineSegment(0,0,0,0); //throwaway init value
-//        Circle corner = new Circle(0,0,0); //throwaway init value
-//        
-//        if (Util.getPartOfGadgetThatBallWillCollideWith()
+        LineSegment wall = new LineSegment(0,0,0,0); //throwaway init value
+        Circle corner = new Circle(0,0,0); //throwaway init value
+        
+        if (Util.getPartOfGadgetThatBallWillCollideWith() instanceof LineSegment) {
+            
+        }
+    }
+    
+    public double getMinCollisionTime(Ball ball) {
+        
     }
     
     public boolean isEmpty() {

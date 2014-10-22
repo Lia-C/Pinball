@@ -4,13 +4,13 @@
  */
 public interface Gadget {
     
-//    /**
-//     * Meant to be used to determine which, if any, Gadget that a ball would hit, and when.
-//     * 
-//     * @param ball One of the balls moving around the map
-//     * @return The least time it would take for the ball to collide with any of the Geometry objects in this Gadget.
-//     */
-//    public double getMinCollisionTime(Ball ball);
+    /**
+     * Meant to be used to determine which, if any, Gadget that a ball would hit, and when.
+     * 
+     * @param ball One of the balls moving around the map
+     * @return The least time it would take for the ball to collide with any of the Geometry objects in this Gadget.
+     */
+    public double getMinCollisionTime(Ball ball);
     
     /**
      * Checks if a Gadget is an Empty gadget.

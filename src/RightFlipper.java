@@ -1,7 +1,7 @@
 import physics.*;
 
 /**
- * An immutable class representing a right flipper.
+ * A mutable class representing a right flipper.
  * 
  * Bounding box of size 2Lx2L
  * The flipper's pivot point is in the northeast corner of its bounding box, and its

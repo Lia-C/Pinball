@@ -1,7 +1,7 @@
 import physics.*;
 
 /**
- * An immutable class representing a left flipper.
+ * A mutable class representing a left flipper.
  * 
  * Bounding box of size 2Lx2L
  * The flipper's pivot point is in the northwest corner of its bounding box, and its
@@ -27,17 +27,19 @@ public class LeftFlipper implements Gadget {
     //  represents a flipper that can rotate 90 degrees counterclockwise about its 
     //  own pivot point and redirects the ball when they come into contact
     
-    public LeftFlipper(int xCor, int yCor) {
-        this.xCor = xCor;
-        this.yCor = yCor;
-        this.orientation = 0;
-        this.flipper = new LineSegment(xCor, yCor, xCor, yCor+1);
-        this.pivot = new Circle(xCor, yCor, 0);
-        this.endpoint = new Circle(xCor, yCor+1, 0);
-        this.rotating = false;
-        checkRep();
-    }
-    
+    /**
+     * Make new LeftFlipper
+     * 
+     * @param xCor
+     *          x-coordinate of the upper-left corner of the bumper's bounding box
+     *          must be in the range [0,19]
+     * @param yCor
+     *          y-coordinate of the upper-left corner of the bumper's bounding box
+     *          must be in the range [0,19]
+     * @param orientation
+     *          rotation in degrees from the default orientation
+     *          must be 0, 90, 180, or 270
+     */
     public LeftFlipper(int xCor, int yCor, int orientation) {
         this.xCor = xCor;
         this.yCor = yCor;
@@ -59,6 +61,27 @@ public class LeftFlipper implements Gadget {
             this.pivot = new Circle(xCor, yCor+1, 0);
             this.endpoint = new Circle(xCor+1, yCor+1, 0);
         } else { throw new IllegalArgumentException("orientation must be 0, 90, 180, or 270"); }
+        this.rotating = false;
+        checkRep();
+    }
+    
+    /**
+     * Make new LeftFlipper with default orientation (0 degrees)
+     * 
+     * @param xCor
+     *          x-coordinate of the upper-left corner of the bumper's bounding box
+     *          must be in the range [0,19]
+     * @param yCor
+     *          y-coordinate of the upper-left corner of the bumper's bounding box
+     *          must be in the range [0,19]
+     */
+    public LeftFlipper(int xCor, int yCor) {
+        this.xCor = xCor;
+        this.yCor = yCor;
+        this.orientation = 0;
+        this.flipper = new LineSegment(xCor, yCor, xCor, yCor+1);
+        this.pivot = new Circle(xCor, yCor, 0);
+        this.endpoint = new Circle(xCor, yCor+1, 0);
         this.rotating = false;
         checkRep();
     }
