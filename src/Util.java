@@ -73,4 +73,18 @@ public class Util {
         
     }
     
+    /**
+     * Compares two doubles, returns True if they are equal within DOUBLE_PRECISION_EPSILON = 0.00000000000001 error
+     * @param d1
+     *          a double
+     * @param d2
+     *          a double
+     * @return
+     *          True if the doubles are equal within DOUBLE_PRECISION_EPSILON = 0.00000000000001 error
+     */
+    public static boolean doublesAreEqual(double d1, double d2){
+        final double DOUBLE_PRECISION_EPSILON = 0.00000000000001;
+        return Math.abs(d1-d2) < DOUBLE_PRECISION_EPSILON;
+    }
+    
 }

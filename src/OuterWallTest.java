@@ -35,10 +35,8 @@ public class OuterWallTest {
         double finalYVelocity = ball.getVelocity().y();
         
         //the ball's x-velocity should be unchanged, y-velocity should be negated
-        
-        final double DOUBLE_PRECISION_EPSILON = 0.0000001;
-        assertTrue(Math.abs(initialXVelocity - finalXVelocity) < DOUBLE_PRECISION_EPSILON);
-        assertTrue(Math.abs(initialYVelocity + finalYVelocity) < DOUBLE_PRECISION_EPSILON);
+        assertTrue(Util.doublesAreEqual(initialXVelocity, finalXVelocity));
+        assertTrue(Util.doublesAreEqual(initialYVelocity, -finalYVelocity));
     }
 
 }

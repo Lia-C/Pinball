@@ -51,12 +51,7 @@ public class SquareBumper implements Gadget{
         return false;
     }
     
-    /**
-     * Meant to be used to determine which, if any, Gadget that a ball would hit, and when.
-     * 
-     * @param ball One of the balls moving around the map
-     * @return The least time it would take for the ball to collide with any of the Geometry objects in this Gadget.
-     */
+
     @Override
     public double getMinCollisionTime(Ball ball){
         Circle[] circles = new Circle[] {topLeftCorner, topRightCorner, bottomLeftCorner, bottomRightCorner};
