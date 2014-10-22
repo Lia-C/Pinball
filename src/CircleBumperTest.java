@@ -10,13 +10,11 @@ import physics.Vect;
 public class CircleBumperTest {
     /*
      * Test Strategies:
-     *      IsEmpty:
-     *          -return false
      *      GetMinCollisionTime:
      *          -when ball is touching this, minCollisionTime is 0
      *          -when ball will not collide with this, minCollisionTime is Double.POSITIVE_INFINITY
-     *      Action: 
-     *          
+     *      InteractWithBall: 
+     *          -ball hits bumper head-on
      *      ToString:
      *          -returns O
      *      IsOccupying:
@@ -48,10 +46,6 @@ public class CircleBumperTest {
         noCollisionBall = new Ball(new Vect(0,1), new Geometry.DoublePair(HALF_OF_MAX_COORDINATE-TILE_SIZE, HALF_OF_MAX_COORDINATE-TILE_SIZE));
     }
 
-    @Test
-    public final void testIsEmpty() {
-        assertFalse(bumperInMiddle.isEmpty());
-    }
 
     @Test
     public final void testGetMinCollisionTime() {
@@ -59,10 +53,29 @@ public class CircleBumperTest {
         assertTrue(Double.isInfinite(bumperInMiddle.getMinCollisionTime(noCollisionBall)));
     }
     
-//    @Test
-//    public final void testAction() {
-//        fail("Not yet implemented"); // TODO
-//    }
+    @Test
+    public final void testInteractWithBall() {
+        double initialXVelocity = 1.0;
+        double initialYVelocity = 0.0;        
+        //defensive copying    
+        Ball leftSideBallCopy = new Ball(new Vect(initialXVelocity,initialYVelocity), new Geometry.DoublePair(HALF_OF_MAX_COORDINATE-(BALL_RADIUS/4), HALF_OF_MAX_COORDINATE+BALL_RADIUS));
+
+        bumperInMiddle.interactWithBall(leftSideBallCopy);
+        
+        double finalXVelocity = leftSideBallCopy.getVelocity().x();
+        double finalYVelocity = leftSideBallCopy.getVelocity().y();
+        
+        //defensive copying    
+        leftSideBallCopy = new Ball(new Vect(initialXVelocity,initialYVelocity), new Geometry.DoublePair(HALF_OF_MAX_COORDINATE-(BALL_RADIUS/4), HALF_OF_MAX_COORDINATE+BALL_RADIUS));
+        final double COEFFICIENT_OF_REFLECTION = 1.0;
+        Vect centerOfBumper = new Vect(HALF_OF_MAX_COORDINATE+TILE_SIZE/2, HALF_OF_MAX_COORDINATE+TILE_SIZE/2);
+        Vect newVelo = Geometry.reflectCircle(centerOfBumper, leftSideBallCopy.getCircle().getCenter(), leftSideBallCopy.getVelocity(), COEFFICIENT_OF_REFLECTION);
+        double expectedFinalXVelocity = newVelo.x();
+        double expectedFinalYVelocity = newVelo.y();
+        
+        assertTrue(Util.doublesAreEqual(finalXVelocity, expectedFinalXVelocity));
+        assertTrue(Util.doublesAreEqual(finalYVelocity, expectedFinalYVelocity));
+    }
 
     @Test
     public final void testToString() {

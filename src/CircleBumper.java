@@ -35,14 +35,10 @@ public class CircleBumper implements Gadget{
     public CircleBumper(int xCor, int yCor){
         this.xCor = xCor;
         this.yCor = yCor;
-        this.circle = new Circle(xCor+0.5, yCor+0.5, RADIUS);
+        this.circle = new Circle(xCor+RADIUS, yCor+RADIUS, RADIUS);
         checkRep();
     }
     
-    @Override
-    public boolean isEmpty(){
-        return false;
-    }
     
     /**
      * Meant to be used to determine which, if any, Gadget that a ball would hit, and when.
@@ -64,9 +60,22 @@ public class CircleBumper implements Gadget{
      *          the ball which hit the bumper
      */
     @Override
-    public void Action(Ball ball){
+    public void interactWithBall(Ball ball){
         Vect newVelocity = Geometry.reflectCircle(circle.getCenter(), ball.getCircle().getCenter(), ball.getVelocity(), COEFFICIENT_OF_REFLECTION);
         ball.setVelocity(newVelocity);
+    }
+    
+    @Override
+    public Gadget[] trigger(){
+        return new Gadget[0];
+    }
+    
+    @Override
+    public void Action(){
+    }
+    
+    @Override
+    public void setTime(double time){
     }
     
    

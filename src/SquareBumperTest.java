@@ -9,14 +9,12 @@ import physics.*;
 public class SquareBumperTest {
     /*
      * Test Strategies:
-     *      IsEmpty:
-     *          -return false
      *      GetMinCollisionTime:
      *          -when ball is touching this, minCollisionTime is 0
      *          -when ball will not collide with this, minCollisionTime is Double.POSITIVE_INFINITY
-     *      Action: 
-     *          -ball hits a corner at an angle, head-on
-     *          -ball hits a line segment
+     *      InteractWithBall: 
+     *          -ball hits a corner at an angle
+     *          -ball hits a corner/line segment head-on
      *      ToString:
      *          -returns #
      *      IsOccupying:
@@ -58,11 +56,6 @@ public class SquareBumperTest {
     }
 
     @Test
-    public final void testIsEmpty() {
-        assertFalse(bumperInMiddle.isEmpty());
-    }
-
-    @Test
     public final void testGetMinCollision() {
         assertTrue(Util.doublesAreEqual(bumperInMiddle.getMinCollisionTime(topLeftCornerBallCollideAtAngle), 0));
         assertTrue(Util.doublesAreEqual(bumperInMiddle.getMinCollisionTime(topLeftCornerBallCollideHeadOn), 0));
@@ -73,14 +66,14 @@ public class SquareBumperTest {
     
     //When a ball hits a corner at an angle; chose 45-degrees -> ball's x and y velocities are each flipped
     @Test
-    public final void testActionCornerAngle() {
+    public final void testinteractWithBallCornerAngle() {
 
         double initialXVelocity = 1.0;
         double initialYVelocity = 1.0;        
         //defensive copying
         Ball topLeftCornerBallCollideAtAngleCopy = new Ball(new Vect(initialXVelocity, initialYVelocity), new Geometry.DoublePair(HALF_OF_MAX_COORDINATE-BALL_CENTER_TRANSLATION_AMOUNT_TO_BE_AT_CORNER, HALF_OF_MAX_COORDINATE-BALL_CENTER_TRANSLATION_AMOUNT_TO_BE_AT_CORNER));
         
-        bumperInMiddle.Action(topLeftCornerBallCollideAtAngleCopy);
+        bumperInMiddle.interactWithBall(topLeftCornerBallCollideAtAngleCopy);
         
         double finalXVelocity = topLeftCornerBallCollideAtAngleCopy.getVelocity().x();
         double finalYVelocity = topLeftCornerBallCollideAtAngleCopy.getVelocity().y();
@@ -89,44 +82,17 @@ public class SquareBumperTest {
         assertTrue(Util.doublesAreEqual(initialYVelocity, -finalYVelocity));
     }
     
-    /*
-   //When a ball hits a corner head-on; chose x-direction -> ball's x-velocity is flipped, y velocity same
-    @Test
-    public final void testActionCornerHeadOn() {
-
-        double initialXVelocity = 1.0;
-        double initialYVelocity = 0.0;        
-        //defensive copying    
-        Ball topLeftCornerBallCollideHeadOnCopy = new Ball(new Vect(initialXVelocity, initialYVelocity), new Geometry.DoublePair(HALF_OF_MAX_COORDINATE-BALL_CENTER_TRANSLATION_AMOUNT_TO_BE_AT_CORNER, HALF_OF_MAX_COORDINATE-BALL_CENTER_TRANSLATION_AMOUNT_TO_BE_AT_CORNER));
-        
-        
-        Vect newVelo =  Geometry.reflectCircle(new Vect(HALF_OF_MAX_COORDINATE,HALF_OF_MAX_COORDINATE), topLeftCornerBallCollideHeadOnCopy.getCircle().getCenter(), topLeftCornerBallCollideHeadOnCopy.getVelocity(), 1.0);
-        System.out.println(newVelo.x());
-        System.out.println(newVelo.y());
-        
-//        bumperInMiddle.Action(topLeftCornerBallCollideHeadOnCopy);
-//        
-//        double finalXVelocity = topLeftCornerBallCollideHeadOnCopy.getVelocity().x();
-//        double finalYVelocity = topLeftCornerBallCollideHeadOnCopy.getVelocity().y();
-//        
-//        System.out.println(finalXVelocity);
-//        System.out.println(finalYVelocity);
-
-//        assertTrue(Util.doublesAreEqual(initialXVelocity, -finalXVelocity));
-//        assertTrue(Util.doublesAreEqual(initialYVelocity, finalYVelocity));
-    }
-    */
    
-    //When a ball hits ball hits a line segment; chose head-on collision with left side of bumper -> ball's x-velocity is flipped, y velocity same
+    //When a ball hits ball hits a corner/line segment; chose head-on collision with left side of bumper -> ball's x-velocity is flipped, y velocity same
     @Test
-    public final void testActionLineSegment() {
+    public final void testinteractWithBallLineSegment() {
 
         double initialXVelocity = 1.0;
         double initialYVelocity = 0.0;        
         //defensive copying    
         Ball leftSideBall = new Ball(new Vect(initialXVelocity,initialYVelocity), new Geometry.DoublePair(HALF_OF_MAX_COORDINATE-BALL_CENTER_TRANSLATION_AMOUNT_TO_BE_AT_CORNER, HALF_OF_MAX_COORDINATE-BALL_CENTER_TRANSLATION_AMOUNT_TO_BE_AT_CORNER+(TILE_SIZE/2)));
         
-        bumperInMiddle.Action(leftSideBall);
+        bumperInMiddle.interactWithBall(leftSideBall);
         
         double finalXVelocity = leftSideBall.getVelocity().x();
         double finalYVelocity = leftSideBall.getVelocity().y();

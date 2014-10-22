@@ -13,13 +13,7 @@ public interface Gadget {
      * @return The least time it would take for the ball to collide with any of the Geometry objects in this Gadget in seconds.
      */
     public double getMinCollisionTime(Ball ball);
-    
-    /**
-     * Checks if a Gadget is an Empty gadget.
-     * 
-     * @return True if Empty. False otherwise.
-     */
-    public boolean isEmpty();
+
     
     /**
      * @return A string rep of this Gadget for a single cell in the Board.
@@ -62,7 +56,8 @@ public interface Gadget {
 
     /**
      * 
-     * @param time a positive valued number that denotes the amount of time a Gadget has to move, it the Gadget does move during Action.
+     * @param time 
+     *          a positive valued number that denotes the amount of time a Gadget has to move, it the Gadget does move during Action.
      */
     public void setTime(double time);
     

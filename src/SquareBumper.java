@@ -45,12 +45,6 @@ public class SquareBumper implements Gadget{
         checkRep();
     }
     
-    
-    @Override
-    public boolean isEmpty(){
-        return false;
-    }
-    
 
     @Override
     public double getMinCollisionTime(Ball ball){
@@ -66,8 +60,7 @@ public class SquareBumper implements Gadget{
      *          the ball which hit the bumper
      */
     @Override
-    public void Action(Ball ball){
-        
+    public void interactWithBall(Ball ball){
         Vect newVelocity = ball.getVelocity(); //just a throwaway initialization value
         
         Circle[] circles = new Circle[] {topLeftCorner, topRightCorner, bottomLeftCorner, bottomRightCorner};
@@ -83,7 +76,19 @@ public class SquareBumper implements Gadget{
         }
         
         ball.setVelocity(newVelocity);
-        
+    }
+    
+    @Override
+    public Gadget[] trigger(){
+        return new Gadget[0];
+    }
+    
+    @Override
+    public void Action(){
+    }
+    
+    @Override
+    public void setTime(double time){
     }
     
     private void checkRep(){
