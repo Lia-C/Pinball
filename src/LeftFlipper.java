@@ -141,6 +141,12 @@ public class LeftFlipper implements Gadget {
         throw new RuntimeException("isOccupying error, did not return true or false");
     }*/
     
+    public double getMinCollisionTime(Ball ball) {
+        LineSegment[] lineSegments = new LineSegment[]{flipper};
+        Circle[] circles = new Circle[]{pivot, endpoint};
+        return Util.getMinCollisionTime(circles, lineSegments, ball);
+    }
+    
     /**
      * Mutates the ball's velocity when the ball hits the bumper and 
      * rotates itself 90 degrees around its pivot point.

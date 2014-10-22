@@ -16,8 +16,6 @@ public class TriangleBumper implements Gadget {
     private final Circle baseCorner, leftCorner, rightCorner; //baseCorner is the corner opposite the hypotenuse.
                                                               //leftCorner, rightCorner are to the left and right if you
                                                               //are sitting at the baseCorner and facing the hypotenuse.
-    private final LineSegment[] lineSegments = new LineSegment[]{leftLeg, rightLeg, hypotenuse};
-    private final Circle[] circles = new Circle[]{baseCorner, leftCorner, rightCorner};
     
     private final double COEFFICIENT_OF_REFLECTION = 1.0;
     
@@ -162,16 +160,22 @@ public class TriangleBumper implements Gadget {
      *          the ball which hit the bumper
      */
     public void Action(Ball ball) {
-        LineSegment wall = new LineSegment(0,0,0,0); //throwaway init value
-        Circle corner = new Circle(0,0,0); //throwaway init value
+        LineSegment[] lineSegments = new LineSegment[]{leftLeg, rightLeg, hypotenuse};
+        Circle[] circles = new Circle[]{baseCorner, leftCorner, rightCorner};
         
-        if (Util.getPartOfGadgetThatBallWillCollideWith() instanceof LineSegment) {
-            
+        if (Util.getPartOfGadgetThatBallWillCollideWith(circles, lineSegments, ball) instanceof LineSegment) {
+            LineSegment wall = (LineSegment)Util.getPartOfGadgetThatBallWillCollideWith(circles, lineSegments, ball);
+            Geometry.reflectWall(wall, ball.getVelocity(), COEFFICIENT_OF_REFLECTION);
+        } else if (Util.getPartOfGadgetThatBallWillCollideWith(circles, lineSegments, ball) instanceof Circle) { 
+            Circle corner = (Circle)Util.getPartOfGadgetThatBallWillCollideWith(circles, lineSegments, ball);
+            Geometry.reflectCircle(corner.getCenter(), ball.getCircle().getCenter(), ball.getVelocity(), COEFFICIENT_OF_REFLECTION);
         }
     }
     
     public double getMinCollisionTime(Ball ball) {
-        
+        LineSegment[] lineSegments = new LineSegment[]{leftLeg, rightLeg, hypotenuse};
+        Circle[] circles = new Circle[]{baseCorner, leftCorner, rightCorner};
+        return Util.getMinCollisionTime(circles, lineSegments, ball);
     }
     
     public boolean isEmpty() {
