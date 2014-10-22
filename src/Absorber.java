@@ -85,7 +85,7 @@ public class Absorber implements Gadget{
     public double getMinCollisionTime(Ball ball) {
         double ballX = ball.getPosition().d1;
         double ballY = ball.getPosition().d2;
-        //System.out.println("ID THIS BALL "+ballX+" "+ballY);
+        System.out.println("ID THIS BALL "+ballX+" "+ballY);
         //System.out.println("ABSORBERBOUDNS "+xCor+" "+(xCor+width)+" "+yCor+" "+(yCor+height));
         if (ballX >= xCor && ballX <= xCor+width && ballY >= yCor && ballY <= yCor + height) {
             //System.out.println("THE FUCK AM I DOING IN HERE?");
@@ -114,7 +114,7 @@ public class Absorber implements Gadget{
             double distToRelease = storageLoc.d2 - yCor;
             double v = LAUNCH_VELOCITY.length();
             double timeToRelease = distToRelease / v;
-            if (timeToRelease <= time) {
+            if (timeToRelease > time) {
                 isActing = false;
             }
         }

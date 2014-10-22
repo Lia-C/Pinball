@@ -12,7 +12,6 @@ public class OuterWall implements Gadget{
     private static final double COEFFICIENT_OF_REFLECTION = 1.0;
     
     private static final int LENGTH = 20;
-    private static final int MAX_COORDINATE = LENGTH-1;
     
     //how much we shift the walls outside the top and bottom of the playing field
     //also, the radius of the circles at the ends of the line segments
@@ -56,7 +55,7 @@ public class OuterWall implements Gadget{
         }
         
         //right wall
-        else if (isVertical && x == MAX_COORDINATE){
+        else if (isVertical && x == LENGTH){
             this.line = new LineSegment(x+EPSILON, y, x+EPSILON, y+LENGTH);
             this.startCircle = new Circle(x+EPSILON,y, 0);
             this.endCircle = new Circle(x+EPSILON, y+LENGTH,EPSILON);
@@ -64,7 +63,7 @@ public class OuterWall implements Gadget{
         
         
         //bottom wall
-        else if (!isVertical && y == MAX_COORDINATE){
+        else if (!isVertical && y == LENGTH){
             this.line = new LineSegment(x, y+EPSILON, x+LENGTH, y+EPSILON);
             this.startCircle = new Circle(x, y+EPSILON,0);
             this.endCircle = new Circle(x+LENGTH, y+EPSILON, EPSILON);
@@ -72,7 +71,7 @@ public class OuterWall implements Gadget{
         }
         
       //top wall
-        else { //(!isVertical && y == MAX_COORDINATE)
+        else { 
             this.line = new LineSegment(x, y-EPSILON, x+LENGTH, y-EPSILON);
             this.startCircle = new Circle(x, y-EPSILON,0);
             this.endCircle = new Circle(x+LENGTH, y-EPSILON, EPSILON);
@@ -85,9 +84,9 @@ public class OuterWall implements Gadget{
     }
     
     private void checkRep() {
-        assert this.x==0 || this.x==MAX_COORDINATE; // x must be 0 or MAX_COORDINATE
-        assert this.y==0 || this.y==MAX_COORDINATE; // y must be 0 or MAX_COORDINATE
-        assert ! (this.x==MAX_COORDINATE && this.y==MAX_COORDINATE); // x and y cannot both be MAX_COORDINATE
+        assert this.x==0 || this.x==LENGTH; // x must be 0 or LENGTH
+        assert this.y==0 || this.y==LENGTH; // y must be 0 or LENGTH
+        assert ! (this.x==LENGTH && this.y==LENGTH); // x and y cannot both be LENGTH
     }
     
     
