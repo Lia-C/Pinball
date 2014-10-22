@@ -130,4 +130,9 @@ public class OuterWall implements Gadget{
         return new Geometry.DoublePair((double) x, (double) y);
     }
     
+    @Override
+    public boolean isActing(){
+        return false;
+    }
+    
 }

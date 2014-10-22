@@ -113,4 +113,8 @@ public class SquareBumper implements Gadget{
         return new Geometry.DoublePair((double) xCor, (double) yCor);
     }
     
+    @Override
+    public boolean isActing(){
+        return false;
+    }
 }

@@ -64,20 +64,14 @@ public interface Gadget {
 
     /**
      * 
-<<<<<<< HEAD
-     * @param time 
-     *          a positive valued number that denotes the amount of time a Gadget has to move, it the Gadget does move during Action.
-=======
      * @param time
      *            a positive valued number that denotes the amount of time a
      *            Gadget has to move, if the Gadget does move during Action.
->>>>>>> f39d8ed9bdc2fe9c5b6b3aa8419b417ba00b52a9
      */
     public void setTime(double time);
 
     /**
      * @return True if the Gadget is in the middle of an action.
-     * @return
      */
     public boolean isActing();
 }
