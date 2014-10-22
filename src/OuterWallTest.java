@@ -26,7 +26,7 @@ public class OuterWallTest {
     private static final int HALF_OF_MAX_COORDINATE = MAX_COORDINATE/2; //this is just to the right of the midpoint bc of integer division
     private static final double BALL_RADIUS = 0.25;
     
-    private static final OuterWall wall = new OuterWall(0, LENGTH, false); //bottom wall
+    private static final OuterWall wall = new OuterWall(0, LENGTH, false, new Gadget[0]); //bottom wall
     
     
     @Test

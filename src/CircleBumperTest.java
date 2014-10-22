@@ -41,7 +41,7 @@ public class CircleBumperTest {
     
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
-        bumperInMiddle = new CircleBumper(HALF_OF_MAX_COORDINATE, HALF_OF_MAX_COORDINATE);
+        bumperInMiddle = new CircleBumper(HALF_OF_MAX_COORDINATE, HALF_OF_MAX_COORDINATE, new Gadget[0]);
         leftSideBall = new Ball(new Vect(1,0), new Geometry.DoublePair(HALF_OF_MAX_COORDINATE-(BALL_RADIUS/4), HALF_OF_MAX_COORDINATE+BALL_RADIUS));
         noCollisionBall = new Ball(new Vect(0,1), new Geometry.DoublePair(HALF_OF_MAX_COORDINATE-TILE_SIZE, HALF_OF_MAX_COORDINATE-TILE_SIZE));
     }

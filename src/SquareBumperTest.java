@@ -48,7 +48,7 @@ public class SquareBumperTest {
     
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
-        bumperInMiddle = new SquareBumper(HALF_OF_MAX_COORDINATE, HALF_OF_MAX_COORDINATE);
+        bumperInMiddle = new SquareBumper(HALF_OF_MAX_COORDINATE, HALF_OF_MAX_COORDINATE, new Gadget[0]);
         topLeftCornerBallCollideAtAngle = new Ball(new Vect(1,1), new Geometry.DoublePair(HALF_OF_MAX_COORDINATE-BALL_CENTER_TRANSLATION_AMOUNT_TO_BE_AT_CORNER, HALF_OF_MAX_COORDINATE-BALL_CENTER_TRANSLATION_AMOUNT_TO_BE_AT_CORNER));
         topLeftCornerBallCollideHeadOn = new Ball(new Vect(1,0), new Geometry.DoublePair(HALF_OF_MAX_COORDINATE-BALL_CENTER_TRANSLATION_AMOUNT_TO_BE_AT_CORNER, HALF_OF_MAX_COORDINATE-BALL_CENTER_TRANSLATION_AMOUNT_TO_BE_AT_CORNER));
         leftSideBall = new Ball(new Vect(1,0), new Geometry.DoublePair(HALF_OF_MAX_COORDINATE-BALL_CENTER_TRANSLATION_AMOUNT_TO_BE_AT_CORNER, HALF_OF_MAX_COORDINATE-BALL_CENTER_TRANSLATION_AMOUNT_TO_BE_AT_CORNER+(TILE_SIZE/2)));
