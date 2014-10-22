@@ -172,6 +172,9 @@ public class Board {
                 }
             }
         }
+        if (triggeredGadgets.length!=0){
+            this.triggerGadgets(triggeredGadgets);
+        }
         // If the ball isn't done moving, make sure it keeps moving
         if (ball.getTime() != 0) {
             this.translate(ball, ball.getTime());
@@ -326,9 +329,30 @@ public class Board {
         for (Ball ball : this.balls) {
             this.updateVelWithAccel(ball, timeDelta);
         }
+        // Makes a gadget acting if it wasn't triggered this iteration, but is still moving.
+        for (Gadget gadget:gadgets){
+            if (gadget.isActing()){
+                gadget.Action();
+            }
+        }
         checkRep();
     }
 
+    /**
+     * Calls .Action() on the gadgets referenced to in the gadgetArray.
+     * 
+     * @param gadgetArray Contains copies of the Gadgets in gadgets, used to index into gadgets and find the referenced gadgets. 
+     */
+    private void triggerGadgets(Gadget[] gadgetArray){
+        for (Gadget gadget:gadgetArray){
+            Geometry.DoublePair gadgLoc=gadget.getPosition();
+            for (int i=0;i<this.gadgets.length;i++){
+                if (gadgets[i].getPosition().equals(gadgLoc)){
+                    gadgets[i].Action();
+                }
+            }
+        }
+    }
     /**
      * 
      * @return A String representation of the board
