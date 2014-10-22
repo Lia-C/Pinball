@@ -11,6 +11,7 @@ public class Ball {
     private Geometry.DoublePair position;
     private Circle circle;
     private double time;
+    private boolean isHeld;
     
     private final double BALL_RADIUS = 0.25;
     
@@ -18,6 +19,7 @@ public class Ball {
         this.velocity = velocity;
         this.position = position;
         this.circle = new Circle(position.d1, position.d2, BALL_RADIUS);
+        this.isHeld=false;
     }
     
     /**
@@ -36,6 +38,18 @@ public class Ball {
     }
     public double getTime(){
         return this.time;
+    }
+    
+    public boolean isHeld(){
+        return this.isHeld;
+    }
+    
+    public void hold(){
+        this.isHeld=true;
+    }
+    
+    public void release(){
+        this.isHeld=false;
     }
     
     public Vect getVelocity(){

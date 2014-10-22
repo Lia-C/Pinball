@@ -1,7 +1,7 @@
 import physics.*;
 
 /**
- * An immutable class representing a right flipper.
+ * A mutable class representing a right flipper.
  * 
  * Bounding box of size 2Lx2L
  * The flipper's pivot point is in the northeast corner of its bounding box, and its
@@ -117,6 +117,12 @@ public class RightFlipper implements Gadget {
         }
         throw new RuntimeException("isOccupying error, did not return true or false");
     }*/
+    
+    public double getMinCollisionTime(Ball ball) {
+        LineSegment[] lineSegments = new LineSegment[]{flipper};
+        Circle[] circles = new Circle[]{pivot, endpoint};
+        return Util.getMinCollisionTime(circles, lineSegments, ball);
+    }
     
     /**
      * Mutates the ball's velocity when the ball hits the bumper and 

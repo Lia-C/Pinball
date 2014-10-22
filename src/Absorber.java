@@ -17,10 +17,10 @@ public class Absorber implements Gadget{
      * 
      * @param height must be 0<height<=20
      * @param width must be 0<width<=20
-     * @param x must be be  0<x<=20
+     * @param xCor must be be  0<x<=20
      * @param y must be be  0<y<=20
      */
-    public Absorber(int height, int width,int x,int y){
+    public Absorber(int height, int width,int x,int y) {
         this.height=height;
         this.width=width;
         this.x=x;
@@ -29,26 +29,24 @@ public class Absorber implements Gadget{
     }
     
     private void checkRep() {
-        assert this.height>0&&this.height<=20;
-        assert this.width>0&&this.width<=20;
-        assert this.x>0&&this.x<=20;
-        assert this.y>0&&this.y<=20;
+        assert this.height>0 && this.height<=20;
+        assert this.width>0 && this.width<=20;
+        assert this.x>=0 && this.x<=20;
+        assert this.y>0 && this.y<=20;
     }
+    
     public String toString(){
         return "=";
     }
 
-    @Override
-    public boolean isOccupying(int x, int y) {
-        if (x>=this.x&&x<=this.x+this.width&&y>=this.y&&y<=this.y+this.height){
-            return true;
-        }
-        return false;
-    }
+//    public boolean isOccupying(int x, int y) {
+//        if (x>=this.x&&x<=this.x+this.width&&y>=this.y&&y<=this.y+this.height){
+//            return true;
+//        }
+//        return false;
+//    }
 
-    @Override
     public boolean isEmpty() {
-     
         return false;
     }
     
