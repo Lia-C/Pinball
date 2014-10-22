@@ -31,6 +31,7 @@ public class TriangleBumper implements Gadget {
                                                               // hypotenuse.
     private final Gadget[] toTrigger;
 
+    //Below value is as defined in the online specs.
     private final double COEFFICIENT_OF_REFLECTION = 1.0;
 
     // Rep invariant:
@@ -185,6 +186,7 @@ public class TriangleBumper implements Gadget {
 
     @Override
     public String toString() {
+        //Depending on the orientation of the bumper in degrees, the String rep will have different values.
         if (orientation == 0 || orientation == 180) {
             return "/";
         } else {

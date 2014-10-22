@@ -18,6 +18,7 @@ public class LeftFlipper implements Gadget {
     private boolean flipping;
     private boolean isVertical;
 
+    //Below values are as defined in specs
     private final double COEFFICIENT_OF_REFLECTION = 0.95;
     private final double ANGULAR_VELOCITY = 1080.0; // LeftFlippers always
                                                     // rotate counterclockwise
@@ -101,6 +102,7 @@ public class LeftFlipper implements Gadget {
     }
 
     private void checkRep() {
+        //Must be placed such that the bounding box is within the board, whose size is 20x20
         assert (xCor >= 0 && xCor <= 18);
         assert (yCor >= 0 && yCor <= 18);
     }
@@ -118,6 +120,7 @@ public class LeftFlipper implements Gadget {
     }
 
     public boolean isOccupying(int x, int y) {
+        //The values checked for orientation are the possible values in degrees that orientation may take.
         if (orientation == 0) {
             if (isVertical) {
                 if (x == xCor && y >= yCor && y <= yCor + 1) {

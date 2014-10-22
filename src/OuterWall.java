@@ -12,7 +12,7 @@ public class OuterWall implements Gadget {
     private final Gadget[] gadgetsThisTriggers;
 
     private static final double COEFFICIENT_OF_REFLECTION = 1.0;
-
+    //Below values are as defined in specs
     private static final int LENGTH = 20;
 
     // how much we shift the walls outside the top and bottom of the playing

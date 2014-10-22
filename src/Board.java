@@ -9,6 +9,7 @@ public class Board {
 
     private final Ball[] balls;
     private final Gadget[] gadgets;
+    //Below final values are given in accordance with the default values in the specs online.
     private final double GRAVITY = 10;
     private final double MU = .005;
     private final double MU2 = .001;
@@ -162,7 +163,7 @@ public class Board {
 
         while (true) {
             System.out.println(this);
-            // updateGraph takes in seconds.
+            // updateGraph takes in seconds and this.TIMEBETWEENFRAMES is given in milliseconds.
             this.updateBoard(this.TIMEBETWEENFRAMES / 1000);
             try {
                 Thread.sleep((long) (this.TIMEBETWEENFRAMES));

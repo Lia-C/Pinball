@@ -5,7 +5,7 @@ public class CircleBumper implements Gadget {
     private final int xCor, yCor;
     private final Circle circle;
     private final Gadget[] gadgetsThisTriggers;
-
+    // Below variables are as defined in the specs.
     private static final double RADIUS = 0.5;
     private static final double COEFFICIENT_OF_REFLECTION = 1.0;
 

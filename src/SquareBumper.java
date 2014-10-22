@@ -6,7 +6,7 @@ public class SquareBumper implements Gadget {
             bottomRightCorner;
     private final int xCor, yCor;
     private final Gadget[] gadgetsThisTriggers;
-
+    //Below value is as defined in specs.
     private static final double COEFFICIENT_OF_REFLECTION = 1.0;
 
     /**
@@ -106,6 +106,7 @@ public class SquareBumper implements Gadget {
     }
 
     private void checkRep() {
+        //The bounding box of a square must be within the 20x20 graph.
         assert xCor >= 0 && xCor <= 19 && yCor >= 0 && yCor <= 19;
     }
 
