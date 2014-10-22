@@ -1,5 +1,4 @@
 import physics.*;
-import physics.Geometry.DoublePair;
 
 public class OuterWall implements Gadget{
     private final int x;
@@ -7,6 +6,8 @@ public class OuterWall implements Gadget{
     private final boolean isVertical;
     private final boolean isTransparent; // we don't use transparent walls in this phase of the project, but we put this here for future phases
     private final LineSegment line;
+    private final Circle startCircle, endCircle;
+    private final Gadget[] gadgetsThisTriggers;
 
     private static final int LENGTH = 20;
     private static final double COEFFICIENT_OF_REFLECTION = 1.0;
@@ -37,18 +38,25 @@ public class OuterWall implements Gadget{
      *  x and y cannot both be MAX_COORDINATE
      * 
      */
-    public OuterWall(int x, int y,boolean isVertical){
+    public OuterWall(int x, int y,boolean isVertical, Gadget[] gadgetsThisTriggers){
         this.x=x;
         this.y=y;
         this.isVertical=isVertical;
         this.isTransparent=false;
         if (isVertical){
             this.line = new LineSegment(x, y, x, y+LENGTH);
+            this.startCircle = new Circle(x,y,0);
+            this.endCircle = new Circle(x,y+LENGTH,0);
         }
         else{
             this.line = new LineSegment(x, y, x+LENGTH, y);
+            this.startCircle = new Circle(x,y,0);
+            this.endCircle = new Circle(x+LENGTH,y,0);
         }
+        this.gadgetsThisTriggers = gadgetsThisTriggers;
         checkRep();
+        
+        
     }
     
     private void checkRep() {
@@ -63,8 +71,6 @@ public class OuterWall implements Gadget{
         return "."; 
     }
 
-
-
     /**
      * Meant to be used to determine which, if any, Gadget that a ball would hit, and when.
      * 
@@ -72,7 +78,7 @@ public class OuterWall implements Gadget{
      * @return The least time it would take for the ball to collide with any of the Geometry objects in this Gadget.
      */
     public double getMinCollisionTime(Ball ball){
-        Circle[] circles = new Circle[0];
+        Circle[] circles = new Circle[]{startCircle,endCircle};
         LineSegment[] lineSegments = new LineSegment[]{line};
         return Util.getMinCollisionTime(circles, lineSegments, ball);
     }
@@ -84,21 +90,49 @@ public class OuterWall implements Gadget{
      * 
      */
     @Override
-    public void Action(Ball ball) {
-        Vect newVelocity = Geometry.reflectWall(line, ball.getVelocity(), COEFFICIENT_OF_REFLECTION);
+    public void interactWithBall(Ball ball) {
+        Vect newVelocity = ball.getVelocity(); //just a throwaway initialization value
+        
+        Circle[] circles = new Circle[] {startCircle, endCircle};
+        LineSegment[] lineSegments = new LineSegment[] {line};
+        Object ballWillCollideWith = Util.getPartOfGadgetThatBallWillCollideWith(circles, lineSegments, ball);
+        
+        if (ballWillCollideWith instanceof LineSegment){
+            newVelocity = Geometry.reflectWall((LineSegment) ballWillCollideWith, ball.getVelocity(), COEFFICIENT_OF_REFLECTION);
+        }
+        else if (ballWillCollideWith instanceof Circle){
+            newVelocity = Geometry.reflectCircle(((Circle) ballWillCollideWith).getCenter(), ball.getCircle().getCenter(), ball.getVelocity(), COEFFICIENT_OF_REFLECTION);
+        }
+        
         ball.setVelocity(newVelocity);
+    }
+    
+    @Override
+    public Gadget[] trigger(){
+        return gadgetsThisTriggers;
+    }
+    
+    @Override
+    public void Action(){
+    }
+    
+    @Override
+    public void setTime(double time){
     }
 
     @Override
     public boolean isOccupying(int x, int y) {
-        // TODO Auto-generated method stub
-        return false;
+        return x == this.x && y == this.y;
     }
 
     @Override
-    public DoublePair getPosition() {
-        // TODO Auto-generated method stub
-        return null;
+    public Geometry.DoublePair getPosition() {
+        return new Geometry.DoublePair((double) x, (double) y);
+    }
+    
+    @Override
+    public boolean isActing(){
+        return false;
     }
     
 }

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * An immutable class representing an absorber that stores and launches balls.
  * 
- * Bounding box of size kLxmL where k,m are positive intergers <= 20
+ * Bounding box of size kLxmL where k,m are positive integers <= 20
  * Trigger: generated whenever the ball hits it
  * Action: launches a stored ball
  */
@@ -15,8 +15,12 @@ public class Absorber implements Gadget{
     private final Circle topLeft, topRight, bottomLeft, bottomRight;
     private ArrayList<Ball> storedBalls;
     private final Geometry.DoublePair storageLoc;
+    private final Gadget[] toTrigger;
+    private double time;
+    private boolean isActing;
     
     private final Vect LAUNCH_VELOCITY = new Vect(Angle.DEG_90, 50.0);
+    
     /*
      * Rep Invariant:
      *     Must be contained within the board. i.e. xCor, yCor are in range [0,19]
@@ -37,11 +41,12 @@ public class Absorber implements Gadget{
      * @param yCor 
      *          must be in range [0,19]
      */
-    public Absorber(int xCor, int yCor, int height, int width) {
+    public Absorber(int xCor, int yCor, int height, int width, Gadget[] toTrigger) {
         this.xCor = xCor;
         this.yCor = yCor;
         this.height = height;
         this.width = width;
+        this.toTrigger = toTrigger;
         this.top = new LineSegment(xCor, yCor, xCor+width, yCor);
         this.left = new LineSegment(xCor, yCor, xCor, yCor+height);
         this.bottom = new LineSegment(xCor, yCor+height, xCor+width, yCor+height);
@@ -51,6 +56,7 @@ public class Absorber implements Gadget{
         this.bottomLeft = new Circle(xCor, yCor+height, 0);
         this.bottomRight = new Circle(xCor+width, yCor+height, 0);
         this.storageLoc = new Geometry.DoublePair(xCor+width-.25, yCor+height-.25);
+        this.isActing = false;
         checkRep();
     }
     
@@ -84,52 +90,41 @@ public class Absorber implements Gadget{
         return Util.getMinCollisionTime(circles, lineSegments, ball);
     }
     
-    public void Action (Ball ball) { //TODO
-        if(!storedBalls.isEmpty()) {
-            Ball launched = storedBalls.remove(0);
-            launched.setVelocity(LAUNCH_VELOCITY);
-            double distToRelease = storageLoc.d2 - yCor;
-            double v = LAUNCH_VELOCITY.length();
-            double time = distToRelease / v;
-        }
-        storedBalls.add(ball);
-        ball.hold();
-    }
-    
-
-    
     public String toString(){
         return "=";
     }
 
-    @Override
     public void Action() {
-        // TODO Auto-generated method stub
-        
+        if(!isActing && !storedBalls.isEmpty()) {
+            Ball launched = storedBalls.remove(0);
+            launched.setVelocity(LAUNCH_VELOCITY);
+            double distToRelease = storageLoc.d2 - yCor;
+            double v = LAUNCH_VELOCITY.length();
+            double timeToRelease = distToRelease / v;
+            if (timeToRelease <= time) {
+                isActing = false;
+            }
+        }
+        time = 0;
     }
 
-    @Override
     public Gadget[] trigger() {
-        // TODO Auto-generated method stub
-        return null;
+        return toTrigger;
     }
 
-    @Override
     public void interactWithBall(Ball ball) {
-        // TODO Auto-generated method stub
-        
+        ball.setVelocity(new Vect(0,0));
+        ball.setPosition(storageLoc);
+        storedBalls.add(ball);
+        ball.hold();
     }
 
-    @Override
     public void setTime(double time) {
-        // TODO Auto-generated method stub
-        
+        this.time = time;
     }
 
-    @Override
     public boolean isActing() {
-        // TODO Auto-generated method stub
-        return false;
+        return isActing;
     }
     
 }

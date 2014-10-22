@@ -1,11 +1,11 @@
 import physics.*;
-import physics.Geometry.DoublePair;
 
 
 public class SquareBumper implements Gadget{
     private final LineSegment top, bottom, left, right;
     private final Circle topLeftCorner, topRightCorner, bottomLeftCorner, bottomRightCorner;
     private final int xCor, yCor;
+    private final Gadget[] gadgetsThisTriggers;
     
     private static final double COEFFICIENT_OF_REFLECTION = 1.0;
     
@@ -32,7 +32,7 @@ public class SquareBumper implements Gadget{
      *          y-coordinate of the desired upper-left of the bumper's bounding box
      *          has to be in the range [0,19] (needs to be in the playing area)
      */
-    public SquareBumper(int xCor, int yCor){
+    public SquareBumper(int xCor, int yCor, Gadget[] gadgetsThisTriggers){
         this.xCor = xCor;
         this.yCor = yCor;
         this.top = new LineSegment(xCor, yCor, xCor+1, yCor);
@@ -43,17 +43,10 @@ public class SquareBumper implements Gadget{
         this.topRightCorner = new Circle(xCor + 1, yCor, 0);
         this.bottomLeftCorner = new Circle(xCor, yCor+1, 0);
         this.bottomRightCorner = new Circle(xCor+1, yCor+1, 0);
+        this.gadgetsThisTriggers = gadgetsThisTriggers;
         checkRep();
     }
     
-
-    
-    /**
-     * Meant to be used to determine which, if any, Gadget that a ball would hit, and when.
-     * 
-     * @param ball One of the balls moving around the map
-     * @return The least time it would take for the ball to collide with any of the Geometry objects in this Gadget.
-     */
     @Override
     public double getMinCollisionTime(Ball ball){
         Circle[] circles = new Circle[] {topLeftCorner, topRightCorner, bottomLeftCorner, bottomRightCorner};
@@ -68,8 +61,7 @@ public class SquareBumper implements Gadget{
      *          the ball which hit the bumper
      */
     @Override
-    public void Action(Ball ball){
-        
+    public void interactWithBall(Ball ball){
         Vect newVelocity = ball.getVelocity(); //just a throwaway initialization value
         
         Circle[] circles = new Circle[] {topLeftCorner, topRightCorner, bottomLeftCorner, bottomRightCorner};
@@ -85,7 +77,19 @@ public class SquareBumper implements Gadget{
         }
         
         ball.setVelocity(newVelocity);
-        
+    }
+    
+    @Override
+    public Gadget[] trigger(){
+        return gadgetsThisTriggers;
+    }
+    
+    @Override
+    public void Action(){
+    }
+    
+    @Override
+    public void setTime(double time){
     }
     
     private void checkRep(){
@@ -100,15 +104,17 @@ public class SquareBumper implements Gadget{
 
     @Override
     public boolean isOccupying(int x, int y) {
-        // TODO Auto-generated method stub
-        return false;
+        return x == xCor && y == yCor;
     }
 
 
     @Override
-    public DoublePair getPosition() {
-        // TODO Auto-generated method stub
-        return null;
+    public Geometry.DoublePair getPosition() {
+        return new Geometry.DoublePair((double) xCor, (double) yCor);
     }
     
+    @Override
+    public boolean isActing(){
+        return false;
+    }
 }

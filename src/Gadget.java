@@ -17,8 +17,6 @@ public interface Gadget {
      */
     public double getMinCollisionTime(Ball ball);
 
-    
-
     /**
      * @return A string rep of this Gadget for a single cell in the Board.
      */
@@ -74,7 +72,6 @@ public interface Gadget {
 
     /**
      * @return True if the Gadget is in the middle of an action.
-     * @return
      */
     public boolean isActing();
 }
