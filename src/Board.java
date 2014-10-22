@@ -183,7 +183,7 @@ public class Board {
          */
         int gadgetIndex = this.getGadgetWithMinCollisionTime(ball, timeDelta);
         int ballIndex = this.getBallWithMinCollisionTime(ball, timeDelta);
-        
+        System.out.println("BALL ID: "+ball.getPosition().d1+" " +ball.getPosition().d2);
         
         // If any gadgets are triggered, they will be kept track of with this
         // and then their actions called.
@@ -206,19 +206,21 @@ public class Board {
         }
         // If the ball will possibly collide with a Gadget within timeDelta.
         else {
-            System.out.println("AM I AT LEAST IN HERE FUCL?");
-            System.out.println("BALL PROPERTIES"+ball.getPosition().d1+" "+ball.getPosition().d2+" "+ball.getVelocity().x()+" "+ball.getVelocity().y()+" "+ball.getTime());
+            System.out.println("DO I ENTER HERE?");
+            System.out.println("I HIT THIS GADGET"+gadgets[gadgetIndex]);
+            //System.out.println("AM I AT LEAST IN HERE FUCL?");
+            //System.out.println("BALL PROPERTIES"+ball.getPosition().d1+" "+ball.getPosition().d2+" "+ball.getVelocity().x()+" "+ball.getVelocity().y()+" "+ball.getTime());
             double gadgetTime = this.gadgets[gadgetIndex].getMinCollisionTime(ball);
             // If the ball won't collide with a Ball within timeDelta.
             if (this.balls.length == ballIndex) {
-                System.out.println("I AM IN HELL"+gadgetTime); 
+                //System.out.println("I AM IN HELL"+gadgetTime); 
                 this.moveWithoutCollision(ball, gadgetTime);
                 Vect priorVel=ball.getVelocity();
-                System.out.println("PRIOR VEL"+ball.getVelocity().x()+" "+ball.getVelocity().y());
+                //System.out.println("PRIOR VEL"+ball.getVelocity().x()+" "+ball.getVelocity().y());
                 this.gadgets[gadgetIndex].interactWithBall(ball);
                 Vect afterVel =ball.getVelocity();
-                System.out.println("AFTER VEL"+ball.getVelocity().x()+" "+ball.getVelocity().y());
-                System.out.println("CURRENTPOS"+ball.getPosition().d1+" "+ball.getPosition().d2);
+               // System.out.println("AFTER VEL"+ball.getVelocity().x()+" "+ball.getVelocity().y());
+                //System.out.println("CURRENTPOS"+ball.getPosition().d1+" "+ball.getPosition().d2);
                 if (afterVel.equals(priorVel)){
                     throw new RuntimeErrorException(null, "SHIT IS FUCKED YO");
                 }
@@ -408,13 +410,13 @@ public class Board {
         }
         // Update all of the balls' velocities to account for acceleration.
         for (Ball ball : this.balls) {
-            System.out.println("Before Gravity");
-            System.out.println(ball.getPosition().d1+" "+ball.getPosition().d2);
-            System.out.println(ball.getVelocity().x()+" "+ball.getVelocity().y());
+          //  System.out.println("Before Gravity");
+           // System.out.println(ball.getPosition().d1+" "+ball.getPosition().d2);
+           // System.out.println(ball.getVelocity().x()+" "+ball.getVelocity().y());
             this.updateVelWithAccel(ball, timeDelta);
-            System.out.println("After Gravity");
-            System.out.println(ball.getPosition().d1+" "+ball.getPosition().d2);
-            System.out.println(ball.getVelocity().x()+" "+ball.getVelocity().y());
+           // System.out.println("After Gravity");
+           // System.out.println(ball.getPosition().d1+" "+ball.getPosition().d2);
+           // System.out.println(ball.getVelocity().x()+" "+ball.getVelocity().y());
         }
         // Makes a gadget acting if it wasn't triggered this iteration, but is
         // still moving.
@@ -422,6 +424,11 @@ public class Board {
             if (gadget.isActing()) {
                 gadget.Action();
             }
+        }
+        
+        for(Ball ball:this.balls){
+            System.out.println("FUCK A DUCK");
+            System.out.println("BALL"+ball.getPosition().d1+" "+ball.getPosition().d2+" "+ball.getVelocity().x()+" "+ball.getVelocity().y());
         }
         checkRep();
     }
