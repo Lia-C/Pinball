@@ -8,7 +8,11 @@ import org.junit.Test;
 import physics.*;
 
 //Testing Strategies described above tests.
-
+/**
+ * 
+ * @category no_didit
+ *
+ */
 public class BoardTest {
     private static Ball ball1;
     private static Ball ball2;
